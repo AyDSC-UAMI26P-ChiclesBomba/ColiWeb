@@ -7,12 +7,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+/**
+ * Entidad de negocio DetalleCotizacion
+ */
 @Entity
 public class DetalleCotizacion {
+    // ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idDetalle;
+    private Long idDetalle;
 
+    // Atributos de la entidad
     private int cantidad;
     private float costo;
     private boolean preciosCompletos;
@@ -22,7 +27,11 @@ public class DetalleCotizacion {
     @JoinColumn(name="idCotizacion")
     private Cotizacion cotizacion;
 
+    // Relación con el material al que se hace referencia (sí guarda columna)
     @ManyToOne
     @JoinColumn(name="idMaterial")
     private Material material;
+
+    // Métodos de la cotización como getters y setters
+    // ...
 }

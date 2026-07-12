@@ -5,29 +5,21 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
 /**
- * Entidad de Negocio Mobiliario
+ * Entidad de negocio para MaterialDecorativo
  * Se utiliza el método Tabla por Tipo (Table per Type, TPT)
-*/
+ */
 @Entity
-public class Mobiliario extends Material {
+public class MaterialDecorativo extends Material {
     // Gracias al inheritance ya está automático el id del material
 
     // Se hacen los enum necesarios
-    public enum TipoMobiliario{
-        // tipos de mobiliario
-    }public enum TipoDano{
-        TOTAL, PARCIAL, NINGUNO
+    public enum TipoDecoracion{
+        // ...
     }
 
     // Atributos de la entidad
     @Enumerated(EnumType.STRING)
-    private TipoMobiliario tipoMobiliario;
-    private boolean estadoMobiliario;
-    private float precioCompra;
-    private float costoDanoTotal;
-    private float costoDanoParcial;
-    @Enumerated(EnumType.STRING)
-    private TipoDano tipoDano;
+    private TipoDecoracion tipoDecoracion;
 
     // Métodos de la cotización como getters y setters
     // ...

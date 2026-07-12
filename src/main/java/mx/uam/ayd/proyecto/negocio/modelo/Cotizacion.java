@@ -8,6 +8,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
@@ -16,10 +18,12 @@ import jakarta.persistence.OneToOne;
  */
 @Entity
 public class Cotizacion {
+    // ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idCotizacion;
+    private Long idCotizacion;
 
+    // Atributos de la entidad
     private float anticipo;
     private float total;
     private float totalMaterial;
@@ -33,7 +37,7 @@ public class Cotizacion {
 
     /**
      * Indica la relación que tiene con Evento
-     * Mediante mappedBy evitamos que la tabla de Cotización genere algun idEvento y de esta manera
+     * Mediante mappedBy evitamos que la tabla de Cotización genere algun idEvento y de esta manera -
      * sólo hace referencia mediante el objeto cotizacion creado en Evento
      */
     @OneToOne(mappedBy = "cotizacion", targetEntity = Evento.class, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -43,6 +47,11 @@ public class Cotizacion {
     @OneToMany(mappedBy = "cotizacion", targetEntity = DetalleCotizacion.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List <DetalleCotizacion> detalles;
 
-    // Métodos de la cotización como getters y setters
+    // Relación con Cliente (sí guarda columna)
+    @ManyToOne
+    @JoinColumn(name = "idCliente")
+    private Cliente cliente;
 
+    // Métodos de la cotización como getters y setters
+    // ...
 }

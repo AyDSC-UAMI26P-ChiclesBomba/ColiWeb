@@ -16,17 +16,23 @@ import jakarta.persistence.OneToMany;
  */
 @Entity
 public class Cliente {
+    // ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idCliente;
+    private Long idCliente;
 
+    // Atributos de la entidad
     private String nombre;
     private String numTelefono;
 
-    @OneToMany(targetEntity = Evento.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    // Relación con Evento, se crea como un idCliente en Evento (Cliente no guarda columna)
+    @OneToMany(mappedBy = "cliente", targetEntity = Evento.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private final List <Evento> eventos = new ArrayList <> ();
+
+    // Relación con Cotización, se crea como un idCliente en Cotizacion (Cliente no guarda llave foránea)
+    @OneToMany(mappedBy = "cliente", targetEntity = Cotizacion.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List <Cotizacion> cotizaciones = new ArrayList <> ();
     
     // Métodos como getters, setters, etc.
-
-    
+    // ...
 }
