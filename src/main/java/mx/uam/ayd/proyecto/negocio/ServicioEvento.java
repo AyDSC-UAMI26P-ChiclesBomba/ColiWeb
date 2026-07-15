@@ -86,9 +86,6 @@ public class ServicioEvento {
         Cotizacion cotizacion = evento.getCotizacion();
         List<DetalleCotizacion> detalles = repositorioDetalleCotizacion.findByCotizacion(cotizacion);
 
-        Object[] arreglo = new Object[2];
-        arreglo[0] = cotizacion;
-        arreglo[1] = detalles;
         return new Object[] {cotizacion, detalles};
     }
 
