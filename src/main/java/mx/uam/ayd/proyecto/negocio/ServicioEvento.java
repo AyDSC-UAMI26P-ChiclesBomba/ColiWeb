@@ -214,7 +214,7 @@ public class ServicioEvento {
             System.err.println("La fecha no existe");
             return false;
         }
-        LocalDate fechaLimite = LocalDate.now().plusDays(16);
+        LocalDate fechaLimite = fechasBloqueadas();
         if(repositorioEvento.findByFecha(fecha) != null && fecha.isBefore(fechaLimite)) return false;
         return true;
     }
