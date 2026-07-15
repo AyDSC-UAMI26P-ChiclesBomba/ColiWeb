@@ -34,5 +34,16 @@ public class Cliente {
     private final List <Cotizacion> cotizaciones = new ArrayList <> ();
     
     // Métodos como getters, setters, etc.
-    // ...
+    // Constructor
+    public Cliente(){}
+    public Cliente(String nombre, String num){
+        this.nombre = nombre;
+        this.numTelefono = num;
+    }
+    
+    public String getNombre(){
+        return nombre;
+    }public String getNumTelefono(){
+        return numTelefono;
+    }
 }

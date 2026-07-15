@@ -1,7 +1,10 @@
 package mx.uam.ayd.proyecto.datos;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
+import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.DetalleCotizacion;
 
 /**
@@ -11,4 +14,5 @@ public interface RepositorioDetalleCotizacion extends CrudRepository <DetalleCot
     
     // Métodos para el repositorio de DetalleCotizacion
     // ...
+    public List<DetalleCotizacion> findByCotizacion(Cotizacion cotizacion);
 }

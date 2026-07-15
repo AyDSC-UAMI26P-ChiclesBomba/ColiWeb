@@ -10,5 +10,5 @@ import mx.uam.ayd.proyecto.negocio.modelo.Cliente;
 public interface RepositorioCliente extends CrudRepository <Cliente, Long> {
     
     // Inician los métodos del repositorio
-    // ...
+    Cliente findByNombreAndNumTelefono(String nombre, String numTelefono);
 }

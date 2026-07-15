@@ -1,5 +1,6 @@
 package mx.uam.ayd.proyecto.negocio.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -52,6 +53,17 @@ public class Cotizacion {
     @JoinColumn(name = "idCliente")
     private Cliente cliente;
 
-    // Métodos de la cotización como getters y setters
-    // ...
+
+    // ----------- MÉTODOS -----------
+
+    // getters
+    public List<DetalleCotizacion> getDetalles(){
+        List<DetalleCotizacion> detalles = new ArrayList<>();
+        return detalles;
+    }public Long getId(){
+        return idCotizacion;
+    }
+
+    // setters
+
 }
