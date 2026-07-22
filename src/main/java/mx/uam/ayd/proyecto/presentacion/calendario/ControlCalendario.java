@@ -11,7 +11,7 @@ import jakarta.annotation.PostConstruct;
 import mx.uam.ayd.proyecto.negocio.ServicioEvento;
 import mx.uam.ayd.proyecto.negocio.modelo.Cliente;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
-import mx.uam.ayd.proyecto.presentacion.gestionarEventos.ControlGestion;
+import mx.uam.ayd.proyecto.presentacion.gestionarEventos.ControlGestionEvento;
 
 /**
  * Módulo de control para la HU-1
@@ -22,10 +22,10 @@ public class ControlCalendario {
 
     private final ServicioEvento servicioEvento;
     private final VentanaCalendario ventana;
-    private final ControlGestion controlGestion;
+    private final ControlGestionEvento controlGestion;
 
     @Autowired
-    public ControlCalendario(ServicioEvento servicioEvento, VentanaCalendario ventana, ControlGestion controlGestion) {
+    public ControlCalendario(ServicioEvento servicioEvento, VentanaCalendario ventana, ControlGestionEvento controlGestion) {
         this.servicioEvento = servicioEvento;
         this.ventana = ventana;
         this.controlGestion = controlGestion;
