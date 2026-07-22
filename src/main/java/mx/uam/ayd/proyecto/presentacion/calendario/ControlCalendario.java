@@ -11,9 +11,10 @@ import jakarta.annotation.PostConstruct;
 import mx.uam.ayd.proyecto.negocio.ServicioEvento;
 import mx.uam.ayd.proyecto.negocio.modelo.Cliente;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
+import mx.uam.ayd.proyecto.presentacion.gestionarEventos.ControlGestion;
 
 /**
- * Módulo de control para la historia de usuario: 
+ * Módulo de control para la HU-1
  * @author JLCB
  */
 @Component
@@ -21,11 +22,13 @@ public class ControlCalendario {
 
     private final ServicioEvento servicioEvento;
     private final VentanaCalendario ventana;
+    private final ControlGestion controlGestion;
 
     @Autowired
-    public ControlCalendario(ServicioEvento servicioEvento, VentanaCalendario ventana) {
+    public ControlCalendario(ServicioEvento servicioEvento, VentanaCalendario ventana, ControlGestion controlGestion) {
         this.servicioEvento = servicioEvento;
         this.ventana = ventana;
+        this.controlGestion = controlGestion;
     }
 
     /**
@@ -87,29 +90,39 @@ public class ControlCalendario {
         }
     }
 
-    public void abrirCreacionEvento(Evento evento){
-        
+    public void abrirCreacionEvento(LocalDate fecha){
+        System.out.println("Cambio a HU-5, creación");
+        ventana.cierra();
+        controlGestion.inicia();
     }
 
     public void verCotizacion(Evento evento){
         Object[] datos = new Object[2];
         datos = servicioEvento.obtenerCotizacionDetalles(evento);
+
+        ventana.cierra();
         // Llama al control correspondiente
     }
     public void verGestion(Evento evento){
-        // Llama al control correspondiente
+        System.out.println("Cambio a HU-5, modificación");
+        ventana.cierra();
+        controlGestion.inicia();
     }
     public void verPagos(Evento evento){
+        ventana.cierra();
         // Llama al control correspondiente
     }
 
     public void verPublicar(Evento evento){
+        ventana.cierra();
         // Llama al control correspondiente
     }
     public void verLiquidacion(Evento evento){
+        ventana.cierra();
         // Llama al control correspondiente
     }
     public void verMobiliario(Evento evento){
+        ventana.cierra();
         // Llama al control correspondiente
     }
 }

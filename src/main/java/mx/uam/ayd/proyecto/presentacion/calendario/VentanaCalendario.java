@@ -218,14 +218,16 @@ public class VentanaCalendario {
 		try {
 			stage = new Stage();
 			stage.setTitle("ColiWeb");
+			stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("/img/logo.jpeg")));
 			
 			// Load FXML
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ventana-calendario.fxml"));
 			loader.setController(this);
-			Scene scene = new Scene(loader.load(), 450, 300);
+			Scene scene = new Scene(loader.load(), 1024, 768);
 			scene.getStylesheets().add(getClass().getResource("/css/estilos.css").toExternalForm());
 			
 			stage.setScene(scene);
+			stage.setMaximized(true);
 			
 			initialized = true;
 		} catch (IOException e) {
@@ -509,8 +511,8 @@ public class VentanaCalendario {
 	private void botonContinuar(ActionEvent event){
 		Button botonPresionado = (Button) event.getSource();
 		Object dato = botonPresionado.getUserData();
-		if(dato instanceof Evento evento){
-			control.abrirCreacionEvento(evento);
+		if(dato instanceof LocalDate fecha){
+			control.abrirCreacionEvento(fecha);
 		}
 	}
 
@@ -579,5 +581,9 @@ public class VentanaCalendario {
 		if(dato instanceof Evento evento){
 			control.verPagos(evento);
 		}
+	}
+
+	public void cierra(){
+		stage.close();
 	}
 }
