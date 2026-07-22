@@ -12,14 +12,14 @@ import mx.uam.ayd.proyecto.negocio.ServicioEvento;
  * @author JLCB
  */
 @Component
-public class ControlGestion {
+public class ControlGestionEvento {
     
     private final ServicioEvento servicioEvento;
     private final ServicioCliente servicioCliente;
-    private final VentanaGestion ventana;
+    private final VentanaGestionEvento ventana;
 
     @Autowired
-    public ControlGestion(ServicioEvento servicioEvento, ServicioCliente servicioCliente, VentanaGestion ventanaGestion){
+    public ControlGestionEvento(ServicioEvento servicioEvento, ServicioCliente servicioCliente, VentanaGestionEvento ventanaGestion){
         this.servicioEvento = servicioEvento;
         this.servicioCliente = servicioCliente;
         this.ventana = ventanaGestion;

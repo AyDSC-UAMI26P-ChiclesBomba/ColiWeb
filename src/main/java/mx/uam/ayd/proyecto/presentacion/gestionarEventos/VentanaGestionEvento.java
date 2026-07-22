@@ -10,12 +10,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 @Component
-public class VentanaGestion {
+public class VentanaGestionEvento {
     private Stage stage;
-    private ControlGestion control;
+    private ControlGestionEvento control;
     private boolean initialized = false;
 
-    public VentanaGestion(){}
+    public VentanaGestionEvento(){}
 
 
     /**
@@ -35,7 +35,7 @@ public class VentanaGestion {
 		try {
 			stage = new Stage();
 			stage.setTitle("ColiWeb: Gestionar Evento");
-			stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("/img/logo.jpeg")));
+			stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("/img/logo.png")));
 			
 			// Load FXML
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ventana-gestion-evento.fxml"));
@@ -56,7 +56,7 @@ public class VentanaGestion {
 	 * 
 	 * @param control El controlador asociado
 	 */
-	public void setControlGestion(ControlGestion control) {
+	public void setControlGestion(ControlGestionEvento control) {
 		this.control = control;
 	}
 

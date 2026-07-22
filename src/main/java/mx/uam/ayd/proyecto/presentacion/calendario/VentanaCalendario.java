@@ -218,7 +218,7 @@ public class VentanaCalendario {
 		try {
 			stage = new Stage();
 			stage.setTitle("ColiWeb");
-			stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("/img/logo.jpeg")));
+			stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("/img/logo.png")));
 			
 			// Load FXML
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ventana-calendario.fxml"));
