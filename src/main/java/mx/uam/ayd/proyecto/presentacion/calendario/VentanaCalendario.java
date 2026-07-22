@@ -9,7 +9,6 @@ import java.util.Locale;
 
 import org.springframework.stereotype.Component;
 
-import ch.qos.logback.core.joran.action.Action;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,15 +32,10 @@ public class VentanaCalendario {
 	private DateTimeFormatter formatoMes = DateTimeFormatter.ofPattern("MMMM, yyyy", new Locale("es", "MX"));
 	private DateTimeFormatter formatoDia = DateTimeFormatter.ofPattern("dd, MMMM, yyyy", new Locale("es", "MX"));
 
+	// Elaboración del Mes
 	@FXML
 	private Label mesAnio;
-
 	@FXML
-	private Button antMes;
-	@FXML
-	private Button sigMes;
-
-    @FXML
 	private ToggleButton lunes1;
 	@FXML
 	private ToggleButton martes1;
@@ -125,7 +119,8 @@ public class VentanaCalendario {
 	private ToggleButton sabado6;
     @FXML
 	private ToggleButton domingo6;
-	
+    
+	// Mostrar los tres próximos eventos
 	@FXML
 	private Label proxFecha1;
 	@FXML
@@ -145,6 +140,9 @@ public class VentanaCalendario {
 	@FXML
 	private Rectangle proxEstado3;
 
+	// Información sobre el evento seleccionado
+	@FXML
+	private VBox detallesEvento;
 	@FXML
 	private Label eventoSeleccionado;
 	@FXML
@@ -162,8 +160,11 @@ public class VentanaCalendario {
 	@FXML
 	private Label pagoSeleccionado;
 
+	// Información sobre el evento finalizado seleccionado
 	@FXML
 	private VBox detallesFinalizado;
+	@FXML
+	private Label eventoFinalizado;
 	@FXML
 	private Label horaFinalizado;
 	@FXML
@@ -173,15 +174,29 @@ public class VentanaCalendario {
 	@FXML
 	private Label montoFinalizado;
 	@FXML
-	private VBox detallesEvento;
-	@FXML
 	private VBox proximosEventos;
 
+	private Label errorFechaOcupada;
+
+	// Botones
 	@FXML
-	private Label eventoFinalizado;
-	
+	private Button antMes;
+	@FXML
+	private Button sigMes;
 	@FXML
 	private Button continuar;
+	@FXML
+	private Button cotizacion;
+	@FXML
+	private Button gestion;
+	@FXML
+	private Button pagos;
+	@FXML
+	private Button compartir;
+	@FXML
+	private Button liquidacion;
+	@FXML
+	private Button mobiliario;
 
 
     public VentanaCalendario(){}
@@ -241,18 +256,13 @@ public class VentanaCalendario {
 		}
 		initializeUI();
 
-		//----------------------------------------------------------------------------------------
-		//---------------------------------MUESTREO MENU LATERAL----------------------------------
-		//----------------------------------------------------------------------------------------
+		//-----------MUESTREO MENU LATERAL-----------\\
 		muestraProximosEventos(eventosTotales);
 
-		//----------------------------------------------------------------------------------------
-		//-----------------------------------MUESTREO CALENDARIO----------------------------------
-		//----------------------------------------------------------------------------------------
+		//-------------MUESTREO CALENDARIO-------------\\
 		List<Evento> listaEventos = new ArrayList<>(eventos); // Se crea una lista provisional en otro apartado de memoria puesto que se modificará dentro de la función y no queremos que la mutabilidad de las listas nos perjudique
 		muestraCalendario(listaEventos, diaActual, diaLimite);
 
-	
 		stage.show();
     }
 
@@ -304,7 +314,7 @@ public class VentanaCalendario {
 		for(ToggleButton diaCalendario : diasCalendario){
 			
 			// Evalúa que i no sea menor al día que debe iniciar y que el mes no haya cambiado por aumentar demasiados días
-			if(i<inicioPrimerDiaMes || dia.getMonthValue()>diaActual.getMonthValue()){
+			if(i<inicioPrimerDiaMes || dia.getMonthValue()!=diaActual.getMonthValue()){
 				System.out.println("Toggle vacío "+i);
 				diaCalendario.setDisable(true);
 				diaCalendario.setVisible(false);
@@ -388,14 +398,19 @@ public class VentanaCalendario {
 					return; // Debido a que los tres espacios ya están llenos, se rompe sale del método
 				}
 	}
-	public void muestraDetallesEvento(List<Object> datos){
+	public void muestraDetallesEvento(List<Object> datos, Evento evento){
 		proximosEventos.setVisible(false);
 		proximosEventos.setManaged(false);
 		detallesFinalizado.setVisible(false);
 		detallesFinalizado.setVisible(false);
+		continuar.setDisable(true);
 
 		detallesEvento.setVisible(true);
 		detallesEvento.setManaged(true);
+
+		cotizacion.setUserData(evento);
+		gestion.setUserData(evento);
+		pagos.setUserData(evento);
 
 		eventoSeleccionado.setText(datos.get(1).toString());
 		horaSeleccionado.setText(datos.get(2).toString());
@@ -413,15 +428,21 @@ public class VentanaCalendario {
 			estadoSeleccionado.setStyle("-fx-fill: #1a9cd4");
 			estadoSeleccionado.setText("CONFIRMADO");
 		}
+
 	}
-	public void muestraDetallesFinalizado(List<Object> datos){
+	public void muestraDetallesFinalizado(List<Object> datos, Evento evento){
 		proximosEventos.setVisible(false);
 		proximosEventos.setManaged(false);
 		detallesEvento.setVisible(false);
 		detallesEvento.setManaged(false);
+		continuar.setDisable(true);
 
 		detallesFinalizado.setVisible(true);
 		detallesFinalizado.setVisible(true);
+
+		compartir.setUserData(evento);
+		liquidacion.setUserData(evento);
+		mobiliario.setUserData(evento);
 
 		eventoFinalizado.setText(datos.get(1).toString());
 		horaFinalizado.setText(datos.get(2).toString());
@@ -449,6 +470,12 @@ public class VentanaCalendario {
 			proximosEventos.setManaged(true);
 			continuar.setDisable(true);
 			continuar.setUserData(null);
+			cotizacion.setUserData(null);
+			gestion.setUserData(null);
+			pagos.setUserData(null);
+			compartir.setUserData(null);
+			liquidacion.setUserData(null);
+			mobiliario.setUserData(null);
 			return;
 		}
 		Object dato = botonPresionado.getUserData();
@@ -463,11 +490,31 @@ public class VentanaCalendario {
 			detallesFinalizado.setVisible(false);
 			proximosEventos.setVisible(true);
 			proximosEventos.setManaged(true);
-			continuar.setDisable(false);
-			continuar.setUserData(fecha);
-		}else
-			control.diaPresionado(dato);
+			
+			control.seleccionaFecha(fecha);
+		}else if(dato instanceof Evento evento)
+			control.eventoPresionado(evento);
 	}
+	public void muestraErrorFechaOcupada(){
+		errorFechaOcupada.setManaged(true);
+		errorFechaOcupada.setVisible(true);
+	}
+	public void habilitaContinuar(LocalDate fecha){
+		continuar.setUserData(fecha);
+		continuar.setDisable(false);
+	}
+
+
+	@FXML
+	private void botonContinuar(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato instanceof Evento evento){
+			control.abrirCreacionEvento(evento);
+		}
+	}
+
+
 
 	@FXML
 	private void botonAntMes(){
@@ -482,33 +529,55 @@ public class VentanaCalendario {
 		control.siguienteMes(mesActual);
 	}
 
+	
 	@FXML
-	private void botonContinuar(ActionEvent event){
-		//Button botonPresionado = (Button) event.getSource();
-
+	private void botonPublicar(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato==null) return;
+		if(dato instanceof Evento evento)
+			control.verPublicar(evento);
 	}
 	@FXML
-	private void botonPublicar(){
-		// HU
+	private void botonLiquidacion(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato==null) return;
+		if(dato instanceof Evento evento)
+			control.verLiquidacion(evento);
 	}
 	@FXML
-	private void botonLiquidacion(){
-		// HU
+	private void botonMobiliario(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato==null) return;
+		if(dato instanceof Evento evento)
+			control.verMobiliario(evento);
 	}
 	@FXML
-	private void botonMobiliario(){
-		// HU
+	private void botonCotizacion(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato==null) return;
+		if(dato instanceof Evento evento)
+			control.verCotizacion(evento);
 	}
 	@FXML
-	private void botonCotizacion(){
-		// HU
+	private void botonGestion(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato==null) return;
+		if(dato instanceof Evento evento){
+			control.verGestion(evento);
+		}
 	}
 	@FXML
-	private void botonGestion(){
-		// HU-5 ----------------------------------
-	}
-	@FXML
-	private void botonPagos(){
-		// HU
+	private void botonPagos(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato==null) return;
+		if(dato instanceof Evento evento){
+			control.verPagos(evento);
+		}
 	}
 }

@@ -88,7 +88,7 @@ public class ServicioEvento {
     public Object[] obtenerCotizacionDetalles(Evento evento) throws IllegalArgumentException {
         if(evento == null) throw new IllegalArgumentException("El evento no puede ser nulo.");
 
-        Cotizacion cotizacion = evento.getCotizacion();
+        Cotizacion cotizacion = repositorioCotizacion.findByEvento(evento);
         List<DetalleCotizacion> detalles = repositorioDetalleCotizacion.findByCotizacion(cotizacion);
 
         return new Object[] {cotizacion, detalles};
@@ -210,22 +210,20 @@ public class ServicioEvento {
         return repositorioCliente.findByEventosContains(evento);
     }
 
-    public List<Object> diaPresionado(Object dato){
+    public List<Object> diaPresionado(Evento evento){
         List<Object> datos = new ArrayList<>();
-        if(dato instanceof Evento evento){
-            String estadoEvento = evento.getEstadoEvento().toString();
-			datos.add(estadoEvento.toString());
-            datos.add(evento.toString());
-            datos.add(evento.getHora().format(DateTimeFormatter.ofPattern("HH:mm")));   
-            if(evento.getLugar() != null) datos.add(evento.getLugar());
-            else datos.add(evento.getDireccion());
-            datos.add(evento.getCliente().toString());
-            datos.add(evento.getTotalPagado());
-			
-			if(!estadoEvento.equals("FINALIZADO"))
-                datos.add(evento.getEstadoPago().toString());
+        String estadoEvento = evento.getEstadoEvento().toString();
+        datos.add(estadoEvento.toString());
+        datos.add(evento.toString());
+        datos.add(evento.getHora().format(DateTimeFormatter.ofPattern("HH:mm")));   
+        if(evento.getLugar() != null) datos.add(evento.getLugar());
+        else datos.add(evento.getDireccion());
+        datos.add(evento.getCliente().toString());
+        datos.add(evento.getTotalPagado());
+        
+        if(!estadoEvento.equals("FINALIZADO"))
+            datos.add(evento.getEstadoPago().toString());
 
-		}
         return datos;
     }
 

@@ -39,7 +39,6 @@ public class ControlCalendario {
 
     /**
 	 * Inicia la historia de usuario
-	 * 
 	 */
 	public void iniciaCalendario() {
         LocalDate diaActual = servicioEvento.obtenerDiaActual();
@@ -69,13 +68,48 @@ public class ControlCalendario {
         return servicioEvento.obtenerCliente(evento);
     }
 
-    public void diaPresionado(Object dato){
+    public void eventoPresionado(Evento evento){
         List<Object> datos = new ArrayList<>();
-        datos = servicioEvento.diaPresionado(dato);
+        datos = servicioEvento.diaPresionado(evento);
         if(datos.get(0).toString().equals("FINALIZADO")){
-            ventana.muestraDetallesFinalizado(datos);
+            ventana.muestraDetallesFinalizado(datos, evento);
         }else{
-            ventana.muestraDetallesEvento(datos);
+            ventana.muestraDetallesEvento(datos, evento);
         }
+    }
+
+    public void seleccionaFecha(LocalDate fecha){
+        boolean fechaDisponible = servicioEvento.fechaDisponible(fecha);
+        if(fechaDisponible){
+            ventana.habilitaContinuar(fecha);
+        }else{
+            ventana.muestraErrorFechaOcupada();
+        }
+    }
+
+    public void abrirCreacionEvento(Evento evento){
+        
+    }
+
+    public void verCotizacion(Evento evento){
+        Object[] datos = new Object[2];
+        datos = servicioEvento.obtenerCotizacionDetalles(evento);
+        // Llama al control correspondiente
+    }
+    public void verGestion(Evento evento){
+        // Llama al control correspondiente
+    }
+    public void verPagos(Evento evento){
+        // Llama al control correspondiente
+    }
+
+    public void verPublicar(Evento evento){
+        // Llama al control correspondiente
+    }
+    public void verLiquidacion(Evento evento){
+        // Llama al control correspondiente
+    }
+    public void verMobiliario(Evento evento){
+        // Llama al control correspondiente
     }
 }

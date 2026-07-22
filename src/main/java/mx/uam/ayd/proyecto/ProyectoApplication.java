@@ -12,19 +12,16 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-import mx.uam.ayd.proyecto.datos.GrupoRepository;
 import mx.uam.ayd.proyecto.datos.RepositorioCliente;
 import mx.uam.ayd.proyecto.datos.RepositorioCotizacion;
 import mx.uam.ayd.proyecto.datos.RepositorioEvento;
 import mx.uam.ayd.proyecto.negocio.modelo.Cliente;
 import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
-import mx.uam.ayd.proyecto.negocio.modelo.Grupo;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento.EstadoEvento;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento.EstadoPago;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento.TipoEvento;
 import mx.uam.ayd.proyecto.presentacion.calendario.ControlCalendario;
-import mx.uam.ayd.proyecto.presentacion.principal.ControlPrincipal;
 
 /**
  * 
