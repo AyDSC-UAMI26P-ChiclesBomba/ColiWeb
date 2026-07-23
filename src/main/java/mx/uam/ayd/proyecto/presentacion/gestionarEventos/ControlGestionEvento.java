@@ -31,9 +31,11 @@ public class ControlGestionEvento {
 	 */
     @PostConstruct
     public void init() {
-        ventana.setControlGestion(this);
+        ventana.setControlGestionEvento(this);
     }
 
+
+    
     public void inicia(){
         ventana.inicia();
     }

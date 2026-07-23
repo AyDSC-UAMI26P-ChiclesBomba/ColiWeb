@@ -56,7 +56,7 @@ public class VentanaGestionEvento {
 	 * 
 	 * @param control El controlador asociado
 	 */
-	public void setControlGestion(ControlGestionEvento control) {
+	public void setControlGestionEvento(ControlGestionEvento control) {
 		this.control = control;
 	}
 
@@ -67,6 +67,23 @@ public class VentanaGestionEvento {
 			return;
 		}
 		initializeUI();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
 		stage.show();
     }
 }
