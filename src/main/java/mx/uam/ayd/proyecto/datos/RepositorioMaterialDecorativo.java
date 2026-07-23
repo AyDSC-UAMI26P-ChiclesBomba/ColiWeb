@@ -1,5 +1,7 @@
 package mx.uam.ayd.proyecto.datos;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
 import mx.uam.ayd.proyecto.negocio.modelo.MaterialDecorativo;
@@ -9,4 +11,5 @@ import mx.uam.ayd.proyecto.negocio.modelo.MaterialDecorativo;
  */
 public interface RepositorioMaterialDecorativo extends CrudRepository <MaterialDecorativo, Long> {
     // Métodos para el repositorio
+    public List<MaterialDecorativo>  findAll();
 }

@@ -34,4 +34,8 @@ public class DetalleCotizacion {
 
     // Métodos de la cotización como getters y setters
     // ...
+    
+    public void setMaterial(Material materia){
+        this.material = material;
+    }
 }
