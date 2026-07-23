@@ -1,11 +1,16 @@
 package mx.uam.ayd.proyecto.presentacion.gestionarEventos;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
 import mx.uam.ayd.proyecto.negocio.ServicioCliente;
 import mx.uam.ayd.proyecto.negocio.ServicioEvento;
+import mx.uam.ayd.proyecto.negocio.modelo.Cliente;
+import mx.uam.ayd.proyecto.negocio.modelo.Evento;
 
 /**
  * Módulo de control para la HU-5
@@ -34,9 +39,11 @@ public class ControlGestionEvento {
         ventana.setControlGestionEvento(this);
     }
 
+    public void iniciaCreacionFecha(LocalDate fecha){
+        List<Cliente> clientes = servicioCliente.obtenerClientes();
+        ventana.muestraCreacionFecha(fecha, clientes);
+    }
+    public void iniciaModificacionEvento(Evento evento){
 
-    
-    public void inicia(){
-        ventana.inicia();
     }
 }

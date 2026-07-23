@@ -140,3 +140,35 @@
     border-radius: 50%;
     background-color: white;
 }
+
+
+/* GESTIÓN DE EVENTO */
+
+.entradasTexto {
+    -fx-background-color: white !important;
+    -fx-background-radius: 50;
+    -fx-border-color: #DBDBDB;
+    -fx-border-width: 2;
+    -fx-border-radius: 50;
+    -fx-pref-width: 425;
+    -fx-pref-height: 35;
+    -fx-padding: 0 0 0 15;
+    background-color: white;
+    border-color: #DBDBDB;
+    border-width: 2;
+    border-radius: 50;
+    padding: 15;
+}
+.entradasTexto .text-field {
+    -fx-background-color: transparent !important;
+    background-color: transparent;
+}
+.entradasTexto .arrow-button {
+    -fx-background-color: transparent !important;
+    -fx-background-radius: 0 50 50 0;
+    background-color: transparent;
+}
+.entradasTexto .arrow {
+    -fx-background-color: #808080 !important;
+    background-color: #808080;
+}
