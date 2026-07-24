@@ -52,7 +52,7 @@ public class ServicioDetalleCotizacion {
     private void aumentarCantidadUno(DetalleCotizacion materialLista){
         materialLista.setCantidad(materialLista.getCantidad()+1);        
     }
-     private void calcularCostoMaterialElegido(DetalleCotizacion materialLista){
+    private void calcularCostoMaterialElegido(DetalleCotizacion materialLista){
         materialLista.setCosto(materialLista.getCantidad()*materialLista.getMaterial().getPrecio());
     }
     private void validarTienePrecio(DetalleCotizacion materialLista){
