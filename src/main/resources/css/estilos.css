@@ -150,7 +150,7 @@
     -fx-border-color: #DBDBDB;
     -fx-border-width: 2;
     -fx-border-radius: 50;
-    -fx-pref-width: 425;
+    /*-fx-pref-width: 425;*/
     -fx-pref-height: 35;
     -fx-padding: 0 0 0 15;
     background-color: white;

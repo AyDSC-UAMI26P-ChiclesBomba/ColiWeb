@@ -44,6 +44,6 @@ public class ControlGestionEvento {
         ventana.muestraCreacionFecha(fecha, clientes);
     }
     public void iniciaModificacionEvento(Evento evento){
-
+        // Inicia Modificación de Evento
     }
 }
