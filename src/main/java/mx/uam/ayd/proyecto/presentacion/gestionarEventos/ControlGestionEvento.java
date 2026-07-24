@@ -40,9 +40,18 @@ public class ControlGestionEvento {
     }
 
     public void iniciaCreacionFecha(LocalDate fecha){
-        List<Cliente> clientes = servicioCliente.obtenerClientes();
-        ventana.muestraCreacionFecha(fecha, clientes);
+        List<String> nombres = servicioCliente.obtenerNombresClientes();
+        List<String> numeros = servicioCliente.obtenerNombresClientes();
+        ventana.muestraCreacionFecha(fecha, nombres, numeros);
     }
+
+    public void buscarCliente(String nombre){
+        Cliente cliente = servicioCliente.encontrarPorNombre(nombre);
+        ventana.regresoNumero(cliente.getNumTelefono());
+    }
+
+
+    
     public void iniciaModificacionEvento(Evento evento){
         // Inicia Modificación de Evento
     }
