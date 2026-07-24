@@ -32,24 +32,31 @@ public class DetalleCotizacion {
     @JoinColumn(name="idMaterial")
     private Material material;
 
+
     // Métodos de la cotización como getters y setters
     // ...
     public int getCantidad(){
         return cantidad;
     }
+    public float getCosto(){
+        return costo;
+    }
     public Material getMaterial(){
         return material;
     }
-
-    
-    public void setMaterial(Material materia){
-        this.material = material;
+    public boolean getPreciosCompletos(){
+        return preciosCompletos;
     }
+      
     public void setCantidad(int cantidad){
         this.cantidad = cantidad;
     }
     public void setCosto(float costo){
         this.costo = costo;
     }
+    public void setPreciosCompletos(boolean preciosCompletos){
+        this.preciosCompletos = preciosCompletos;
+    }
+    
 }
 

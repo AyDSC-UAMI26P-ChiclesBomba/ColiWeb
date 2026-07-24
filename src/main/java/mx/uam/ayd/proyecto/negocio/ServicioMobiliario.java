@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import mx.uam.ayd.proyecto.datos.RepositorioMobiliario;
 import mx.uam.ayd.proyecto.negocio.modelo.Mobiliario;
+import mx.uam.ayd.proyecto.negocio.modelo.Mobiliario.TipoDano;
 
 @Service
 public class ServicioMobiliario {
@@ -27,6 +28,16 @@ public class ServicioMobiliario {
         return mobiliarios;
     }
 
+    public boolean verificarNoDanoTotal(Mobiliario mobiliarioSeleccionado){
+        return !tieneDanoTotal(mobiliarioSeleccionado);
 
+
+    }
+    private boolean tieneDanoTotal(Mobiliario mobiliarioSeleccionado){
+        if(mobiliarioSeleccionado.getTipoDano() == TipoDano.TOTAL){
+            return true;
+        }
+        return false;
+    }
     
 }

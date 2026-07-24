@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import mx.uam.ayd.proyecto.negocio.modelo.Material;
 import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.DetalleCotizacion;
 
@@ -16,7 +15,4 @@ public interface RepositorioDetalleCotizacion extends CrudRepository <DetalleCot
     // Métodos para el repositorio de DetalleCotizacion
     // ...
     List<DetalleCotizacion> findByCotizacion(Cotizacion cotizacion);
-    boolean save(Material materialSeleccionado);
-    DetalleCotizacion findByMaterialList(DetalleCotizacion materialLista);
-    void delete(DetalleCotizacion materialLista);
 }

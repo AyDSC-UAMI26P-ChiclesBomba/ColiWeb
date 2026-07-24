@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import mx.uam.ayd.proyecto.datos.RepositorioCliente;
 import mx.uam.ayd.proyecto.datos.RepositorioCotizacion;
 import mx.uam.ayd.proyecto.datos.RepositorioEvento;
-import mx.uam.ayd.proyecto.negocio.modelo.Evento;
-import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 
 
 
@@ -21,8 +19,6 @@ public class ServicioCotizacion {
     @Autowired
     public ServicioCotizacion(RepositorioCotizacion repositorioCotizacion){
         this.repositorioCotizacion = repositorioCotizacion;
-        this.repositorioCliente = repositorioCliente;
-        this.repositorioEvento = repositorioEvento;
     }
 
     

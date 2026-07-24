@@ -89,5 +89,18 @@ public class Cotizacion {
     }
 
     // setters
+    public void setTransporte(float transporte){
+        this.transporte = transporte;
+    }
+    public void setMaterialPersonalizado(float materialPersonalizado){
+        this.materialPersonalizado = materialPersonalizado;
+    }
+    public void setMaterialCliente(float materialCliente){
+        this.materialCliente = materialCliente;
+    }
+    public void setTamano(Tamano tamano){
+        this.tamano = tamano;
+    }
+
 
 }

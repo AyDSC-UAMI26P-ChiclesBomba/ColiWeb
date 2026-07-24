@@ -26,5 +26,5 @@ public interface RepositorioEvento extends CrudRepository <Evento, Long> {
 
     List<Evento> findByOrderByFechaAsc();
 
-    Evento findaByCotizacion(Cotizacion cotizacion);
+    Evento findByCotizacion(Cotizacion cotizacion);
 }

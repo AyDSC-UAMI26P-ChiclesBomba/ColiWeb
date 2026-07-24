@@ -16,5 +16,5 @@ public interface RepositorioCliente extends CrudRepository <Cliente, Long> {
 
     Cliente findByEventosContains(Evento evento);
 
-    Cliente findByCotizacion(Cotizacion cotizacion);
+    Cliente findByCotizaciones(Cotizacion cotizacion);
 }
