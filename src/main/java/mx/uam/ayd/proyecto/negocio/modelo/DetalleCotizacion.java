@@ -19,7 +19,7 @@ public class DetalleCotizacion {
 
     // Atributos de la entidad
     private int cantidad;
-    private float costo;
+    private Float costo;
     private boolean preciosCompletos;
 
     // Relación con Cotizacion, donde se guarda la columna "idCotizacion"
@@ -38,7 +38,7 @@ public class DetalleCotizacion {
     public int getCantidad(){
         return cantidad;
     }
-    public float getCosto(){
+    public Float getCosto(){
         return costo;
     }
     public Material getMaterial(){
@@ -48,6 +48,9 @@ public class DetalleCotizacion {
         return preciosCompletos;
     }
       
+    public void setMaterial(Material material){
+        this.material = material;
+    }
     public void setCantidad(int cantidad){
         this.cantidad = cantidad;
     }

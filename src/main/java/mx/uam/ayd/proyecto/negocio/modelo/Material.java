@@ -31,4 +31,8 @@ public class Material {
     public Float getPrecio(){
         return precio;
     }
+
+    public void setPrecio(float precio){
+        this.precio = precio;
+    }
 }
