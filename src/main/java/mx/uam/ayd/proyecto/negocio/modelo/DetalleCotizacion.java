@@ -34,8 +34,22 @@ public class DetalleCotizacion {
 
     // Métodos de la cotización como getters y setters
     // ...
+    public int getCantidad(){
+        return cantidad;
+    }
+    public Material getMaterial(){
+        return material;
+    }
+
     
     public void setMaterial(Material materia){
         this.material = material;
     }
+    public void setCantidad(int cantidad){
+        this.cantidad = cantidad;
+    }
+    public void setCosto(float costo){
+        this.costo = costo;
+    }
 }
+

@@ -14,7 +14,7 @@ public class Mobiliario extends Material {
 
     // Se hacen los enum necesarios
     public enum TipoMobiliario{
-        // tipos de mobiliario
+        MAMPARASMETALICAS, MAMPARASDEMADERA, FIGURADECOROPLAST, LUCESLED, LETREROS, MESASDEMADERA, CARRITODEDULCES, BASTIDORES, NUMEORSMADERA, LONAS, TAPETES, CORTINAS, SERIESDELUCES, FLORES, FOLLAFUES
     }public enum TipoDano{
         TOTAL, PARCIAL, NINGUNO
     }

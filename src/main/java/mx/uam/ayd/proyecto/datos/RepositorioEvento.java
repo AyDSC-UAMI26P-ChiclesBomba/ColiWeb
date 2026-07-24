@@ -9,6 +9,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
+import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
+
 
 /**
  * Repositorio para Eventos
@@ -23,4 +25,6 @@ public interface RepositorioEvento extends CrudRepository <Evento, Long> {
     Evento findByFecha(LocalDate fecha);
 
     List<Evento> findByOrderByFechaAsc();
+
+    Evento findaByCotizacion(Cotizacion cotizacion);
 }

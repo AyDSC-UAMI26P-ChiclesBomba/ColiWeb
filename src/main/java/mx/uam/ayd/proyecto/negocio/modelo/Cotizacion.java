@@ -6,6 +6,8 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +27,13 @@ public class Cotizacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCotizacion;
 
+    public enum Tamano{
+        PEQUENO, MEDIANO, GRANDE
+    }
+
     // Atributos de la entidad
+    @Enumerated(EnumType.STRING)
+    private Tamano tamano;
     @Column(nullable = true)
     private float anticipo;
     @Column(nullable = true)
@@ -38,6 +46,8 @@ public class Cotizacion {
     private float extra;
     @Column(nullable = true)
     private float materialPersonalizado;
+    @Column(nullable = true)
+    private float materialCliente;
     @Column(nullable = true)
     private float manoDeObra;
     @Column(nullable = true)

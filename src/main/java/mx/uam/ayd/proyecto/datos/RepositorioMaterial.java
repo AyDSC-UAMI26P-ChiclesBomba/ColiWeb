@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
+import mx.uam.ayd.proyecto.negocio.modelo.DetalleCotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Material;
 
 /**
@@ -16,6 +17,6 @@ public interface RepositorioMaterial extends CrudRepository <Material, Long> {
 
     //Regresa una lista de todo el material existente
     public List<Material>  findAll();
-
+    public Material findByMaterialDetalleCotizacion(DetalleCotizacion materialLista);
     
 }

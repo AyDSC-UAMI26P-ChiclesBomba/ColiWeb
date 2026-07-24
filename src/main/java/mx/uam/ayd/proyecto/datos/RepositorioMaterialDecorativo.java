@@ -11,5 +11,5 @@ import mx.uam.ayd.proyecto.negocio.modelo.MaterialDecorativo;
  */
 public interface RepositorioMaterialDecorativo extends CrudRepository <MaterialDecorativo, Long> {
     // Métodos para el repositorio
-    public List<MaterialDecorativo>  findAll();
+    List<MaterialDecorativo>  findAll();
 }

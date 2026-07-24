@@ -16,9 +16,9 @@ public class Globo extends Material {
     public enum Color{
         ROJO, AZUL, VERDE, AMARILLO, ROSA, DORADO, PLATEADO, BLANCO, NEGRO, MORADO //...
     }public enum TipoGlobo{
-        // ...
+        ESTANDAR, CROMADO, METALICO, BURBUJA, ESTAMPADO, NUMEROS, LATEX, MOLDEAR, FIGURAS
     }public enum Marca{
-        // ...
+        QiAU, SEMPERTEX, GLOMEX, CIELO, PANDA, PAYASO, BALLONZONE, PARTYSTAR, NUEVAERAPARY, SHUAIANBALLONS
     }
 
     // Atritbutos de la entidad

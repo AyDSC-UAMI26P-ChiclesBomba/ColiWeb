@@ -15,7 +15,7 @@ public class Comestible extends Material{
 
     // Se hacen los enum necesarios
     public enum TipoComestible{
-        // ...
+        DULCE, SALADO, BOTANAS
     }
 
     // Atributos de la entidad

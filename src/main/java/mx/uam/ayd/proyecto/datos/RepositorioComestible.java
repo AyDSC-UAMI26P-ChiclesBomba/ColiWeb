@@ -15,5 +15,5 @@ public interface RepositorioComestible extends CrudRepository <Comestible, Long>
 
     // Métodos para el repositorio
     // ...
-    public List<Comestible>  findAll();
+    List<Comestible>  findAll();
 }

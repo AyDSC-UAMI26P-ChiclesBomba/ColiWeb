@@ -13,5 +13,5 @@ public interface RepositorioMobiliario extends CrudRepository <Mobiliario, Long>
     
     // Métodos para el repositorio de Mobiliario
     // ...
-    public List<Mobiliario> findAll();
+    List<Mobiliario> findAll();
 }

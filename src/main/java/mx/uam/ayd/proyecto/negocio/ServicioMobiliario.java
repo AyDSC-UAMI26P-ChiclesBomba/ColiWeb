@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import mx.uam.ayd.proyecto.negocio.modelo.Material;
 import mx.uam.ayd.proyecto.datos.RepositorioMobiliario;
 import mx.uam.ayd.proyecto.negocio.modelo.Mobiliario;
 

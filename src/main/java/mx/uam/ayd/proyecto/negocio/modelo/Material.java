@@ -28,4 +28,7 @@ public class Material {
 
     // Métodos de la cotización como getters y setters
     // ...
+    public Float getPrecio(){
+        return precio;
+    }
 }
