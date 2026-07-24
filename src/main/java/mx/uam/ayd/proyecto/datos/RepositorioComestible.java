@@ -14,6 +14,5 @@ import mx.uam.ayd.proyecto.negocio.modelo.Comestible;
 public interface RepositorioComestible extends CrudRepository <Comestible, Long> {
 
     // Métodos para el repositorio
-    // ...
     List<Comestible>  findAll();
 }

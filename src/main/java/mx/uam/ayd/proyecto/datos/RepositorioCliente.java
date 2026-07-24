@@ -19,4 +19,3 @@ public interface RepositorioCliente extends CrudRepository <Cliente, Long> {
     Cliente findByCotizaciones(Cotizacion cotizacion);  
 
     Cliente findByNombre(String nombre);
-}
