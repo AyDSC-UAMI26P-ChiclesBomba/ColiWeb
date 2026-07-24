@@ -1,6 +1,8 @@
 package mx.uam.ayd.proyecto.presentacion.gestionarEventos;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -8,6 +10,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import mx.uam.ayd.proyecto.negocio.modelo.Cliente;
 
 @Component
 public class VentanaGestionEvento {
@@ -61,13 +64,13 @@ public class VentanaGestionEvento {
 	}
 
 
-    public void inicia(){
+    public void muestraCreacionFecha(LocalDate fecha, List<Cliente> clientes){
         if (!Platform.isFxApplicationThread()) {
-			Platform.runLater(() -> this.inicia());
+			Platform.runLater(() -> this.muestraCreacionFecha(fecha, clientes));
 			return;
 		}
 		initializeUI();
-
+		
 
 
 
