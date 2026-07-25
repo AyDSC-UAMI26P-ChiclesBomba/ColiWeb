@@ -104,4 +104,33 @@ public class ServicioCotizacion {
             return costototal+costoextra+costoconsumibles+costomanoora+costoganancia;
     }
 
+    public float copiaTotal(Cotizacion cotizacion){
+        return cotizacion.getTotal();
+    }
+
+    public boolean aprobarCotizacion(Cotizacion cotizacion, boolean estado){
+        cotizacion.setAprobada(estado);
+        if(estado == true){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean borraCotizazion(Cotizacion cotizacion){
+        if(cotizacion == null){
+            System.err.println("La cotizacion no existe ");
+            return false;
+        }
+        try {
+            repositorioCotizacion.delete(cotizacion);
+            return true;
+        } catch (Exception e) {
+            System.err.println("No se encontró la cotizacion. "+e.getMessage());
+            return false;
+        }
+    }
+
+    public Evento recuperaInfo(Cotizacion cotizacion){
+        return repositorioEvento.findByCotizacion(cotizacion);
+    }
 }

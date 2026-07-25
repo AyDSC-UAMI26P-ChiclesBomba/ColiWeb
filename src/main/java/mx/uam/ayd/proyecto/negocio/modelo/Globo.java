@@ -30,6 +30,12 @@ public class Globo extends Material {
     @Enumerated(EnumType.STRING)
     private Marca marca;
 
+    public void setMedida(int medida){
+        this.medida = medida;
+    }
+    public int getMedida(){
+        return medida;
+    }
     // Métodos de la cotización como getters y setters
     
 }

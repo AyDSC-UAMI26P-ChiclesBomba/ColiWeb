@@ -119,5 +119,8 @@ public class Cotizacion {
     public void setManoObra(float manoDeObra){
         this.manoDeObra = manoDeObra;
     }
+    public void setAprobada(boolean aprobada){
+        this.aprobada = aprobada;
+    }
 }
 
