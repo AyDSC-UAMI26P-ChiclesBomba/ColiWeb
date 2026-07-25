@@ -667,11 +667,6 @@
                                                       <Insets bottom="10.0" top="10.0" />
                                                    </padding>
                                                 </Button>
-                                                <Button fx:id="contrato" contentDisplay="CENTER" layoutX="10.0" layoutY="286.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#botonContrato" style="-fx-background-color: #4CAF50; -fx-background-radius: 30px; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Gestionar Contrato" textAlignment="CENTER">
-                                                   <padding>
-                                                      <Insets bottom="10.0" top="10.0" />
-                                                   </padding>
-                                                </Button>
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="10.0" />
