@@ -14,7 +14,7 @@ public class MaterialDecorativo extends Material {
 
     // Se hacen los enum necesarios
     public enum TipoDecoracion{
-        // ...
+        MARIPOSAS, LENTEJUELAS, PAPELCHINA, CONFETIS, BOLSASDECELOFAN, VASODULCERO, PALITOSDEMADERA, LISTONPLASTICO
     }
 
     // Atributos de la entidad

@@ -9,7 +9,6 @@ import java.util.Locale;
 
 import org.springframework.stereotype.Component;
 
-import ch.qos.logback.core.joran.action.Action;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,19 +29,16 @@ public class VentanaCalendario {
     private Stage stage;
     private ControlCalendario control;
     private boolean initialized = false;
+
+	// Formatos para cómo mostrar las fechas dependiendo de cómo lo necesitemos
 	private DateTimeFormatter formatoMes = DateTimeFormatter.ofPattern("MMMM, yyyy", new Locale("es", "MX"));
 	private DateTimeFormatter formatoDia = DateTimeFormatter.ofPattern("dd, MMMM, yyyy", new Locale("es", "MX"));
 
+	// Elaboración del Mes
 	@FXML
-	private Label mesAnio;
-
+	private Label mesAnio; // El texto para mes y año en la parte superior
 	@FXML
-	private Button antMes;
-	@FXML
-	private Button sigMes;
-
-    @FXML
-	private ToggleButton lunes1;
+	private ToggleButton lunes1; // Recuadros disponbles para pintar los días del mes
 	@FXML
 	private ToggleButton martes1;
     @FXML
@@ -125,13 +121,16 @@ public class VentanaCalendario {
 	private ToggleButton sabado6;
     @FXML
 	private ToggleButton domingo6;
-	
+    
+	// Menú lateral que contiene a los siguientes tres eventos
 	@FXML
-	private Label proxFecha1;
+	private VBox proximosEventos; // Contenedor que contiene a los próximos eventos
 	@FXML
-	private Label proxNombre1;
+	private Label proxFecha1; // Fecha del próximo evento
 	@FXML
-	private Rectangle proxEstado1;
+	private Label proxNombre1; // Nombre del próximo evento
+	@FXML
+	private Rectangle proxEstado1; // Estado del próximo evento
 	@FXML
 	private Label proxFecha2;
 	@FXML
@@ -145,45 +144,66 @@ public class VentanaCalendario {
 	@FXML
 	private Rectangle proxEstado3;
 
+	// Menú lateral del evento seleccionado cuando está en Borrador o Confirmado
 	@FXML
-	private Label eventoSeleccionado;
+	private VBox detallesEvento; // Contenedor que contiene al menú lateral
 	@FXML
-	private Label horaSeleccionado;
+	private Label eventoSeleccionado; // Nombre del evento seleccionado
 	@FXML
-	private Label estadoSeleccionado;
+	private Label horaSeleccionado; // Hora del evento seleccionado
 	@FXML
-	private Label ubicacionSeleccionado;
+	private Label estadoSeleccionado; // Estado del evento seleccionado
 	@FXML
-	private Label montoSeleccionado;
+	private Label ubicacionSeleccionado; // Ubicación del evento seleccionado
 	@FXML
-	private Rectangle rectanguloSeleccionado;
+	private Label montoSeleccionado; // Monto del evento seleccionado
 	@FXML
-	private Label clienteSeleccionado;
+	private Rectangle rectanguloSeleccionado; // Rectángulo que se pinta de color de acuerdo al estado del evento seleccionado
 	@FXML
-	private Label pagoSeleccionado;
+	private Label clienteSeleccionado; // Nombre del cliente que solicitó al evento seleccionado
+	@FXML
+	private Label pagoSeleccionado; // Cantidad pagada del evento seleccionado
 
+	// Información sobre el evento finalizado seleccionado
 	@FXML
-	private VBox detallesFinalizado;
+	private VBox detallesFinalizado; // Contenedor que contiene al menú lateral
 	@FXML
-	private Label horaFinalizado;
+	private Label eventoFinalizado; // Nombre del evento finalizado seleccionado
 	@FXML
-	private Label ubicacionFinalizado;
+	private Label horaFinalizado; // Hora del evento finalizado seleccionado
 	@FXML
-	private Label clienteFinalizado;
+	private Label ubicacionFinalizado; // Ubicación del evento finalizado seleccionado
 	@FXML
-	private Label montoFinalizado;
+	private Label clienteFinalizado; // Nombre del cliente que solicitó al evento finalizado seleccionado
 	@FXML
-	private VBox detallesEvento;
-	@FXML
-	private VBox proximosEventos;
+	private Label montoFinalizado; // Costo del evento finalizado seleccionado
 
+	// Label activado para cuando se intente continuar con una fecha ocupada
 	@FXML
-	private Label eventoFinalizado;
-	
+	private Label errorFechaOcupada;
+
+	// Botones
 	@FXML
-	private Button continuar;
+	private Button antMes; // Navegar al mes anterior
+	@FXML
+	private Button sigMes; // Navegar al mes siguiente
+	@FXML
+	private Button continuar; // Continuar en el proceso de creación
+	@FXML
+	private Button cotizacion; // Ir a la cotización de un evento no finalizado
+	@FXML
+	private Button gestion; // Ir a la gestión de un evento no finalizado
+	@FXML
+	private Button pagos; // Ir a la gestión de pagos de un evento no finalizado
+	@FXML
+	private Button compartir; // Ir a la publicación de un evento finalizado
+	@FXML
+	private Button liquidacion; // Ir a la liquidación de un evento finalizado
+	@FXML
+	private Button mobiliario; // Ir a la revisión de mobiliario de un evento finalizado
 
 
+	// Constructor necesario para la clase
     public VentanaCalendario(){}
 
     /**
@@ -202,15 +222,17 @@ public class VentanaCalendario {
 		
 		try {
 			stage = new Stage();
-			stage.setTitle("ColiWeb");
+			stage.setTitle("ColiWeb"); // El título que toma la pantalla
+			stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("/img/logo.png"))); // El logo de la aplicación
 			
 			// Load FXML
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ventana-calendario.fxml"));
 			loader.setController(this);
-			Scene scene = new Scene(loader.load(), 450, 300);
-			scene.getStylesheets().add(getClass().getResource("/css/estilos.css").toExternalForm());
+			Scene scene = new Scene(loader.load(), 1024, 768);
+			scene.getStylesheets().add(getClass().getResource("/css/estilos.css").toExternalForm()); // Se asocia el css para los estilos
 			
 			stage.setScene(scene);
+			stage.setMaximized(true); // Se dibuja en pantalla maximizada
 			
 			initialized = true;
 		} catch (IOException e) {
@@ -229,6 +251,7 @@ public class VentanaCalendario {
 
 	/**
 	 * Muestra la pantalla principal del calendario, llamando los métodos de los respectivos elementos, el calendario, eventos próximos y detalles sobre los eventos
+	 * @author JLCB
 	 * @param eventos Es la lista de eventos que existen en el mes, utilizado por el calendario
 	 * @param eventosTotales Es la lista de eventos totales, utilizado por los proximos eventos
 	 * @param diaActual Es el día del mes en el que estamos parados, utilizado por el calendario
@@ -241,23 +264,19 @@ public class VentanaCalendario {
 		}
 		initializeUI();
 
-		//----------------------------------------------------------------------------------------
-		//---------------------------------MUESTREO MENU LATERAL----------------------------------
-		//----------------------------------------------------------------------------------------
+		//-----------MUESTREO MENU LATERAL-----------\\
 		muestraProximosEventos(eventosTotales);
 
-		//----------------------------------------------------------------------------------------
-		//-----------------------------------MUESTREO CALENDARIO----------------------------------
-		//----------------------------------------------------------------------------------------
+		//-------------MUESTREO CALENDARIO-------------\\
 		List<Evento> listaEventos = new ArrayList<>(eventos); // Se crea una lista provisional en otro apartado de memoria puesto que se modificará dentro de la función y no queremos que la mutabilidad de las listas nos perjudique
 		muestraCalendario(listaEventos, diaActual, diaLimite);
 
-	
 		stage.show();
     }
 
 	/**
 	 * Es el encargado de evaluar fecha por fecha y evento por evento para determinar cómo se debe de mostrar en la pantalla del calendario
+	 * @author JLCB
 	 * @param eventos son los eventos que pertenecen al mes que estamos visualizando
 	 * @param diaActual es el día que actualmente es
 	 * @param diaLimite es el día límite para reservar eventos
@@ -304,7 +323,7 @@ public class VentanaCalendario {
 		for(ToggleButton diaCalendario : diasCalendario){
 			
 			// Evalúa que i no sea menor al día que debe iniciar y que el mes no haya cambiado por aumentar demasiados días
-			if(i<inicioPrimerDiaMes || dia.getMonthValue()>diaActual.getMonthValue()){
+			if(i<inicioPrimerDiaMes || dia.getMonthValue()!=diaActual.getMonthValue()){
 				System.out.println("Toggle vacío "+i);
 				diaCalendario.setDisable(true);
 				diaCalendario.setVisible(false);
@@ -388,15 +407,30 @@ public class VentanaCalendario {
 					return; // Debido a que los tres espacios ya están llenos, se rompe sale del método
 				}
 	}
-	public void muestraDetallesEvento(List<Object> datos){
+
+	/**
+	 * Habilita el menú lateral encargado de mostrar los detalles de un evento no finalizado seleccionado
+	 * @param datos son los datos recabados para mostrar en el menú lateral
+	 * @param evento es el evento que fue seleccionado
+	 */
+	public void muestraDetallesEvento(List<Object> datos, Evento evento){
+		// Se impide el manejo y visibilidad de las otras dos posibles pantallas laterales, así como nos aseguramos de que el Continuar se mantenga deshabilitado
 		proximosEventos.setVisible(false);
 		proximosEventos.setManaged(false);
 		detallesFinalizado.setVisible(false);
 		detallesFinalizado.setVisible(false);
+		continuar.setDisable(true);
 
+		// Se habilita el manejo y visibilidad de la pantalla lateral deseada
 		detallesEvento.setVisible(true);
 		detallesEvento.setManaged(true);
 
+		// Damos a los botones el valor del Evento puesto que sus acciones lo requieren y lo preparamos en caso de que sea presionado
+		cotizacion.setUserData(evento);
+		gestion.setUserData(evento);
+		pagos.setUserData(evento);
+
+		// Llenamos todos los label para mostrar la información del evento. Se llenan con la lista de datos
 		eventoSeleccionado.setText(datos.get(1).toString());
 		horaSeleccionado.setText(datos.get(2).toString());
 		ubicacionSeleccionado.setText(datos.get(3).toString());
@@ -414,15 +448,30 @@ public class VentanaCalendario {
 			estadoSeleccionado.setText("CONFIRMADO");
 		}
 	}
-	public void muestraDetallesFinalizado(List<Object> datos){
+
+	/**
+	 * Habilita el menú lateral que contiene los detalles y opciones para un evento finalizado seleccionado
+	 * @param datos son los datos recabados para mostrar en el menú lateral
+	 * @param evento es el evento que fue seleccionado
+	 */
+	public void muestraDetallesFinalizado(List<Object> datos, Evento evento){
+		// Se inhabilitan las otras pantallas posibles en el mismo menú lateral y se asegura que el Continuar esté deshabilitado
 		proximosEventos.setVisible(false);
 		proximosEventos.setManaged(false);
 		detallesEvento.setVisible(false);
 		detallesEvento.setManaged(false);
-
+		continuar.setDisable(true);
+	
+		// Se habilita la visibilidad y manejo del contenedor para los detalles del evento finalizado
 		detallesFinalizado.setVisible(true);
 		detallesFinalizado.setVisible(true);
 
+		// Se asignan a los posibles botones el valor del evento en caso de que sean presionados
+		compartir.setUserData(evento);
+		liquidacion.setUserData(evento);
+		mobiliario.setUserData(evento);
+
+		// Se llena la información con la lista de datos del Evento
 		eventoFinalizado.setText(datos.get(1).toString());
 		horaFinalizado.setText(datos.get(2).toString());
 		ubicacionFinalizado.setText(datos.get(3).toString());
@@ -440,15 +489,27 @@ public class VentanaCalendario {
 
 		// Evitamos problemas si el usuario deselecciona el botón
 		if (!botonPresionado.isSelected()) {
-			System.out.println("Botón deseleccionado.");
+			// Quitamos la visibilidad para los menus laterales que muestran información de un evento
 			detallesEvento.setVisible(false);
 			detallesEvento.setManaged(false);
 			detallesFinalizado.setVisible(false);
 			detallesFinalizado.setVisible(false);
+
+			// Habilitamos el menú lateral de próximos eventos
 			proximosEventos.setVisible(true);
 			proximosEventos.setManaged(true);
+
+			// Nos aseguramos que el botón continuar esté deshabilitado y su valor sea nulo
 			continuar.setDisable(true);
 			continuar.setUserData(null);
+			
+			// Regresamos el valor de los botones de las demás pantallas a nulo
+			cotizacion.setUserData(null);
+			gestion.setUserData(null);
+			pagos.setUserData(null);
+			compartir.setUserData(null);
+			liquidacion.setUserData(null);
+			mobiliario.setUserData(null);
 			return;
 		}
 		Object dato = botonPresionado.getUserData();
@@ -456,25 +517,67 @@ public class VentanaCalendario {
 			return;
 		}
 
+		// Realizamos if para poder aprovechar el tipo de dato LocalDate
 		if(dato instanceof LocalDate fecha){
+			// Nos aseguramos que las demás pantallas laterales no sean visibles ni manejables
 			detallesEvento.setVisible(false);
 			detallesEvento.setManaged(false);
 			detallesFinalizado.setVisible(false);
 			detallesFinalizado.setVisible(false);
+			// El menú de próximos eventos es visible y manejable
 			proximosEventos.setVisible(true);
 			proximosEventos.setManaged(true);
-			continuar.setDisable(false);
-			continuar.setUserData(fecha);
-		}else
-			control.diaPresionado(dato);
+			
+			// Damos al control el valor de la fecha que queremos para que se vaya a verificar que está disponible
+			control.seleccionaFecha(fecha);
+		}else if(dato instanceof Evento evento)
+			// En caso de que sea un evento el seleccionado, se manda a control a tratar al evento
+			control.eventoPresionado(evento);
 	}
 
+	/**
+	 * Habilita un Label para mostrar error en caso de ser llamado
+	 */
+	public void muestraErrorFechaOcupada(){
+		errorFechaOcupada.setManaged(true);
+		errorFechaOcupada.setVisible(true);
+	}
+
+	/**
+	 * En caso de que se necesite habilitar continuar
+	 * @param fecha es la fecha seleccionada por la que se habilitó continuar
+	 */
+	public void habilitaContinuar(LocalDate fecha){
+		continuar.setUserData(fecha); // Damos al botón el valor de la fecha para cuando sea activado
+		continuar.setDisable(false); // Habilitamos el botón
+	}
+
+	/**
+	 * El botón continuar es presioado, se toma el valor de la fecha que activó al botón
+	 * @param event
+	 */
+	@FXML
+	private void botonContinuar(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato instanceof LocalDate fecha){
+			control.abrirCreacionEvento(fecha); // Mandamos a control la fecha que fue seleccionada
+		}
+	}
+
+
+	/**
+	 * Método para cuando se acciona el botón para ir al anterior mes
+	 */
 	@FXML
 	private void botonAntMes(){
 		System.out.println("Presionó Anterior Mes");
 		LocalDate mesActual = (LocalDate) mesAnio.getUserData();
 		control.anteriorMes(mesActual);
 	}
+	/**
+	 * Método para cuando se acciona el botón para ir al siguiente mes
+	 */
 	@FXML
 	private void botonSigMes(){
 		System.out.println("Presionó Siguiente Mes");
@@ -482,33 +585,83 @@ public class VentanaCalendario {
 		control.siguienteMes(mesActual);
 	}
 
+	/**
+	 * Método para cuando se activa el botón para ir a publicar un evento seleccionado
+	 * @param event
+	 */
 	@FXML
-	private void botonContinuar(ActionEvent event){
-		//Button botonPresionado = (Button) event.getSource();
+	private void botonPublicar(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato==null) return;
+		if(dato instanceof Evento evento)
+			control.verPublicar(evento);
+	}
+	/**
+	 * Método para cuando se activa el botón para ir a la liquidación de un evento seleccionado
+	 * @param event
+	 */
+	@FXML
+	private void botonLiquidacion(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato==null) return;
+		if(dato instanceof Evento evento)
+			control.verLiquidacion(evento);
+	}
+	/**
+	 * Método para cuando se activa el botón para ir al mobiliario un evento seleccionado
+	 * @param event
+	 */
+	@FXML
+	private void botonMobiliario(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato==null) return;
+		if(dato instanceof Evento evento)
+			control.verMobiliario(evento);
+	}
+	/**
+	 * Método para cuando se activa el botón para ir a la cotización de un evento seleccionado
+	 * @param event
+	 */
+	@FXML
+	private void botonCotizacion(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato==null) return;
+		if(dato instanceof Evento evento)
+			control.verCotizacion(evento);
+	}
+	/**
+	 * Método para cuando se activa el botón para ir a gestionar un evento seleccionado
+	 * @param event
+	 */
+	@FXML
+	private void botonGestion(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato==null) return;
+		if(dato instanceof Evento evento){
+			control.verGestion(evento);
+		}
+	}
+	/**
+	 * Método para cuando se activa el botón para ir a gestionar los pagos un evento seleccionado
+	 * @param event
+	 */
+	@FXML
+	private void botonPagos(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+		if(dato==null) return;
+		if(dato instanceof Evento evento){
+			control.verPagos(evento);
+		}
+	}
 
-	}
-	@FXML
-	private void botonPublicar(){
-		// HU
-	}
-	@FXML
-	private void botonLiquidacion(){
-		// HU
-	}
-	@FXML
-	private void botonMobiliario(){
-		// HU
-	}
-	@FXML
-	private void botonCotizacion(){
-		// HU
-	}
-	@FXML
-	private void botonGestion(){
-		// HU-5 ----------------------------------
-	}
-	@FXML
-	private void botonPagos(){
-		// HU
+	// Cierra la ventana asociada a esta vista
+	public void cierra(){
+		stage.close();
 	}
 }

@@ -23,16 +23,22 @@ public class ServicioCliente {
         this.repositorioCliente = repositorioCliente;
     }
 
-    public List<Cliente> obtenerClientes(){
+    public List<Cliente> recupera(){
         ArrayList<Cliente> clientes = new ArrayList<>();
         for(Cliente cliente:repositorioCliente.findAll()){
             clientes.add(cliente);
         }
         return clientes;
     }
-    public Object[] obtieneInfoCliente(Cliente cliente) throws Exception {
-        if(cliente == null) throw new IllegalArgumentException("El cliente no puede ser nulo");
-        return new Object[] {cliente.getNombre(), cliente.getNumTelefono()};
+
+    public Cliente encontrarClientePorNombre(String nombre){
+        Cliente cliente = repositorioCliente.findByNombre(nombre);
+        return cliente;
     }
     
+    public String obtieneInfoCliente(String nombre) throws Exception {
+        Cliente cliente = repositorioCliente.findByNombre(nombre);
+        if(cliente == null) throw new IllegalArgumentException("El cliente no puede ser nulo");
+        return cliente.getNumTelefono();
+    }
 }

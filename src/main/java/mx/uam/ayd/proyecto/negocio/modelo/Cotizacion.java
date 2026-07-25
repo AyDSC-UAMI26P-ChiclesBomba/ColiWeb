@@ -6,6 +6,8 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +27,13 @@ public class Cotizacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCotizacion;
 
+    public enum Tamano{
+        PEQUENO, MEDIANO, GRANDE
+    }
+
     // Atributos de la entidad
+    @Enumerated(EnumType.STRING)
+    private Tamano tamano;
     @Column(nullable = true)
     private float anticipo;
     @Column(nullable = true)
@@ -38,6 +46,8 @@ public class Cotizacion {
     private float extra;
     @Column(nullable = true)
     private float materialPersonalizado;
+    @Column(nullable = true)
+    private float materialCliente;
     @Column(nullable = true)
     private float manoDeObra;
     @Column(nullable = true)
@@ -79,5 +89,38 @@ public class Cotizacion {
     }
 
     // setters
-
+    public void setTransporte(float transporte){
+        this.transporte = transporte;
+    }
+    public void setMaterialPersonalizado(float materialPersonalizado){
+        this.materialPersonalizado = materialPersonalizado;
+    }
+    public void setMaterialCliente(float materialCliente){
+        this.materialCliente = materialCliente;
+    }
+    public void setTamano(Tamano tamano){
+        this.tamano = tamano;
+    }
+    public void setExtra(float extra){
+        this.extra = extra;
+    }
+    public void setTotal(float total){
+        this.total = total;
+    }
+    public void setTotalMaterial(float totalMaterial){
+        this.totalMaterial = totalMaterial;
+    }
+    public void setGanancia(float ganancia){
+        this.ganancia = ganancia;
+    }
+    public void setConsumibles(float consumibles){
+        this.consumibles = consumibles;
+    }
+    public void setManoObra(float manoDeObra){
+        this.manoDeObra = manoDeObra;
+    }
+    public void setAprobada(boolean aprobada){
+        this.aprobada = aprobada;
+    }
 }
+

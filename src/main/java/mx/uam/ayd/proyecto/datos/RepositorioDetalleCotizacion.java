@@ -14,5 +14,9 @@ public interface RepositorioDetalleCotizacion extends CrudRepository <DetalleCot
     
     // Métodos para el repositorio de DetalleCotizacion
     // ...
-    public List<DetalleCotizacion> findByCotizacion(Cotizacion cotizacion);
+    List<DetalleCotizacion> findByCotizacion(Cotizacion cotizacion);
+    List<DetalleCotizacion> findAll();
+    
+    DetalleCotizacion save(DetalleCotizacion materialLista);
+    
 }

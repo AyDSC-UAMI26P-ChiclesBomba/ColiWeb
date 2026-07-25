@@ -88,7 +88,7 @@ public class ServicioEvento {
     public Object[] obtenerCotizacionDetalles(Evento evento) throws IllegalArgumentException {
         if(evento == null) throw new IllegalArgumentException("El evento no puede ser nulo.");
 
-        Cotizacion cotizacion = evento.getCotizacion();
+        Cotizacion cotizacion = repositorioCotizacion.findByEvento(evento);
         List<DetalleCotizacion> detalles = repositorioDetalleCotizacion.findByCotizacion(cotizacion);
 
         return new Object[] {cotizacion, detalles};
@@ -189,7 +189,6 @@ public class ServicioEvento {
         Cliente cliente = repositorioCliente.findByNombreAndNumTelefono(nombre, num);
         if(cliente == null){
             cliente = new Cliente(nombre, num);
-            repositorioCliente.save(cliente);
         }
         
         // Verifica que no exista en el repositorio otro evento con la misma fecha
@@ -198,6 +197,7 @@ public class ServicioEvento {
         // Crea a la cotización
         Cotizacion cotizacion = new Cotizacion();
         cotizacion = repositorioCotizacion.save(cotizacion);
+        cliente = repositorioCliente.save(cliente);
         
         // Crea al evento
         Evento evento = new Evento(tipoEvento, fecha, hora, lugar, referencias, direccion, referencias, imagen, cotizacion, cliente);
@@ -210,22 +210,20 @@ public class ServicioEvento {
         return repositorioCliente.findByEventosContains(evento);
     }
 
-    public List<Object> diaPresionado(Object dato){
+    public List<Object> diaPresionado(Evento evento){
         List<Object> datos = new ArrayList<>();
-        if(dato instanceof Evento evento){
-            String estadoEvento = evento.getEstadoEvento().toString();
-			datos.add(estadoEvento.toString());
-            datos.add(evento.toString());
-            datos.add(evento.getHora().format(DateTimeFormatter.ofPattern("HH:mm")));   
-            if(evento.getLugar() != null) datos.add(evento.getLugar());
-            else datos.add(evento.getDireccion());
-            datos.add(evento.getCliente().toString());
-            datos.add(evento.getTotalPagado());
-			
-			if(!estadoEvento.equals("FINALIZADO"))
-                datos.add(evento.getEstadoPago().toString());
+        String estadoEvento = evento.getEstadoEvento().toString();
+        datos.add(estadoEvento.toString());
+        datos.add(evento.toString());
+        datos.add(evento.getHora().format(DateTimeFormatter.ofPattern("HH:mm")));   
+        if(evento.getLugar() != null && evento.getLugar() != "") datos.add(evento.getLugar());
+        else datos.add(evento.getDireccion());
+        datos.add(evento.getCliente().toString());
+        datos.add(evento.getTotalPagado());
+        
+        if(!estadoEvento.equals("FINALIZADO"))
+            datos.add(evento.getEstadoPago().toString());
 
-		}
         return datos;
     }
 
@@ -240,7 +238,7 @@ public class ServicioEvento {
             return false;
         }
         LocalDate fechaLimite = obtenerDiaLimite();
-        if(repositorioEvento.findByFecha(fecha) != null && fecha.isBefore(fechaLimite)) return false;
+        if(repositorioEvento.findByFecha(fecha) != null || fecha.isBefore(fechaLimite)) return false;
         return true;
     }
 

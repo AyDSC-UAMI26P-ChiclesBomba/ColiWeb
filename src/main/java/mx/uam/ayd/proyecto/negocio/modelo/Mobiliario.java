@@ -14,7 +14,7 @@ public class Mobiliario extends Material {
 
     // Se hacen los enum necesarios
     public enum TipoMobiliario{
-        // tipos de mobiliario
+        MAMPARASMETALICAS, MAMPARASDEMADERA, FIGURADECOROPLAST, LUCESLED, LETREROS, MESASDEMADERA, CARRITODEDULCES, BASTIDORES, NUMEORSMADERA, LONAS, TAPETES, CORTINAS, SERIESDELUCES, FLORES, FOLLAFUES
     }public enum TipoDano{
         TOTAL, PARCIAL, NINGUNO
     }
@@ -31,4 +31,36 @@ public class Mobiliario extends Material {
 
     // Métodos de la cotización como getters y setters
     // ...
+    public boolean getEstadoMobiliario(){
+        return estadoMobiliario;
+    }
+    public float getPrecioCompra(){
+        return precioCompra;
+    }
+    public float getCostoDanoTotal(){
+        return costoDanoTotal;
+    }
+    public float getCostoDanoParcial(){
+        return costoDanoParcial;
+    }
+    public TipoDano getTipoDano(){
+        return tipoDano;
+    }
+
+
+    public void setEstadoMobiliario(boolean estadoMobiliario){
+        this.estadoMobiliario = estadoMobiliario;
+    }
+    public void setPrecioCompra(float precioCompra){
+        this.precioCompra = precioCompra;
+    }
+    public void setCostoDanoTotal(float costoDanoTotal){
+        this.costoDanoTotal = costoDanoTotal;
+    }
+    public void setCostoDanoParcial(float costoDanoParcial){
+        this.costoDanoParcial = costoDanoParcial;
+    }
+    public void setTipoDano(TipoDano tipoDano){
+        this.tipoDano = tipoDano;
+    }
 }

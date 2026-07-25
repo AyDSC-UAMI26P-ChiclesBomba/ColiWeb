@@ -19,7 +19,7 @@ public class DetalleCotizacion {
 
     // Atributos de la entidad
     private int cantidad;
-    private float costo;
+    private Float costo;
     private boolean preciosCompletos;
 
     // Relación con Cotizacion, donde se guarda la columna "idCotizacion"
@@ -32,6 +32,34 @@ public class DetalleCotizacion {
     @JoinColumn(name="idMaterial")
     private Material material;
 
+
     // Métodos de la cotización como getters y setters
     // ...
+    public int getCantidad(){
+        return cantidad;
+    }
+    public Float getCosto(){
+        return costo;
+    }
+    public Material getMaterial(){
+        return material;
+    }
+    public boolean getPreciosCompletos(){
+        return preciosCompletos;
+    }
+      
+    public void setMaterial(Material material){
+        this.material = material;
+    }
+    public void setCantidad(int cantidad){
+        this.cantidad = cantidad;
+    }
+    public void setCosto(float costo){
+        this.costo = costo;
+    }
+    public void setPreciosCompletos(boolean preciosCompletos){
+        this.preciosCompletos = preciosCompletos;
+    }
+    
 }
+
