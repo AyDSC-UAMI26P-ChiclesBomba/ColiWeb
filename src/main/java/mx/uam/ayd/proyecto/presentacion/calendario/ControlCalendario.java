@@ -105,8 +105,8 @@ public class ControlCalendario {
      */
     public void abrirCreacionEvento(LocalDate fecha){
         System.out.println("Cambio a HU-5, creación");
-        ventana.cierra();
         controlGestion.iniciaCreacionFecha(fecha);
+        ventana.cierra();
     }
 
     /**

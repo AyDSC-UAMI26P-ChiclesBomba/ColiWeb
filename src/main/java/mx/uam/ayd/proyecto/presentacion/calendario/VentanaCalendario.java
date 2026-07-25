@@ -179,6 +179,7 @@ public class VentanaCalendario {
 	private Label montoFinalizado; // Costo del evento finalizado seleccionado
 
 	// Label activado para cuando se intente continuar con una fecha ocupada
+	@FXML
 	private Label errorFechaOcupada;
 
 	// Botones

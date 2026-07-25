@@ -203,7 +203,6 @@ public class ProyectoApplication {
 		evento5.setTipoEvento(TipoEvento.BODA);
 		evento5.setFecha(LocalDate.of(2026, 6, 1));
 		evento5.setHora(LocalTime.of(19, 0));
-		evento5.setLugar("Jardín Botánico");
 		evento5.setReferencias("Entrada por el acceso oriente");
 		evento5.setDireccion("Camino Real s/n");
 		evento5.setTotalPagado(22000.00f);

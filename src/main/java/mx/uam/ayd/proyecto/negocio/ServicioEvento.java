@@ -189,7 +189,6 @@ public class ServicioEvento {
         Cliente cliente = repositorioCliente.findByNombreAndNumTelefono(nombre, num);
         if(cliente == null){
             cliente = new Cliente(nombre, num);
-            repositorioCliente.save(cliente);
         }
         
         // Verifica que no exista en el repositorio otro evento con la misma fecha
@@ -198,6 +197,7 @@ public class ServicioEvento {
         // Crea a la cotización
         Cotizacion cotizacion = new Cotizacion();
         cotizacion = repositorioCotizacion.save(cotizacion);
+        cliente = repositorioCliente.save(cliente);
         
         // Crea al evento
         Evento evento = new Evento(tipoEvento, fecha, hora, lugar, referencias, direccion, referencias, imagen, cotizacion, cliente);
@@ -216,7 +216,7 @@ public class ServicioEvento {
         datos.add(estadoEvento.toString());
         datos.add(evento.toString());
         datos.add(evento.getHora().format(DateTimeFormatter.ofPattern("HH:mm")));   
-        if(evento.getLugar() != null) datos.add(evento.getLugar());
+        if(evento.getLugar() != null && evento.getLugar() != "") datos.add(evento.getLugar());
         else datos.add(evento.getDireccion());
         datos.add(evento.getCliente().toString());
         datos.add(evento.getTotalPagado());
@@ -238,7 +238,7 @@ public class ServicioEvento {
             return false;
         }
         LocalDate fechaLimite = obtenerDiaLimite();
-        if(repositorioEvento.findByFecha(fecha) != null && fecha.isBefore(fechaLimite)) return false;
+        if(repositorioEvento.findByFecha(fecha) != null || fecha.isBefore(fechaLimite)) return false;
         return true;
     }
 

@@ -99,6 +99,12 @@ public class Evento {
         this.visualRecinto = visualRecinto;
         this.detalles = detalles;
         this.estadoEvento = EstadoEvento.BORRADOR;
+        this.estadoPago = EstadoPago.PENDIENTE;
+        this.totalPagado = 0;
+        this.contratoFirmado = false;
+
+        this.cotizacion = cotizacion;
+        this.cliente = cliente;
     }
 
     // getters

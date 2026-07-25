@@ -105,11 +105,35 @@
                      <children>
                         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                            <children>
-                              <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="← Volver a la agenda" textFill="#0482b9" />
+                              <Button mnemonicParsing="false" onAction="#presionarBotonCancelar" style="-fx-background-color: transparent; -fx-cursor: hand;" text="← Volver a la agenda" textFill="#0482b9" />
                               <Label text="Crear Nuevo Evento">
                                  <font>
                                     <Font name="System Bold" size="28.0" />
                                  </font>
+                              </Label>
+                              <Label fx:id="errorEventoExistente" layoutX="10.0" layoutY="10.0" maxWidth="700.0" style="-fx-background-color: ffcdcd; -fx-padding: 5; -fx-background-radius: 20px; -fx-managed: false;" text="Ya existe un evento en esa fecha, regresa a la agenda para actualizar las fechas disponibles." textFill="RED" visible="false">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/warning_24dp_FF0000_FILL0_wght400_GRAD0_opsz24.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Label>
+                              <Label fx:id="errorDatosIncompletos" maxWidth="700.0" style="-fx-background-color: ffcdcd; -fx-padding: 5; -fx-background-radius: 20px; -fx-managed: false;" text=" Asegúrate de ingresar todos los datos mínimos necesarios." textFill="RED" visible="false">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/warning_24dp_FF0000_FILL0_wght400_GRAD0_opsz24.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
                               </Label>
                               <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0" VBox.vgrow="ALWAYS">
                                  <children>
@@ -208,7 +232,7 @@
                                                                         <Font name="System Bold" size="16.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <TextField fx:id="textFechaCreacion" editable="false" maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Fecha" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
+                                                                  <TextField fx:id="textFechaCreacion" disable="true" editable="false" maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Fecha" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
                                                                      <VBox.margin>
                                                                         <Insets left="5.0" top="5.0" />
                                                                      </VBox.margin>
@@ -227,13 +251,13 @@
                                                                         <Insets left="5.0" top="5.0" />
                                                                      </VBox.margin>
                                                                      <children>
-                                                                        <Spinner maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="70.0" style="-fx-max-width: 70;" styleClass="entradasTexto" stylesheets="@../css/estilos.css" />
+                                                                        <Spinner fx:id="horaCreacion" editable="true" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="90.0" style="-fx-max-width: 90;" styleClass="entradasTexto" stylesheets="@../css/estilos.css" />
                                                                         <Label text=" : ">
                                                                            <font>
                                                                               <Font name="System Bold" size="21.0" />
                                                                            </font>
                                                                         </Label>
-                                                                        <Spinner layoutX="10.0" layoutY="10.0" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="70.0" style="-fx-max-width: 70;" styleClass="entradasTexto" stylesheets="@../css/estilos.css" />
+                                                                        <Spinner fx:id="minutoCreacion" editable="true" layoutX="10.0" layoutY="10.0" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="90.0" style="-fx-max-width: 90;" styleClass="entradasTexto" stylesheets="@../css/estilos.css" />
                                                                         <Label alignment="BOTTOM_LEFT" text=" hrs." />
                                                                      </children>
                                                                   </HBox>
@@ -267,7 +291,7 @@
                                                                   <Font name="System Bold" size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <TextField maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Nombre del recinto" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
+                                                            <TextField fx:id="textLugarCreacion" maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Nombre del recinto" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
                                                                <VBox.margin>
                                                                   <Insets left="5.0" top="5.0" />
                                                                </VBox.margin>
@@ -284,7 +308,7 @@
                                                                   <Font name="System Bold" size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <TextField maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Ej. Calle Principal 123, Colonia Centro, Ciudad, CP" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
+                                                            <TextField fx:id="textDireccionCreacion" maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Ej. Calle Principal 123, Colonia Centro, Ciudad, CP" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
                                                                <VBox.margin>
                                                                   <Insets left="5.0" top="5.0" />
                                                                </VBox.margin>
@@ -309,7 +333,7 @@
                                                                   <Font name="System Bold" size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <TextField maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Ej. Calle Principal 123, Colonia Centro, Ciudad, CP" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
+                                                            <TextField fx:id="textReferenciasCreacion" maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Ej. Calle Principal 123, Colonia Centro, Ciudad, CP" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
                                                                <VBox.margin>
                                                                   <Insets left="5.0" top="5.0" />
                                                                </VBox.margin>
@@ -342,7 +366,7 @@
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                                      <ImageView fx:id="imageVisualizacionCreacion" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
                                                       <VBox alignment="CENTER" maxHeight="150.0" maxWidth="150.0" minHeight="150.0" minWidth="150.0" prefHeight="150.0" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                                          <children>
                                                             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -380,7 +404,7 @@
                                                       </ImageView>
                                                    </graphic>
                                                 </Label>
-                                                <TextArea prefHeight="150.0" prefWidth="150.0" promptText="Escribe detalles adicionales sobre el montaje, requerimientos especiales del cliente o accesos..." style="-fx-background-radius: 100px; -fx-border-radius: 100px; -fx-background-color: transparent;" wrapText="true">
+                                                <TextArea fx:id="textNotasCreacion" prefHeight="150.0" prefWidth="150.0" promptText="Escribe detalles adicionales sobre el montaje, requerimientos especiales del cliente o accesos..." style="-fx-background-radius: 100px; -fx-border-radius: 100px; -fx-background-color: transparent;" wrapText="true">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
