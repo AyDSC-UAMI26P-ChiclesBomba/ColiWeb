@@ -35,4 +35,26 @@ public class Material {
     public void setPrecio(float precio){
         this.precio = precio;
     }
+
+    public String getNombre(){
+        return nombre;
+    }
+
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
+    public String getImagen(){
+        return imagen;
+    }
+
+    public void setImagen(String imagen){
+        this.imagen = imagen;
+    }
+    public int getCantInventario(){
+        return cantInventario;
+    }
+
+    public void setCantInventario(int cantInventario){
+        this.cantInventario = cantInventario;
+    }
 }
