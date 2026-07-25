@@ -45,6 +45,8 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -443,15 +445,56 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="modificacionBox" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-managed: false;" visible="false">
+                  <VBox fx:id="modificacionBox" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" visible="false">
                      <children>
                         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                            <children>
-                              <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="← Volver a la agenda" textFill="#0482b9" />
-                              <Label text="Crear Nuevo Evento">
+                              <Button mnemonicParsing="false" onAction="#presionarBotonCancelar" style="-fx-background-color: transparent; -fx-cursor: hand;" text="← Volver a la agenda" textFill="#0482b9" />
+                              <Label text="Gestionar Evento">
                                  <font>
                                     <Font name="System Bold" size="28.0" />
                                  </font>
+                              </Label>
+                              <HBox alignment="CENTER_LEFT" spacing="15.0">
+                                 <children>
+                                    <Label text="Estado: " textFill="#4d4d4d">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox spacing="5.0" style="-fx-background-color: #F2EBF2; -fx-background-radius: 30px; -fx-padding: 10;">
+                                       <children>
+                                          <ToggleButton fx:id="switchBorradorModificacion" mnemonicParsing="false" styleClass="switchEstadoBorrador" stylesheets="@../css/estilos.css" text="Borrador">
+                                             <padding>
+                                                <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                                             </padding>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="grupoEstadoEvento" />
+                                             </toggleGroup>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="switchConfirmadoModificacion" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="switchEstadoConfirmado" stylesheets="@../css/estilos.css" text="Confirmado" toggleGroup="$grupoEstadoEvento">
+                                             <padding>
+                                                <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                                             </padding>
+                                          </ToggleButton>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <Label fx:id="errorDatosIncompletosModificacion" maxWidth="700.0" style="-fx-background-color: ffcdcd; -fx-padding: 5; -fx-background-radius: 20px; -fx-managed: false;" text=" Asegúrate de ingresar los datos mínimos y de forma correcta." textFill="RED" visible="false">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/warning_24dp_FF0000_FILL0_wght400_GRAD0_opsz24.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
                               </Label>
                               <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0" VBox.vgrow="ALWAYS">
                                  <children>
@@ -480,7 +523,7 @@
                                                                   <Font name="System Bold" size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <ComboBox maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="425.0" promptText="Ej. Boda, Conferencias, XV Años" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
+                                                            <ComboBox fx:id="textTipoModificacion" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="425.0" promptText="Ej. Boda, Conferencias, XV Años" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
                                                                <VBox.margin>
                                                                   <Insets left="5.0" top="5.0" />
                                                                </VBox.margin>
@@ -499,11 +542,11 @@
                                                                         <Font name="System Bold" size="16.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <ComboBox editable="true" maxHeight="35.0" maxWidth="500.0" minHeight="35.0" prefHeight="35.0" prefWidth="250.0" promptText="Nombre del Cliente" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
+                                                                  <TextField fx:id="textNombreModificacion" editable="false" maxHeight="35.0" maxWidth="500.0" minHeight="35.0" prefHeight="35.0" prefWidth="250.0" promptText="Nombre del Cliente" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
                                                                      <VBox.margin>
                                                                         <Insets left="5.0" top="5.0" />
                                                                      </VBox.margin>
-                                                                  </ComboBox>
+                                                                  </TextField>
                                                                </children>
                                                             </VBox>
                                                             <VBox>
@@ -513,7 +556,7 @@
                                                                         <Font name="System Bold" size="16.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <TextField maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="250.0" promptText="Número telefónico del Cliente" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
+                                                                  <TextField fx:id="textTelefonoModificacion" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="250.0" promptText="Número telefónico del Cliente" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
                                                                      <VBox.margin>
                                                                         <Insets left="5.0" top="5.0" />
                                                                      </VBox.margin>
@@ -550,7 +593,7 @@
                                                                         <Font name="System Bold" size="16.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <TextField maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Fecha" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
+                                                                  <TextField fx:id="textFechaModificacion" disable="true" editable="false" maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Fecha" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
                                                                      <VBox.margin>
                                                                         <Insets left="5.0" top="5.0" />
                                                                      </VBox.margin>
@@ -569,13 +612,13 @@
                                                                         <Insets left="5.0" top="5.0" />
                                                                      </VBox.margin>
                                                                      <children>
-                                                                        <Spinner maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="70.0" style="-fx-max-width: 70;" styleClass="entradasTexto" stylesheets="@../css/estilos.css" />
+                                                                        <Spinner fx:id="horaModificacion" editable="true" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="90.0" style="-fx-max-width: 90;" styleClass="entradasTexto" stylesheets="@../css/estilos.css" />
                                                                         <Label text=" : ">
                                                                            <font>
                                                                               <Font name="System Bold" size="21.0" />
                                                                            </font>
                                                                         </Label>
-                                                                        <Spinner layoutX="10.0" layoutY="10.0" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="70.0" style="-fx-max-width: 70;" styleClass="entradasTexto" stylesheets="@../css/estilos.css" />
+                                                                        <Spinner fx:id="minutoModificacion" editable="true" layoutX="10.0" layoutY="10.0" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="90.0" style="-fx-max-width: 90;" styleClass="entradasTexto" stylesheets="@../css/estilos.css" />
                                                                         <Label alignment="BOTTOM_LEFT" text=" hrs." />
                                                                      </children>
                                                                   </HBox>
@@ -609,7 +652,7 @@
                                                                   <Font name="System Bold" size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <TextField maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Nombre del recinto" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
+                                                            <TextField fx:id="textLugarModificacion" maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Nombre del recinto" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
                                                                <VBox.margin>
                                                                   <Insets left="5.0" top="5.0" />
                                                                </VBox.margin>
@@ -626,7 +669,7 @@
                                                                   <Font name="System Bold" size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <TextField maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Ej. Calle Principal 123, Colonia Centro, Ciudad, CP" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
+                                                            <TextField fx:id="textDireccionModificacion" maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Ej. Calle Principal 123, Colonia Centro, Ciudad, CP" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
                                                                <VBox.margin>
                                                                   <Insets left="5.0" top="5.0" />
                                                                </VBox.margin>
@@ -651,7 +694,7 @@
                                                                   <Font name="System Bold" size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <TextField maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Ej. Calle Principal 123, Colonia Centro, Ciudad, CP" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
+                                                            <TextField fx:id="textReferenciasModificacion" maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" promptText="Ej. Calle Principal 123, Colonia Centro, Ciudad, CP" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
                                                                <VBox.margin>
                                                                   <Insets left="5.0" top="5.0" />
                                                                </VBox.margin>
@@ -684,7 +727,7 @@
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                    </rowConstraints>
                                                    <children>
-                                                      <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                                      <ImageView fx:id="imageVisualizacionModificacion" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
                                                       <VBox alignment="CENTER" maxHeight="150.0" maxWidth="150.0" minHeight="150.0" minWidth="150.0" prefHeight="150.0" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                                          <children>
                                                             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -722,7 +765,7 @@
                                                       </ImageView>
                                                    </graphic>
                                                 </Label>
-                                                <TextArea prefHeight="150.0" prefWidth="150.0" promptText="Escribe detalles adicionales sobre el montaje, requerimientos especiales del cliente o accesos..." style="-fx-background-radius: 100px; -fx-border-radius: 100px; -fx-background-color: transparent;" wrapText="true">
+                                                <TextArea fx:id="textNotasModificacion" prefHeight="150.0" prefWidth="150.0" promptText="Escribe detalles adicionales sobre el montaje, requerimientos especiales del cliente o accesos..." style="-fx-background-radius: 100px; -fx-border-radius: 100px; -fx-background-color: transparent;" wrapText="true">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -741,12 +784,17 @@
                         <Separator prefWidth="200.0" />
                         <HBox alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" spacing="20.0">
                            <children>
-                              <Button contentDisplay="CENTER" layoutX="1776.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-background-radius: 30px; -fx-text-fill: #1b1b1b; -fx-font-weight: bold; -fx-cursor: hand;" text="Cancelar" textAlignment="CENTER" textFill="#1b1b1b">
+                              <Button contentDisplay="CENTER" layoutX="1776.0" layoutY="10.0" mnemonicParsing="false" onAction="#presionarBotonCancelar" style="-fx-background-color: transparent; -fx-background-radius: 30px; -fx-text-fill: #1b1b1b; -fx-font-weight: bold; -fx-cursor: hand;" text="Cancelar" textAlignment="CENTER" textFill="#1b1b1b">
                                  <padding>
                                     <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                                  </padding>
                               </Button>
-                              <Button contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: #d81b60; -fx-background-radius: 30px; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Crear Evento" textAlignment="CENTER">
+                              <Button fx:id="botonEliminar" contentDisplay="CENTER" mnemonicParsing="false" onAction="#presionarBotonEliminar" style="-fx-background-color: transparece; -fx-background-radius: 30px; -fx-text-fill: red; -fx-font-weight: bold; -fx-cursor: hand; -fx-border-color: red; -fx-border-radius: 30px; -fx-border-width: 2px;" text="Eliminar Evento" textAlignment="CENTER">
+                                 <padding>
+                                    <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                 </padding>
+                              </Button>
+                              <Button fx:id="botonModificar" contentDisplay="CENTER" layoutX="1727.0" layoutY="10.0" mnemonicParsing="false" onAction="#presionarBotonModificar" style="-fx-background-color: #d81b60; -fx-background-radius: 30px; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Guardar Cambios" textAlignment="CENTER">
                                  <padding>
                                     <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                                  </padding>

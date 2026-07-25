@@ -28,6 +28,7 @@ public class VentanaCalendario {
     
     private Stage stage;
     private ControlCalendario control;
+
     private boolean initialized = false;
 
 	// Formatos para cómo mostrar las fechas dependiendo de cómo lo necesitemos
@@ -235,9 +236,9 @@ public class VentanaCalendario {
 			stage.setMaximized(true); // Se dibuja en pantalla maximizada
 			
 			initialized = true;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 
     /**
@@ -304,6 +305,7 @@ public class VentanaCalendario {
 			diaCalendario.getStyleClass().removeAll("dia-base", "dia-calendario-confirmado", "dia-calendario-finalizado", "dia-calendario-borrador");
 			diaCalendario.getStyleClass().addAll("toggle-button", "dia-base");
 		}
+		despresionDia(); // Se despresiona cualquier día que haya sido presionado para que no se quede seleccionado
 
 
 		// Se da el formato para el texto que da el mes. utilizando uno de los declarados al inicio de la ventana
@@ -324,13 +326,11 @@ public class VentanaCalendario {
 			
 			// Evalúa que i no sea menor al día que debe iniciar y que el mes no haya cambiado por aumentar demasiados días
 			if(i<inicioPrimerDiaMes || dia.getMonthValue()!=diaActual.getMonthValue()){
-				System.out.println("Toggle vacío "+i);
 				diaCalendario.setDisable(true);
 				diaCalendario.setVisible(false);
 				i++; // Aumenta i, una vez se deje de cumplir la condición, se deja de aumentar (es innecesario)
 			}
 			else{
-				System.out.println("Entra al else de los toggle vacíos, empieza a pintar");
 				// Siendo que ya estamos en un día que sí se mostrará, se toma el día del mes en el que nos encontramos y se muestra
 				diaCalendario.setText(String.valueOf(dia.getDayOfMonth()));
 				
@@ -359,7 +359,6 @@ public class VentanaCalendario {
 					diaCalendario.setUserData(eventoEncontradoFecha); // Se asigna que ese toggle guardará el valor del evento que se encontró en esa fecha
 					System.out.println("Fecha con evento: "+dia+" evento: "+eventoEncontradoFecha);
 				}else if(dia.isBefore(diaLimite)){ // Si no había evento, se evalúa si es una fecha disponible, si no, se bloquea
-					System.out.println("Fecha deshabilitada: "+dia+". El día límite es: "+diaLimite);
 					diaCalendario.setDisable(true); // Se deshabilita el toogle en esa posición
 				}else{ // En caso de que no haya evento, y el día no esté antes de la fecha límite, entonces es un día disponible, no se deshabilita y su estética no cambia
 					System.out.println("Fecha disponible: "+dia);
@@ -489,27 +488,7 @@ public class VentanaCalendario {
 
 		// Evitamos problemas si el usuario deselecciona el botón
 		if (!botonPresionado.isSelected()) {
-			// Quitamos la visibilidad para los menus laterales que muestran información de un evento
-			detallesEvento.setVisible(false);
-			detallesEvento.setManaged(false);
-			detallesFinalizado.setVisible(false);
-			detallesFinalizado.setVisible(false);
-
-			// Habilitamos el menú lateral de próximos eventos
-			proximosEventos.setVisible(true);
-			proximosEventos.setManaged(true);
-
-			// Nos aseguramos que el botón continuar esté deshabilitado y su valor sea nulo
-			continuar.setDisable(true);
-			continuar.setUserData(null);
-			
-			// Regresamos el valor de los botones de las demás pantallas a nulo
-			cotizacion.setUserData(null);
-			gestion.setUserData(null);
-			pagos.setUserData(null);
-			compartir.setUserData(null);
-			liquidacion.setUserData(null);
-			mobiliario.setUserData(null);
+			despresionDia();
 			return;
 		}
 		Object dato = botonPresionado.getUserData();
@@ -533,6 +512,30 @@ public class VentanaCalendario {
 		}else if(dato instanceof Evento evento)
 			// En caso de que sea un evento el seleccionado, se manda a control a tratar al evento
 			control.eventoPresionado(evento);
+	}
+
+	private void despresionDia(){
+		// Quitamos la visibilidad para los menus laterales que muestran información de un evento
+		detallesEvento.setVisible(false);
+		detallesEvento.setManaged(false);
+		detallesFinalizado.setVisible(false);
+		detallesFinalizado.setVisible(false);
+
+		// Habilitamos el menú lateral de próximos eventos
+		proximosEventos.setVisible(true);
+		proximosEventos.setManaged(true);
+
+		// Nos aseguramos que el botón continuar esté deshabilitado y su valor sea nulo
+		continuar.setDisable(true);
+		continuar.setUserData(null);
+		
+		// Regresamos el valor de los botones de las demás pantallas a nulo
+		cotizacion.setUserData(null);
+		gestion.setUserData(null);
+		pagos.setUserData(null);
+		compartir.setUserData(null);
+		liquidacion.setUserData(null);
+		mobiliario.setUserData(null);
 	}
 
 	/**
@@ -572,6 +575,7 @@ public class VentanaCalendario {
 	@FXML
 	private void botonAntMes(){
 		System.out.println("Presionó Anterior Mes");
+		despresionDia(); // Se despresiona cualquier día que haya sido presionado para que no se quede seleccionado
 		LocalDate mesActual = (LocalDate) mesAnio.getUserData();
 		control.anteriorMes(mesActual);
 	}
