@@ -13,6 +13,7 @@ import mx.uam.ayd.proyecto.negocio.ServicioCliente;
 import mx.uam.ayd.proyecto.negocio.ServicioEvento;
 import mx.uam.ayd.proyecto.negocio.modelo.Cliente;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
+import mx.uam.ayd.proyecto.negocio.modelo.Evento.EstadoEvento;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento.TipoEvento;
 import mx.uam.ayd.proyecto.presentacion.calendario.ControlCalendario;
 
@@ -47,7 +48,7 @@ public class ControlGestionEvento {
 
     public void iniciaCreacionFecha(LocalDate fecha){
         List<Cliente> clientes = servicioCliente.recupera();
-        ventana.muestraCreacionFecha(fecha, clientes);
+        ventana.muestraCreacion(fecha, clientes);
     }
 
     public void seleccionaCliente(String nombre){
@@ -70,7 +71,34 @@ public class ControlGestionEvento {
 
     
     public void iniciaModificacionEvento(Evento evento){
-        ventana.muestraGestionEvento(evento);
+        ventana.muestraModificacion(evento);
+    }
+    public void modificaEvento(Evento evento, LocalDate fecha, TipoEvento tipoEvento, LocalTime hora, String lugar, String direccion, String referencias, String imagen, String notas, EstadoEvento estadoEvento) {
+        boolean exito = servicioEvento.modificaEvento(evento, fecha, tipoEvento, hora, lugar, direccion, referencias, imagen, notas, estadoEvento);
+        if(exito){
+            System.out.println("Se modificó el evento");
+            ventana.muestraModificacionExitosa();
+        }else{
+            System.err.println("Error al modificar el evento");
+        }
+    }
+
+    public void solicitaEliminacionEvento() {
+        ventana.muestraConfirmacionEliminar();
+    }
+    public void eliminaEvento(Evento evento) {
+        boolean exito = servicioEvento.eliminaEvento(evento);
+        if(exito){
+            System.out.println("Se eliminó el evento");
+            ventana.muestraEliminacionExitosa();
+        }else{
+            System.err.println("Error al eliminar el evento");
+        }
+    }
+
+    public void abreCalendario(){
+        controlCalendario.iniciaCalendario();
+        ventana.cierra();
     }
 
     public void regresar(){

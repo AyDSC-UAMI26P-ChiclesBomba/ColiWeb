@@ -13,5 +13,5 @@ public interface RepositorioCotizacion extends CrudRepository <Cotizacion, Long>
     Cotizacion findByEvento(Evento evento);
     // Métodos del respositorio de Cotización
     // ...
-
+    void deleteByIdCotizacion(Long idCotizacion);
 }

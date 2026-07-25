@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import mx.uam.ayd.proyecto.datos.RepositorioCliente;
 import mx.uam.ayd.proyecto.datos.RepositorioCotizacion;
 import mx.uam.ayd.proyecto.datos.RepositorioDetalleCotizacion;
@@ -155,13 +156,15 @@ public class ServicioEvento {
      * @param evento Es el evento a eliminar
      * @return Regresa verdadero en caso de que se haya logrado eliminar el evento, regresa falso en caso de que no se haya logrado eliminar
      */
+    @Transactional
     public boolean eliminaEvento(Evento evento){
         if(evento == null){
             System.err.println("El evento no existe");
             return false;
         }
         try {
-            repositorioEvento.delete(evento);
+            repositorioCotizacion.deleteByIdCotizacion(evento.getCotizacion().getId());
+            repositorioEvento.deleteByIdEvento(evento.getIdEvento());
             return true;
         } catch (Exception e) {
             System.err.println("No se encontró al evento. "+e.getMessage());

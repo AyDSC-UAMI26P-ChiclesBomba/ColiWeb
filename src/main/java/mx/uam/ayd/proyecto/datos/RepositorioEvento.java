@@ -27,4 +27,6 @@ public interface RepositorioEvento extends CrudRepository <Evento, Long> {
     List<Evento> findByOrderByFechaAsc();
 
     Evento findByCotizacion(Cotizacion cotizacion);
+
+    void deleteByIdEvento(Long idEvento);
 }

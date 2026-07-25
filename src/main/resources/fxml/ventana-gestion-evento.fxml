@@ -45,6 +45,8 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -101,7 +103,7 @@
          <children>
             <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                <children>
-                  <VBox fx:id="creacionBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-managed: false;" visible="false">
+                  <VBox fx:id="creacionBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                      <children>
                         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                            <children>
@@ -443,7 +445,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="modificacionBox" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-managed: true;">
+                  <VBox fx:id="modificacionBox" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" visible="false">
                      <children>
                         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                            <children>
@@ -453,6 +455,35 @@
                                     <Font name="System Bold" size="28.0" />
                                  </font>
                               </Label>
+                              <HBox alignment="CENTER_LEFT" spacing="15.0">
+                                 <children>
+                                    <Label text="Estado: " textFill="#4d4d4d">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox spacing="5.0" style="-fx-background-color: #F2EBF2; -fx-background-radius: 30px; -fx-padding: 10;">
+                                       <children>
+                                          <ToggleButton fx:id="switchBorradorModificacion" mnemonicParsing="false" styleClass="switchEstadoBorrador" stylesheets="@../css/estilos.css" text="Borrador">
+                                             <padding>
+                                                <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                                             </padding>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="grupoEstadoEvento" />
+                                             </toggleGroup>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="switchConfirmadoModificacion" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="switchEstadoConfirmado" stylesheets="@../css/estilos.css" text="Confirmado" toggleGroup="$grupoEstadoEvento">
+                                             <padding>
+                                                <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                                             </padding>
+                                          </ToggleButton>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
                               <Label fx:id="errorDatosIncompletosModificacion" maxWidth="700.0" style="-fx-background-color: ffcdcd; -fx-padding: 5; -fx-background-radius: 20px; -fx-managed: false;" text=" Asegúrate de ingresar los datos mínimos y de forma correcta." textFill="RED" visible="false">
                                  <font>
                                     <Font size="18.0" />
@@ -511,11 +542,11 @@
                                                                         <Font name="System Bold" size="16.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <ComboBox fx:id="textNombreModificacion" editable="true" maxHeight="35.0" maxWidth="500.0" minHeight="35.0" onAction="#accionClienteSeleccionado" prefHeight="35.0" prefWidth="250.0" promptText="Nombre del Cliente" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
+                                                                  <TextField fx:id="textNombreModificacion" editable="false" maxHeight="35.0" maxWidth="500.0" minHeight="35.0" prefHeight="35.0" prefWidth="250.0" promptText="Nombre del Cliente" styleClass="entradasTexto" stylesheets="@../css/estilos.css">
                                                                      <VBox.margin>
                                                                         <Insets left="5.0" top="5.0" />
                                                                      </VBox.margin>
-                                                                  </ComboBox>
+                                                                  </TextField>
                                                                </children>
                                                             </VBox>
                                                             <VBox>
@@ -758,7 +789,12 @@
                                     <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                                  </padding>
                               </Button>
-                              <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#presionarBotonCrear" style="-fx-background-color: #d81b60; -fx-background-radius: 30px; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Crear Evento" textAlignment="CENTER">
+                              <Button fx:id="botonEliminar" contentDisplay="CENTER" mnemonicParsing="false" onAction="#presionarBotonEliminar" style="-fx-background-color: transparece; -fx-background-radius: 30px; -fx-text-fill: red; -fx-font-weight: bold; -fx-cursor: hand; -fx-border-color: red; -fx-border-radius: 30px; -fx-border-width: 2px;" text="Eliminar Evento" textAlignment="CENTER">
+                                 <padding>
+                                    <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                 </padding>
+                              </Button>
+                              <Button fx:id="botonModificar" contentDisplay="CENTER" layoutX="1727.0" layoutY="10.0" mnemonicParsing="false" onAction="#presionarBotonModificar" style="-fx-background-color: #d81b60; -fx-background-radius: 30px; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Guardar Cambios" textAlignment="CENTER">
                                  <padding>
                                     <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                                  </padding>

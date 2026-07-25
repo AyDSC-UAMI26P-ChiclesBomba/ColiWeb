@@ -108,6 +108,9 @@ public class Evento {
     }
 
     // getters
+    public Long getIdEvento() {
+        return this.idEvento;
+    }
     public EstadoEvento getEstadoEvento(){
         return this.estadoEvento;
     }public Cotizacion getCotizacion(){
