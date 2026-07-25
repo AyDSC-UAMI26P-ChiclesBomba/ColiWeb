@@ -123,7 +123,7 @@
                                     </ImageView>
                                  </graphic>
                               </Label>
-                              <Label fx:id="errorDatosIncompletos" maxWidth="700.0" style="-fx-background-color: ffcdcd; -fx-padding: 5; -fx-background-radius: 20px; -fx-managed: false;" text=" Asegúrate de ingresar todos los datos mínimos necesarios." textFill="RED" visible="false">
+                              <Label fx:id="errorDatosIncompletos" maxWidth="700.0" style="-fx-background-color: ffcdcd; -fx-padding: 5; -fx-background-radius: 20px; -fx-managed: false;" text=" Asegúrate de ingresar los datos mínimos y de forma correcta." textFill="RED" visible="false">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

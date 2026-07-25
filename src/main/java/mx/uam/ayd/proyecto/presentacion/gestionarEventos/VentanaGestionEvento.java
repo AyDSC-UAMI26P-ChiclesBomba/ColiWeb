@@ -118,6 +118,11 @@ public class VentanaGestionEvento {
 	}
 
 
+	/**
+	 * Método encargado de iniciar la pantalla de Creación, reseteando e iniciando los datos que deben ir en las opciones elegibles y de escritura para el usuario
+	 * @param fecha Es la fecha sobre la que se trabaja la creación del evento
+	 * @param clientes Es la lista de clientes que ya existen en el repositorio
+	 */
     public void muestraCreacionFecha(LocalDate fecha, List<Cliente> clientes){
         if (!Platform.isFxApplicationThread()) {
 			Platform.runLater(() -> this.muestraCreacionFecha(fecha, clientes));
@@ -147,17 +152,42 @@ public class VentanaGestionEvento {
 
 
 	private boolean validaDatos(){
-		if(textTipoCreacion.getValue() == null ||
-			textNombreCreacion.getValue() == null || textNombreCreacion.getValue().equals("") ||
-			textTelefonoCreacion.getText() == null || textTelefonoCreacion.getText().equals("") ||
-			textFechaCreacion.getText() == null || textFechaCreacion.getText().equals("") ||
-			horaCreacion.getValue() == null ||
-			minutoCreacion.getValue() == null ||
-			textDireccionCreacion.getText() == null || textDireccionCreacion.getText().equals("")
-		){
+		// Validación Tipo de Evento
+		if(textTipoCreacion.getValue() == null){
 			muestraErrorDatos();
 			return false;
 		}
+		// Validación Nombre del Cliente
+		if(textNombreCreacion.getValue() == null || textNombreCreacion.getValue().isBlank()){
+			muestraErrorDatos();
+			return false;
+		}
+		// Validación Número telefónico del cliente
+		if(textTelefonoCreacion.getText() == null || textTelefonoCreacion.getText().isBlank() || !(textTelefonoCreacion.getText().matches("^[0-9]{10}$"))){
+			muestraErrorDatos();
+			return false;
+		}
+		// Validación Fecha del evento
+		if(textFechaCreacion.getText() == null || textFechaCreacion.getText().isBlank()){
+			muestraErrorDatos();
+			return false;
+		}
+		// Validación Hora
+		if(horaCreacion.getValue() == null || !(horaCreacion.getValue()<=23 && horaCreacion.getValue()>=00)){
+			muestraErrorDatos();
+			return false;
+		}
+		// Validación Minutos
+		if(minutoCreacion.getValue() == null || !(minutoCreacion.getValue()<=59 && minutoCreacion.getValue()>=00)){
+			muestraErrorDatos();
+			return false;
+		}
+		// Validación Dirección del evento
+		if(textDireccionCreacion.getText() == null || textDireccionCreacion.getText().isBlank()){
+			muestraErrorDatos();
+			return false;
+		}
+
 		return true;
 	}
 
