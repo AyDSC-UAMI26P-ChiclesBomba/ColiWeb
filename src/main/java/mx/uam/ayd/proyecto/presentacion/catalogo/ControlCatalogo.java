@@ -14,6 +14,7 @@ import mx.uam.ayd.proyecto.negocio.ServicioGlobo;
 import mx.uam.ayd.proyecto.negocio.ServicioMaterial;
 import mx.uam.ayd.proyecto.negocio.ServicioMaterialDecorativo;
 import mx.uam.ayd.proyecto.negocio.ServicioMobiliario;
+import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.DetalleCotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Material;
 
@@ -55,7 +56,7 @@ public class ControlCatalogo {
         ventanaCatalogo.setControlCatalogo(this);
     }
 
-    public void inicia() {
+    public void inicia(Cotizacion cotizacion) {
         log.info("Abriendo catálogo");
         ventanaCatalogo.muestra(servicioMaterial.recuperaTodoMaterial());
     }
