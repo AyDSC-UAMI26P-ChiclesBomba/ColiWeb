@@ -25,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import mx.uam.ayd.proyecto.negocio.modelo.Cliente;
+import mx.uam.ayd.proyecto.negocio.modelo.Evento;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento.TipoEvento;
 
 @Component
@@ -75,6 +76,30 @@ public class VentanaGestionEvento {
 	@FXML
 	private TextArea textNotasCreacion;
 
+	// Recuadros Modificación
+	@FXML
+	private ComboBox<TipoEvento> textTipoModificacion;
+	@FXML
+	private ComboBox<String> textNombreModificacion;
+	@FXML
+	private TextField textTelefonoModificacion;
+	@FXML
+	private TextField textFechaModificacion;
+	@FXML
+	private Spinner<Integer> horaModificacion;
+	@FXML
+	private Spinner<Integer> minutoModificacion;
+	@FXML
+	private TextField textLugarModificacion;
+	@FXML
+	private TextField textDireccionModificacion;
+	@FXML
+	private TextField textReferenciasModificacion;
+	@FXML
+	private ImageView imageVisualizacionModificacion;
+	@FXML
+	private TextArea textNotasModificacion;
+
 	/**
 	 * Initialize UI components on the JavaFX application thread
 	 */
@@ -117,25 +142,42 @@ public class VentanaGestionEvento {
 		this.control = control;
 	}
 
+	/**
+	 * Inicializa la ventana y algunos componentes, tratando los hilos
+	 */
+	private void inicializacion() {
+		if (!Platform.isFxApplicationThread()) {
+			Platform.runLater(this::inicializacion);
+			return;
+		}
+		initializeUI();
 
+		// Se da qué valores pueden tener los Spinners (usados en la hora y minuto), necesarios ahorita para evitar errores al reiniciar los valores
+		SpinnerValueFactory<Integer> horasFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23, 00);
+		SpinnerValueFactory<Integer> minutosFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,59, 00);
+		horasFactory.setWrapAround(true);
+		minutosFactory.setWrapAround(true);
+		horaCreacion.setValueFactory(horasFactory);
+        minutoCreacion.setValueFactory(minutosFactory);
+	}
+
+	// --------------- MÉTODOS DE MUESTRAS CREACIÓN Y MODIFICACIÓN ---------------
 	/**
 	 * Método encargado de iniciar la pantalla de Creación, reseteando e iniciando los datos que deben ir en las opciones elegibles y de escritura para el usuario
 	 * @param fecha Es la fecha sobre la que se trabaja la creación del evento
 	 * @param clientes Es la lista de clientes que ya existen en el repositorio
 	 */
     public void muestraCreacionFecha(LocalDate fecha, List<Cliente> clientes){
-        if (!Platform.isFxApplicationThread()) {
-			Platform.runLater(() -> this.muestraCreacionFecha(fecha, clientes));
-			return;
-		}
-		initializeUI();
+        inicializacion();
 
-		// Se reinician los valores que tienen los textos y asegura de que se muestre la sección de creación y la de modificación se oculte
-		reiniciarValores();
+		// Nos aseguramos de que el contenedor de creación sea el visible y el manejado en lugar del de modificación
 		modificacionBox.setVisible(false);
 		modificacionBox.setManaged(false);
 		creacionBox.setVisible(true);
 		creacionBox.setManaged(true);
+
+		// Se reinician los valores que tienen los textos
+		reiniciarValores();
 		
 		// Creamos una lista con los nombres de los clientes para poder asignarla al ComboBox que los contendrá
 		textTipoCreacion.setItems(FXCollections.observableArrayList(TipoEvento.values()));
@@ -143,19 +185,29 @@ public class VentanaGestionEvento {
 		for(Cliente cliente : clientes){
 			nombresClientes.add(cliente.getNombre());
 		}
-		
 		textNombreCreacion.setItems(FXCollections.observableArrayList(nombresClientes));
 		textFechaCreacion.setText(fecha.format(formatoFecha));
 		textFechaCreacion.setUserData(fecha);
-		SpinnerValueFactory<Integer> horasFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23, 00);
-		SpinnerValueFactory<Integer> minutosFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,59, 00);
-		horasFactory.setWrapAround(true);
-		minutosFactory.setWrapAround(true);
-		horaCreacion.setValueFactory(horasFactory);
-        minutoCreacion.setValueFactory(minutosFactory);
 		
 		stage.show();
     }
+
+	public void muestraGestionEvento(Evento evento) {
+        inicializacion();
+
+		// Nos aseguramos de que el contenedor de modificación sea el visible y el manejado en lugar del de creación
+		creacionBox.setVisible(false);
+		creacionBox.setManaged(false);
+		modificacionBox.setVisible(true);
+		modificacionBox.setManaged(true);
+
+		// Se reinician los valores que tienen los textos
+		reiniciarValores();
+
+		stage.show();
+	}
+
+
 
 	// --------------- Métodos de apoyo en las muestras ---------------
 	/**
@@ -225,12 +277,19 @@ public class VentanaGestionEvento {
 	}
 
 	// --------------- Métodos que muestran errores ---------------
+	/**
+	 * Muestra el error de que los datos no están completos
+	 */
 	private void muestraErrorDatos(){
 		System.err.println("Los datos no están completos");
 		errorDatosIncompletos.setVisible(true);
 		errorDatosIncompletos.setManaged(true);
 	}
+	/**
+	 * Muestra el error de que el evento ya existe
+	 */
 	public void muestraErrorEventoExistente(){
+		System.err.println("El evento ya existe");
 		errorEventoExistente.setVisible(true);
 		errorEventoExistente.setManaged(true);
 	}
@@ -242,6 +301,7 @@ public class VentanaGestionEvento {
 	@FXML
 	private void accionClienteSeleccionado(){
 		String nombre = textNombreCreacion.getValue();
+		if(nombre == null || nombre.isBlank()) return;
 		control.seleccionaCliente(nombre);
 	}
 	/**
@@ -256,6 +316,7 @@ public class VentanaGestionEvento {
 	 */
 	public void clienteNuevo(){
 		textTelefonoCreacion.setEditable(true);
+		textTelefonoCreacion.setText(null);
 	}
 	
 	/**
@@ -263,6 +324,7 @@ public class VentanaGestionEvento {
 	 */
 	@FXML
 	private void presionarBotonCancelar(){
+		reiniciarValores();
 		control.regresar();
 	}
 	/**

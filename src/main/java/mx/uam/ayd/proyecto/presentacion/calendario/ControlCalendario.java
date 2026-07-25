@@ -125,8 +125,8 @@ public class ControlCalendario {
      */
     public void verGestion(Evento evento){
         System.out.println("Cambio a HU-5, modificación");
-        ventana.cierra();
         controlGestion.iniciaModificacionEvento(evento);
+        ventana.cierra();
     }
     /**
      * Se manda a ver pagos

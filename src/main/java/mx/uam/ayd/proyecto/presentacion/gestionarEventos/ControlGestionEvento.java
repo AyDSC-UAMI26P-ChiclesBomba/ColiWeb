@@ -70,7 +70,7 @@ public class ControlGestionEvento {
 
     
     public void iniciaModificacionEvento(Evento evento){
-        // Inicia Modificación de Evento
+        ventana.muestraGestionEvento(evento);
     }
 
     public void regresar(){
