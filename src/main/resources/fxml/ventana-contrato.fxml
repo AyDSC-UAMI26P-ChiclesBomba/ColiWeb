@@ -6,9 +6,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<!--
+    Ventana de la HU-6: administración del contrato.
+
+    Permite:
+    1. Editar las cláusulas del contrato actual.
+    2. Guardar las cláusulas del contrato actual.
+    3. Guardar el texto como plantilla para contratos futuros.
+    4. Generar el archivo PDF.
+    5. Cancelar y cerrar la ventana.
+
+    La firma física del contrato no se administra aquí.
+-->
 <VBox spacing="10"
       style="-fx-padding: 10px;"
-      xmlns="http://javafx.com/javafx/24.0.1"
+      xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1">
 
     <Label text="Cláusulas del contrato"/>
@@ -16,17 +28,22 @@
     <TextArea
             fx:id="textAreaClausulas"
             prefHeight="300"
-            wrapText="true"/>
+            wrapText="true"
+            promptText="Escriba aquí las cláusulas del contrato"/>
 
     <HBox spacing="10">
 
         <Button
-                text="Guardar"
+                text="Guardar contrato"
                 onAction="#handleGuardar"/>
 
         <Button
-                text="Firmar"
-                onAction="#handleFirmar"/>
+                text="Guardar plantilla"
+                onAction="#handleGuardarPlantilla"/>
+
+        <Button
+                text="Generar PDF"
+                onAction="#handleGenerarPDF"/>
 
         <Button
                 text="Cancelar"

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javafx.application.Platform;
@@ -22,12 +23,20 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento.EstadoEvento;
+import mx.uam.ayd.proyecto.presentacion.Contrato.ControlContrato;
 
 @Component
 public class VentanaCalendario {
     
     private Stage stage;
     private ControlCalendario control;
+
+    /**
+     * Controlador de la HU-6 encargado de abrir la ventana de contratos.
+     * Spring lo inyecta porque VentanaCalendario es un componente.
+     */
+    @Autowired
+    private ControlContrato controlContrato;
     private boolean initialized = false;
 
 	// Formatos para cómo mostrar las fechas dependiendo de cómo lo necesitemos
@@ -196,6 +205,8 @@ public class VentanaCalendario {
 	@FXML
 	private Button pagos; // Ir a la gestión de pagos de un evento no finalizado
 	@FXML
+	private Button contrato; // Ir a la gestión del contrato de un evento no finalizado
+	@FXML
 	private Button compartir; // Ir a la publicación de un evento finalizado
 	@FXML
 	private Button liquidacion; // Ir a la liquidación de un evento finalizado
@@ -235,9 +246,25 @@ public class VentanaCalendario {
 			stage.setMaximized(true); // Se dibuja en pantalla maximizada
 			
 			initialized = true;
-		} catch (IOException e) {
+		// ===== INICIO CAMBIO HU-6 / DIAGNÓSTICO FXML =====
+		/*
+		 * Se captura Exception en lugar de solo IOException porque FXMLLoader.load()
+		 * también puede lanzar errores de carga como LoadException, errores por fx:id,
+		 * métodos onAction inexistentes o controles mal vinculados.
+		 *
+		 * Antes, el error solo se imprimía y el programa continuaba. Eso provocaba que
+		 * los elementos @FXML, como proxFecha1, permanecieran en null y después
+		 * apareciera un NullPointerException que ocultaba la causa real.
+		 *
+		 * Al lanzar RuntimeException, la ejecución se detiene justo en el error de carga
+		 * y la consola muestra la causa original del problema.
+		 */
+		} catch (Exception e) {
+			System.err.println("ERROR AL CARGAR ventana-calendario.fxml");
 			e.printStackTrace();
+			throw new RuntimeException("No se pudo cargar ventana-calendario.fxml", e);
 		}
+		// ===== FIN CAMBIO HU-6 / DIAGNÓSTICO FXML =====
 	}
 
     /**
@@ -429,6 +456,7 @@ public class VentanaCalendario {
 		cotizacion.setUserData(evento);
 		gestion.setUserData(evento);
 		pagos.setUserData(evento);
+		contrato.setUserData(evento);
 
 		// Llenamos todos los label para mostrar la información del evento. Se llenan con la lista de datos
 		eventoSeleccionado.setText(datos.get(1).toString());
@@ -507,6 +535,7 @@ public class VentanaCalendario {
 			cotizacion.setUserData(null);
 			gestion.setUserData(null);
 			pagos.setUserData(null);
+			contrato.setUserData(null);
 			compartir.setUserData(null);
 			liquidacion.setUserData(null);
 			mobiliario.setUserData(null);
@@ -657,6 +686,24 @@ public class VentanaCalendario {
 		if(dato==null) return;
 		if(dato instanceof Evento evento){
 			control.verPagos(evento);
+		}
+	}
+
+	/**
+	 * Abre la ventana de contratos del evento seleccionado.
+	 * El evento se recupera del userData asignado al botón.
+	 *
+	 * @param event evento generado al presionar Gestionar Contrato
+	 */
+	@FXML
+	private void botonContrato(ActionEvent event){
+		Button botonPresionado = (Button) event.getSource();
+		Object dato = botonPresionado.getUserData();
+
+		if(dato == null) return;
+
+		if(dato instanceof Evento evento){
+			controlContrato.iniciaContrato(evento);
 		}
 	}
 
