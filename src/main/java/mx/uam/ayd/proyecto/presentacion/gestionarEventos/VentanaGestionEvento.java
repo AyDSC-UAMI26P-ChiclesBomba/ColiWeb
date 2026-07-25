@@ -175,6 +175,7 @@ public class VentanaGestionEvento {
         minutoCreacion.setValueFactory(minutosFactory);
 		horaModificacion.setValueFactory(horasFactory);
 		minutoModificacion.setValueFactory(minutosFactory);
+		System.out.println("Se inician los Spinner para la creación y modificación");
 	}
 
 	// --------------- MÉTODOS DE MUESTRAS CREACIÓN Y MODIFICACIÓN ---------------
@@ -185,6 +186,7 @@ public class VentanaGestionEvento {
 	 */
     public void muestraCreacion(LocalDate fecha, List<Cliente> clientes){
         inicializacion();
+		System.out.println("Se inicia la ventana de creación de evento");
 
 		// Nos aseguramos de que el contenedor de creación sea el visible y el manejado en lugar del de modificación
 		creacionBox.setVisible(true);
@@ -204,12 +206,14 @@ public class VentanaGestionEvento {
 		textNombreCreacion.setItems(FXCollections.observableArrayList(nombresClientes));
 		textFechaCreacion.setText(fecha.format(formatoFecha));
 		textFechaCreacion.setUserData(fecha);
+		System.out.println("Se asignan los valores posibles para el tipo de evento y los nombres de clientes");
 		
 		stage.show();
     }
 
 	public void muestraModificacion(Evento evento) {
         inicializacion();
+		System.out.println("Se inicia la ventana de creación de evento");
 
 		// Nos aseguramos de que el contenedor de modificación sea el visible y el manejado en lugar del de creación
 		creacionBox.setVisible(false);
@@ -242,6 +246,7 @@ public class VentanaGestionEvento {
 		}else{
 			switchBorradorModificacion.setSelected(true);
 		}
+		System.out.println("Se asignan los valores del evento a los textos correspondientes");
 
 		botonModificar.setUserData(evento); // Guardamos el evento en el botón para poder usarlo al presionarlo
 		botonEliminar.setUserData(evento); // Guardamos el evento en el botón para poder usarlo al presionarlo
@@ -254,6 +259,7 @@ public class VentanaGestionEvento {
 	 * Muestra una ventana emergente de aviso de que la modificación fue exitosa
 	 */
 	public void muestraModificacionExitosa() {
+		System.out.println("Se muestra el mensaje de modificación exitosa");
 		Alert alerta = new Alert(Alert.AlertType.INFORMATION);
 		alerta.setTitle("Modificación Exitosa");
 		alerta.setHeaderText(null);
@@ -292,6 +298,7 @@ public class VentanaGestionEvento {
 	 * Método encargado de reiniciar los valores de los textos y ocultar los errores
 	 */
 	private void reiniciarValores(){
+		System.out.println("Se reinician los valores de los textos y se ocultan los errores");
 		// Los errores son limpiados y ocultados
 		errorDatosIncompletos.setVisible(false);
 		errorDatosIncompletos.setManaged(false);
@@ -327,6 +334,10 @@ public class VentanaGestionEvento {
 		textNotasModificacion.setText(null);
 		switchConfirmadoModificacion.setSelected(false);
 		switchBorradorModificacion.setSelected(false);
+
+		// Se limpian los eventos guardados en los botones de modificación y eliminación
+		botonModificar.setUserData(null);
+		botonEliminar.setUserData(null);
 	}
 	/**
 	 * Método encargado de validar los datos que son obligatorios para un evento. Dependiendo de si se cumplen todos, se manda true, de lo contrario, false y se manda el error correspondiente

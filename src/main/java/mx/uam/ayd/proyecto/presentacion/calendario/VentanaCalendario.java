@@ -325,13 +325,11 @@ public class VentanaCalendario {
 			
 			// Evalúa que i no sea menor al día que debe iniciar y que el mes no haya cambiado por aumentar demasiados días
 			if(i<inicioPrimerDiaMes || dia.getMonthValue()!=diaActual.getMonthValue()){
-				System.out.println("Toggle vacío "+i);
 				diaCalendario.setDisable(true);
 				diaCalendario.setVisible(false);
 				i++; // Aumenta i, una vez se deje de cumplir la condición, se deja de aumentar (es innecesario)
 			}
 			else{
-				System.out.println("Entra al else de los toggle vacíos, empieza a pintar");
 				// Siendo que ya estamos en un día que sí se mostrará, se toma el día del mes en el que nos encontramos y se muestra
 				diaCalendario.setText(String.valueOf(dia.getDayOfMonth()));
 				
@@ -360,7 +358,6 @@ public class VentanaCalendario {
 					diaCalendario.setUserData(eventoEncontradoFecha); // Se asigna que ese toggle guardará el valor del evento que se encontró en esa fecha
 					System.out.println("Fecha con evento: "+dia+" evento: "+eventoEncontradoFecha);
 				}else if(dia.isBefore(diaLimite)){ // Si no había evento, se evalúa si es una fecha disponible, si no, se bloquea
-					System.out.println("Fecha deshabilitada: "+dia+". El día límite es: "+diaLimite);
 					diaCalendario.setDisable(true); // Se deshabilita el toogle en esa posición
 				}else{ // En caso de que no haya evento, y el día no esté antes de la fecha límite, entonces es un día disponible, no se deshabilita y su estética no cambia
 					System.out.println("Fecha disponible: "+dia);
