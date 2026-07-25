@@ -101,6 +101,23 @@ public class Cotizacion {
     public void setTamano(Tamano tamano){
         this.tamano = tamano;
     }
-
-
+    public void setExtra(float extra){
+        this.extra = extra;
+    }
+    public void setTotal(float total){
+        this.total = total;
+    }
+    public void setTotalMaterial(float totalMaterial){
+        this.totalMaterial = totalMaterial;
+    }
+    public void setGanancia(float ganancia){
+        this.ganancia = ganancia;
+    }
+    public void setConsumibles(float consumibles){
+        this.consumibles = consumibles;
+    }
+    public void setManoObra(float manoDeObra){
+        this.manoDeObra = manoDeObra;
+    }
 }
+
