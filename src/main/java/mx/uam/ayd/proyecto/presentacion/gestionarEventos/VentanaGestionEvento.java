@@ -129,12 +129,21 @@ public class VentanaGestionEvento {
 			return;
 		}
 		initializeUI();
+
+		// Se reinician los valores que tienen los textos y asegura de que se muestre la sección de creación y la de modificación se oculte
+		reiniciarValores();
+		modificacionBox.setVisible(false);
+		modificacionBox.setManaged(false);
+		creacionBox.setVisible(true);
+		creacionBox.setManaged(true);
 		
+		// Creamos una lista con los nombres de los clientes para poder asignarla al ComboBox que los contendrá
 		textTipoCreacion.setItems(FXCollections.observableArrayList(TipoEvento.values()));
 		List<String> nombresClientes = new ArrayList<>();
 		for(Cliente cliente : clientes){
 			nombresClientes.add(cliente.getNombre());
 		}
+		
 		textNombreCreacion.setItems(FXCollections.observableArrayList(nombresClientes));
 		textFechaCreacion.setText(fecha.format(formatoFecha));
 		textFechaCreacion.setUserData(fecha);
@@ -144,13 +153,38 @@ public class VentanaGestionEvento {
 		minutosFactory.setWrapAround(true);
 		horaCreacion.setValueFactory(horasFactory);
         minutoCreacion.setValueFactory(minutosFactory);
-
-
 		
 		stage.show();
     }
 
-
+	// --------------- Métodos de apoyo en las muestras ---------------
+	/**
+	 * Método encargado de reiniciar los valores de los textos y ocultar los errores
+	 */
+	private void reiniciarValores(){
+		// Los errores son limpiados y ocultados
+		errorDatosIncompletos.setVisible(false);
+		errorDatosIncompletos.setManaged(false);
+		errorEventoExistente.setVisible(false);
+		errorEventoExistente.setManaged(false);
+		
+		// Se limpian todos los textos
+		textTipoCreacion.setValue(null);
+		textNombreCreacion.setValue(null);
+		textTelefonoCreacion.setText(null);
+		textFechaCreacion.setText(null);
+		textFechaCreacion.setUserData(null);
+		horaCreacion.getValueFactory().setValue(00);
+		minutoCreacion.getValueFactory().setValue(00);
+		textLugarCreacion.setText(null);
+		textDireccionCreacion.setText(null);
+		textReferenciasCreacion.setText(null);
+		textNotasCreacion.setText(null);
+	}
+	/**
+	 * Método encargado de validar los datos que son obligatorios para un evento. Dependiendo de si se cumplen todos, se manda true, de lo contrario, false y se manda el error correspondiente
+	 * @return es el estado conseguido de la validación de todos los campos obligatorios
+	 */
 	private boolean validaDatos(){
 		// Validación Tipo de Evento
 		if(textTipoCreacion.getValue() == null){
@@ -187,10 +221,10 @@ public class VentanaGestionEvento {
 			muestraErrorDatos();
 			return false;
 		}
-
 		return true;
 	}
 
+	// --------------- Métodos que muestran errores ---------------
 	private void muestraErrorDatos(){
 		System.err.println("Los datos no están completos");
 		errorDatosIncompletos.setVisible(true);
@@ -201,25 +235,39 @@ public class VentanaGestionEvento {
 		errorEventoExistente.setManaged(true);
 	}
 
+	// --------------- Métodos de acción de elementos ---------------
+	/**
+	 * Cuando un cliente es seleccionado se manda a control a revisar si el cliente ya existe en el repositorio para mostrar y bloquear su número
+	 */
 	@FXML
 	private void accionClienteSeleccionado(){
 		String nombre = textNombreCreacion.getValue();
 		control.seleccionaCliente(nombre);
 	}
+	/**
+	 * En caso de que se haya encontrado un cliente con ese nombre, se deshabilita la editabilidad del número telefóncio y se muestra el número asociado al cliente
+	 */
 	public void clienteUsado(String numero){
 		textTelefonoCreacion.setEditable(false);
 		textTelefonoCreacion.setText(numero);
 	}
-	
+	/**
+	 * En caso de que no se haya encontrado un cliente con el nombre ingresado, se habilita la editabilidad del número telefónico para que el usuario pueda ingresar uno nuevo
+	 */
 	public void clienteNuevo(){
 		textTelefonoCreacion.setEditable(true);
 	}
-
-	// Presión de botones
+	
+	/**
+	 * En caso de presionar el botón Cancelar manda a regresar al calendario
+	 */
 	@FXML
 	private void presionarBotonCancelar(){
 		control.regresar();
 	}
+	/**
+	 * Cuando se presiona el botón para crear, se validan los datos y se cambian de tipos en caso de ser neceario para mandarlos al control a guardarlos
+	 */
 	@FXML
 	private void presionarBotonCrear(){
 		// Se valida si los datos mínimos están completos
@@ -245,6 +293,9 @@ public class VentanaGestionEvento {
 	}
 
 
+	/**
+	 * Cierra la ventana
+	 */
 	public void cierra(){
 		stage.close();
 	}
