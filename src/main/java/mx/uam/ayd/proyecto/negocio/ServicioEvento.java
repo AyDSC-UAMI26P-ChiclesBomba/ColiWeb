@@ -187,7 +187,7 @@ public class ServicioEvento {
      * @param notas Notas extra sobre el evento (opcional)
      * @return Regresa true si se logró guardar el evento, false si ocurrió algún error
      */
-    public boolean guardaEvento(String nombre, String num, LocalDate fecha, TipoEvento tipoEvento, LocalTime hora, String lugar, String direccion, String referencias, String imagen, String notas){
+    public Cotizacion guardaEvento(String nombre, String num, LocalDate fecha, TipoEvento tipoEvento, LocalTime hora, String lugar, String direccion, String referencias, String imagen, String notas){
         // Verifica si el cliente existe, si no, lo registra
         Cliente cliente = repositorioCliente.findByNombreAndNumTelefono(nombre, num);
         if(cliente == null){
@@ -195,7 +195,7 @@ public class ServicioEvento {
         }
         
         // Verifica que no exista en el repositorio otro evento con la misma fecha
-        if(!fechaDisponible(fecha)) return false;
+        if(!fechaDisponible(fecha)) return null;
 
         // Crea a la cotización
         Cotizacion cotizacion = new Cotizacion();
@@ -206,7 +206,7 @@ public class ServicioEvento {
         Evento evento = new Evento(tipoEvento, fecha, hora, lugar, referencias, direccion, referencias, imagen, cotizacion, cliente);
         evento = repositorioEvento.save(evento);
         
-        return true;
+        return cotizacion;
     }
 
     public Cliente obtenerCliente(Evento evento){
