@@ -47,7 +47,7 @@ public class DetalleCotizacion {
     public boolean getPreciosCompletos(){
         return preciosCompletos;
     }
-      
+    
     public void setMaterial(Material material){
         this.material = material;
     }

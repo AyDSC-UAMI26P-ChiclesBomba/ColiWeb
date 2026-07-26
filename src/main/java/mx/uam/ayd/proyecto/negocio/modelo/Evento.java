@@ -106,6 +106,23 @@ public class Evento {
         this.cotizacion = cotizacion;
         this.cliente = cliente;
     }
+    public Evento(Evento evento){
+        this.fecha = evento.getFecha();
+        this.tipoEvento = evento.getTipoEvento();
+        this.hora = evento.getHora();
+        this.lugar = evento.getLugar();
+        this.direccion = evento.getDireccion();
+        this.referencias = evento.getReferencias();
+        this.visualRecinto = evento.getVisualRecinto();
+        this.detalles = evento.getDetalles();
+        this.estadoEvento = evento.getEstadoEvento();
+        this.estadoPago = evento.getEstadoPago();
+        this.totalPagado = evento.getTotalPagado();
+        this.contratoFirmado = evento.getContratoFirmado();
+
+        this.cotizacion = evento.getCotizacion();
+        this.cliente = evento.getCliente();
+    }
 
     // getters
     public Long getIdEvento() {
@@ -175,6 +192,8 @@ public class Evento {
         this.contratoFirmado = firma;
     }public void setCliente(Cliente cliente){
         this.cliente = cliente;
+    }public void setIdEvento(Long idEvento){
+        this.idEvento = idEvento;
     }
 
     @Override

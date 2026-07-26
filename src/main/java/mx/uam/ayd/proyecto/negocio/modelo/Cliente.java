@@ -47,6 +47,10 @@ public class Cliente {
         return numTelefono;
     }
 
+    public void setIdCliente(Long idCliente){
+        this.idCliente = idCliente;
+    }
+
     public String toString(){
         String cadena = nombre+" "+numTelefono;
         return cadena;

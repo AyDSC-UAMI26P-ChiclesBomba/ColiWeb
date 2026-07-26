@@ -82,15 +82,13 @@ public class ServicioEvento {
      */
     public Object[] obtenerCotizacionDetalles(Evento evento) throws IllegalArgumentException {
         if(evento == null) throw new IllegalArgumentException("El evento no puede ser nulo.");
+        
+        Cotizacion cotizacion = repositorioCotizacion.findByEvento(evento);
+        if(cotizacion == null) throw new IllegalArgumentException("El evento no tiene ninguna cotización asociada");
 
-        try {
-            Cotizacion cotizacion = repositorioCotizacion.findByEvento(evento);
-            List<DetalleCotizacion> detalles = repositorioDetalleCotizacion.findByCotizacion(cotizacion);
-
-            return new Object[] {cotizacion, detalles};
-        } catch (Exception e) {
-            throw new IllegalArgumentException("El evento no tiene una cotización ni detalles asociados");
-        }
+        List<DetalleCotizacion> detalles = repositorioDetalleCotizacion.findByCotizacion(cotizacion);
+        
+        return new Object[] {cotizacion, detalles};
     }
 
     /**
@@ -111,7 +109,7 @@ public class ServicioEvento {
      */
     public boolean modificaEvento(Evento evento, LocalDate fecha, TipoEvento tipoEvento, LocalTime hora, String lugar, String direccion, String referencias, String imagen, String notas, EstadoEvento estadoEvento) {
         if(evento == null || fecha == null || tipoEvento == null || hora == null || direccion == null || estadoEvento == null) throw new IllegalArgumentException("Algunos datos son obligatorios");
-        modificaObjEvento(evento, fecha, tipoEvento, hora, lugar, direccion, referencias, imagen, notas, estadoEvento); // Aprovechamos la mutabilidad de Evento
+        evento = modificaObjEvento(evento, fecha, tipoEvento, hora, lugar, direccion, referencias, imagen, notas, estadoEvento); // Aprovechamos la mutabilidad de Evento
         try {
             repositorioEvento.save(evento);
             return true;
@@ -144,7 +142,7 @@ public class ServicioEvento {
         evento.setReferencias(referencias);
         evento.setVisualRecinto(imagen);
         evento.setDetalles(notas);
-        evento.setEstadoEvento(estadoEvento); 
+        evento.setEstadoEvento(estadoEvento);
         return evento;
     }
 
@@ -160,6 +158,7 @@ public class ServicioEvento {
             System.err.println("El evento no existe");
             return false;
         }
+        
         try {
             repositorioCotizacion.deleteByIdCotizacion(evento.getCotizacion().getIdCotizacion());
             repositorioEvento.deleteByIdEvento(evento.getIdEvento());

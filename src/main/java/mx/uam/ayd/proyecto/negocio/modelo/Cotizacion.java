@@ -122,5 +122,8 @@ public class Cotizacion {
     public void setAprobada(boolean aprobada){
         this.aprobada = aprobada;
     }
+    public void setIdCotizacion(Long idCotizacion){
+        this.idCotizacion = idCotizacion;
+    }
 }
 
