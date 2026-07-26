@@ -89,7 +89,16 @@ public class ServicioDetalleCotizacion {
         materialLista.setCantidad(materialLista.getCantidad()-1);  
     }
 
-    public boolean borraMaterialLista(DetalleCotizacion materialLista){
+    public List<DetalleCotizacion> borraMaterialLista(DetalleCotizacion materialLista){
+            borra(materialLista);
+            ArrayList<DetalleCotizacion> listaMaterialSeleccionado = new ArrayList<>();
+                for (DetalleCotizacion detalle : repositorioDetalleCotizacion.findAll()) {
+            listaMaterialSeleccionado.add(detalle);
+        }
+        return listaMaterialSeleccionado;
+    }
+
+    private boolean borra(DetalleCotizacion materialLista){
         if(materialLista == null){
             System.err.println("El material no existe en la lista");
             return false;

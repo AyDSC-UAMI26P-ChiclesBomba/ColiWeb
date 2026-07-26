@@ -29,9 +29,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="160.0" spacing="10.0">
          <children>
-            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarMaterial" text="+" />
-            <Label fx:id="lblCantidad" text="0" />
-            <Button fx:id="btnQuitar" mnemonicParsing="false" onAction="#quitarMaterial" text="-" />
+            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarMaterial" text="Agregar" />
          </children>
       </HBox>
    </children>

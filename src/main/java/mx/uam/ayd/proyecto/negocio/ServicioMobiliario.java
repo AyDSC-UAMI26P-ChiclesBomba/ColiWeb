@@ -29,7 +29,7 @@ public class ServicioMobiliario {
     }
 
     public boolean verificarNoDanoTotal(Mobiliario mobiliarioSeleccionado){
-        return !tieneDanoTotal(mobiliarioSeleccionado);
+        return tieneDanoTotal(mobiliarioSeleccionado);
 
 
     }

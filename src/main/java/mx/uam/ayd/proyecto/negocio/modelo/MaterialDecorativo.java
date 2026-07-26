@@ -23,4 +23,12 @@ public class MaterialDecorativo extends Material {
 
     // Métodos de la cotización como getters y setters
     // ...
+    public TipoDecoracion getTipoDecoracion(){
+        return tipoDecoracion;
+    }
+
+
+    public void setTipoDecoracion(TipoDecoracion tipoDecoracion){
+        this.tipoDecoracion = tipoDecoracion;
+    }
 }

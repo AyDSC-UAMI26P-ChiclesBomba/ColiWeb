@@ -37,5 +37,24 @@ public class Globo extends Material {
         return medida;
     }
     // Métodos de la cotización como getters y setters
-    
+    public void setColor(Color color){
+        this.color = color;
+    }
+    public Color getColor(){
+        return color;
+    }
+
+    public void setTipoGlobo(TipoGlobo tipoGlobo){
+        this.tipoGlobo = tipoGlobo;
+    }
+    public TipoGlobo getTipoGloo(){
+        return tipoGlobo;
+    }
+
+    public void setMarca(Marca marca){
+        this.marca = marca;
+    }
+    public Marca getMarca(){
+        return marca;
+    }
 }

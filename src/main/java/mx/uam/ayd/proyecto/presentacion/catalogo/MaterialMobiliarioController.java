@@ -3,10 +3,9 @@ package mx.uam.ayd.proyecto.presentacion.catalogo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import mx.uam.ayd.proyecto.negocio.modelo.Mobiliario;
-import mx.uam.ayd.proyecto.negocio.modelo.Material;
-
 
 public class MaterialMobiliarioController {
 
@@ -26,26 +25,19 @@ public class MaterialMobiliarioController {
     private Label lblTipoDano;
 
     @FXML
-    private Label lblCantidad;
-
-    @FXML
     private Button btnAgregar;
-
-    @FXML
-    private Button btnQuitar;
-
-    private ControlCatalogo controlCatalogo;
 
     private Mobiliario mobiliario;
 
-    private int cantidad = 0;
+    private ControlCatalogo controlCatalogo;
 
     /**
-     * Carga la información del mobiliario.
+     * Inicializa la tarjeta del mobiliario.
      */
-    public void setMaterial(Mobiliario mobiliario, ControlCatalogo controlCatalogo) { // <--- RECIBIR ControlCatalogo
+    public void setMaterial(Mobiliario mobiliario, ControlCatalogo controlCatalogo) {
+
         this.mobiliario = mobiliario;
-        this.controlCatalogo = controlCatalogo; // <--- GUARDAR LA REFERENCIA
+        this.controlCatalogo = controlCatalogo;
 
         lblNombre.setText(mobiliario.getNombre());
 
@@ -62,29 +54,31 @@ public class MaterialMobiliarioController {
 
         if (mobiliario.getTipoDano() != null) {
             lblTipoDano.setText(mobiliario.getTipoDano().name());
+        } else {
+            lblTipoDano.setText("NINGUNO");
         }
 
-        lblCantidad.setText("0");
-    }
-
-    @FXML
-    private void agregarMaterial() {
-        cantidad++;
-        lblCantidad.setText(String.valueOf(cantidad));
-        if (controlCatalogo != null) {
-        controlCatalogo.agregarMaterialLista(mobiliario);
-    }
-}
-
-
-    @FXML
-    private void quitarMaterial() {
-        if (cantidad > 0) {
-            cantidad--;
-            lblCantidad.setText(String.valueOf(cantidad));
-            if (controlCatalogo != null) {
-                controlCatalogo.agregarMaterialLista(mobiliario);
+        // Imagen
+        if (mobiliario.getImagen() != null && !mobiliario.getImagen().isBlank()) {
+            try {
+                Image image = new Image(getClass().getResourceAsStream(mobiliario.getImagen()));
+                imgMaterial.setImage(image);
+            } catch (Exception e) {
+                // Ignorar si la imagen no existe.
             }
         }
     }
+
+    /**
+     * Agrega el mobiliario a la lista de cotización.
+     */
+    @FXML
+    private void agregarMaterial() {
+
+        if (controlCatalogo != null) {
+            controlCatalogo.agregarMaterialLista(mobiliario);
+        }
+
+    }
+
 }
