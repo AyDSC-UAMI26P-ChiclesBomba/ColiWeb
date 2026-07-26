@@ -56,6 +56,10 @@ public class ServicioEvento {
         return repositorioEvento.findByMesOrderByFecha(mes);
     }
 
+    /**
+     * Regresa a todos los eventos ordenados por fecha
+     * @return
+     */
     public List<Evento> recupera(){
         return repositorioEvento.findByOrderByFechaAsc();
     }
