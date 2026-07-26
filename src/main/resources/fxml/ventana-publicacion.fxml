@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="650.0"
+      prefWidth="900.0"
+      spacing="20.0"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      style="-fx-background-color: #fcf6fc; -fx-padding: 25;">
+
+    <!-- ===================== -->
+    <!-- TÍTULO DE LA VENTANA -->
+    <!-- ===================== -->
+
+    <Label text="Publicación de Evento"
+           textFill="#9d31e0">
+
+        <font>
+            <Font name="System Bold" size="28"/>
+        </font>
+
+    </Label>
+
+    <!-- ===================== -->
+    <!-- DATOS DEL EVENTO -->
+    <!-- ===================== -->
+
+    <VBox spacing="10"
+          style="-fx-background-color: #F2EBF2;
+                 -fx-background-radius: 15;
+                 -fx-padding: 20;">
+
+        <Label text="Información del evento">
+
+            <font>
+                <Font name="System Bold" size="18"/>
+            </font>
+
+        </Label>
+
+        <Label fx:id="tipoEvento"
+               text="Tipo"/>
+
+        <Label fx:id="fechaEvento"
+               text="Fecha"/>
+
+        <Label fx:id="horaEvento"
+               text="Hora"/>
+
+        <Label fx:id="lugarEvento"
+               text="Lugar"/>
+
+        <Label fx:id="direccionEvento"
+               text="Dirección"/>
+
+        <Label fx:id="detallesEvento"
+               wrapText="true"
+               text="Detalles"/>
+
+    </VBox>
+
+    <!-- ===================== -->
+    <!-- MENSAJE -->
+    <!-- ===================== -->
+
+    <VBox spacing="10">
+
+        <Label text="Mensaje de la publicación">
+
+            <font>
+                <Font name="System Bold" size="18"/>
+            </font>
+
+        </Label>
+
+        <TextArea fx:id="mensajePublicacion"
+                  prefHeight="180"
+                  wrapText="true"/>
+
+    </VBox>
+
+    <!-- ===================== -->
+    <!-- BOTONES -->
+    <!-- ===================== -->
+
+    <HBox spacing="15">
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <Button fx:id="cancelar"
+                mnemonicParsing="false"
+                onAction="#botonCancelar"
+                text="Cancelar"
+                style="-fx-background-color:#F2EBF2;
+                       -fx-background-radius:30;
+                       -fx-font-weight:bold;"/>
+
+        <Button fx:id="publicar"
+                mnemonicParsing="false"
+                onAction="#botonPublicar"
+                text="Publicar"
+                style="-fx-background-color:#9d31e0;
+                       -fx-text-fill:white;
+                       -fx-background-radius:30;
+                       -fx-font-weight:bold;"/>
+
+    </HBox>
+
+</VBox>
