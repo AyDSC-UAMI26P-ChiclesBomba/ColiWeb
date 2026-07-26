@@ -83,10 +83,14 @@ public class ServicioEvento {
     public Object[] obtenerCotizacionDetalles(Evento evento) throws IllegalArgumentException {
         if(evento == null) throw new IllegalArgumentException("El evento no puede ser nulo.");
 
-        Cotizacion cotizacion = repositorioCotizacion.findByEvento(evento);
-        List<DetalleCotizacion> detalles = repositorioDetalleCotizacion.findByCotizacion(cotizacion);
+        try {
+            Cotizacion cotizacion = repositorioCotizacion.findByEvento(evento);
+            List<DetalleCotizacion> detalles = repositorioDetalleCotizacion.findByCotizacion(cotizacion);
 
-        return new Object[] {cotizacion, detalles};
+            return new Object[] {cotizacion, detalles};
+        } catch (Exception e) {
+            throw new IllegalArgumentException("El evento no tiene una cotización ni detalles asociados");
+        }
     }
 
     /**
@@ -157,7 +161,7 @@ public class ServicioEvento {
             return false;
         }
         try {
-            repositorioCotizacion.deleteByIdCotizacion(evento.getCotizacion().getId());
+            repositorioCotizacion.deleteByIdCotizacion(evento.getCotizacion().getIdCotizacion());
             repositorioEvento.deleteByIdEvento(evento.getIdEvento());
             return true;
         } catch (Exception e) {
