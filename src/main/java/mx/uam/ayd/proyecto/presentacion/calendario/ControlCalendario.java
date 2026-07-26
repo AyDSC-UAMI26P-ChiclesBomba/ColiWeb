@@ -119,11 +119,12 @@ public class ControlCalendario {
     public void verCotizacion(Evento evento){
         Object[] datos = new Object[2];
         datos = servicioEvento.obtenerCotizacionDetalles(evento);
-        Cotizacion cotizacion = (Cotizacion) datos[0];
+        /*Cotizacion cotizacion = (Cotizacion) datos[0];
 
-        controlCatalogo.inicia(cotizacion);
+        controlCatalogo.inicia(cotizacion);*/ // No es esa conexión
         ventana.cierra();
-        // Llama al control correspondiente
+
+        System.out.println("Cambio a HU-2, ver cotización");
     }
     /**
      * Se cambia a gestionar un evento en la HU-5
