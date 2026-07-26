@@ -56,6 +56,10 @@ public class ServicioEvento {
         return repositorioEvento.findByMesOrderByFecha(mes);
     }
 
+    /**
+     * Regresa a todos los eventos ordenados por fecha
+     * @return
+     */
     public List<Evento> recupera(){
         return repositorioEvento.findByOrderByFechaAsc();
     }
@@ -72,16 +76,6 @@ public class ServicioEvento {
     }
 
     /**
-     * Toma el Evento que le es dado y regresa el valor del atributo estadoEvento
-     * @param evento Es el evento del que se coonseguirá el atributo buscado
-     * @return Es el valor del atributo estadoEvento
-     */
-    public EstadoEvento determinaEstado(Evento evento) throws IllegalArgumentException {
-        if(evento == null) throw new IllegalArgumentException("El evento no puede ser nulo.");
-        return evento.getEstadoEvento();
-    }
-
-    /**
      * La función recibe un evento y por medio del mismo, encuentra la cotización asociada y encuentra los detalles asociados a esa cotización
      * @param evento Es el evento del que se quieren obtener Cotizacion y DetalleCotizacion
      * @return Regresa un arreglo que contiene al objeto cotizacion y la lista con los DetallesCotizacion
@@ -89,10 +83,14 @@ public class ServicioEvento {
     public Object[] obtenerCotizacionDetalles(Evento evento) throws IllegalArgumentException {
         if(evento == null) throw new IllegalArgumentException("El evento no puede ser nulo.");
 
-        Cotizacion cotizacion = repositorioCotizacion.findByEvento(evento);
-        List<DetalleCotizacion> detalles = repositorioDetalleCotizacion.findByCotizacion(cotizacion);
+        try {
+            Cotizacion cotizacion = repositorioCotizacion.findByEvento(evento);
+            List<DetalleCotizacion> detalles = repositorioDetalleCotizacion.findByCotizacion(cotizacion);
 
-        return new Object[] {cotizacion, detalles};
+            return new Object[] {cotizacion, detalles};
+        } catch (Exception e) {
+            throw new IllegalArgumentException("El evento no tiene una cotización ni detalles asociados");
+        }
     }
 
     /**
@@ -113,7 +111,7 @@ public class ServicioEvento {
      */
     public boolean modificaEvento(Evento evento, LocalDate fecha, TipoEvento tipoEvento, LocalTime hora, String lugar, String direccion, String referencias, String imagen, String notas, EstadoEvento estadoEvento) {
         if(evento == null || fecha == null || tipoEvento == null || hora == null || direccion == null || estadoEvento == null) throw new IllegalArgumentException("Algunos datos son obligatorios");
-        modificaObjEvento(evento, fecha, tipoEvento, hora, lugar, direccion, referencias, imagen, notas, estadoEvento);
+        modificaObjEvento(evento, fecha, tipoEvento, hora, lugar, direccion, referencias, imagen, notas, estadoEvento); // Aprovechamos la mutabilidad de Evento
         try {
             repositorioEvento.save(evento);
             return true;
@@ -163,7 +161,7 @@ public class ServicioEvento {
             return false;
         }
         try {
-            repositorioCotizacion.deleteByIdCotizacion(evento.getCotizacion().getId());
+            repositorioCotizacion.deleteByIdCotizacion(evento.getCotizacion().getIdCotizacion());
             repositorioEvento.deleteByIdEvento(evento.getIdEvento());
             return true;
         } catch (Exception e) {
@@ -192,6 +190,7 @@ public class ServicioEvento {
         Cliente cliente = repositorioCliente.findByNombreAndNumTelefono(nombre, num);
         if(cliente == null){
             cliente = new Cliente(nombre, num);
+            cliente = repositorioCliente.save(cliente);
         }
         
         // Verifica que no exista en el repositorio otro evento con la misma fecha
@@ -200,7 +199,6 @@ public class ServicioEvento {
         // Crea a la cotización
         Cotizacion cotizacion = new Cotizacion();
         cotizacion = repositorioCotizacion.save(cotizacion);
-        cliente = repositorioCliente.save(cliente);
         
         // Crea al evento
         Evento evento = new Evento(tipoEvento, fecha, hora, lugar, referencias, direccion, referencias, imagen, cotizacion, cliente);
@@ -209,10 +207,11 @@ public class ServicioEvento {
         return cotizacion;
     }
 
-    public Cliente obtenerCliente(Evento evento){
-        return repositorioCliente.findByEventosContains(evento);
-    }
-
+    /**
+     * Cuando un día en Calendario es presionado, se toman todos los datos necesarios para regresarlos en un array
+     * @param evento
+     * @return
+     */
     public List<Object> diaPresionado(Evento evento){
         List<Object> datos = new ArrayList<>();
         String estadoEvento = evento.getEstadoEvento().toString();

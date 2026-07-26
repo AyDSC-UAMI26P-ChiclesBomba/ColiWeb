@@ -81,7 +81,7 @@ public class Cotizacion {
     public List<DetalleCotizacion> getDetalles(){
         List<DetalleCotizacion> detalles = new ArrayList<>();
         return detalles;
-    }public Long getId(){
+    }public Long getIdCotizacion(){
         return idCotizacion;
     }
     public float getTotal(){

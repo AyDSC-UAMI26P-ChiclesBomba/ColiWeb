@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import mx.uam.ayd.proyecto.datos.RepositorioCliente;
 import mx.uam.ayd.proyecto.datos.RepositorioCotizacion;
 import mx.uam.ayd.proyecto.datos.RepositorioEvento;
+import mx.uam.ayd.proyecto.negocio.modelo.Cliente;
 import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.DetalleCotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
@@ -132,5 +133,12 @@ public class ServicioCotizacion {
 
     public Evento recuperaInfo(Cotizacion cotizacion){
         return repositorioEvento.findByCotizacion(cotizacion);
+    }
+
+    public Evento recuperaEvento(Cotizacion cotizacion){
+        return repositorioEvento.findByCotizacion(cotizacion);
+    }
+    public Cliente recuperaCliente(Cotizacion cotizacion){
+        return repositorioCliente.findByCotizaciones(cotizacion);
     }
 }

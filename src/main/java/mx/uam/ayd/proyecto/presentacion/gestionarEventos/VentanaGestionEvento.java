@@ -1,6 +1,10 @@
 package mx.uam.ayd.proyecto.presentacion.gestionarEventos;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -24,8 +28,10 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mx.uam.ayd.proyecto.negocio.modelo.Cliente;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
@@ -81,6 +87,8 @@ public class VentanaGestionEvento {
 	private ImageView imageVisualizacionCreacion;
 	@FXML
 	private TextArea textNotasCreacion;
+	@FXML
+	private VBox subirFotoCreacion;
 
 	// Recuadros Modificación
 	@FXML
@@ -103,6 +111,7 @@ public class VentanaGestionEvento {
 	private TextField textReferenciasModificacion;
 	@FXML
 	private ImageView imageVisualizacionModificacion;
+	private File archivoImagenSeleccionado;
 	@FXML
 	private TextArea textNotasModificacion;
 	@FXML
@@ -113,6 +122,8 @@ public class VentanaGestionEvento {
 	private Button botonModificar;
 	@FXML
 	private Button botonEliminar;
+	@FXML
+	private VBox subirFotoModificacion;
 
 	/**
 	 * Initialize UI components on the JavaFX application thread
@@ -211,6 +222,10 @@ public class VentanaGestionEvento {
 		stage.show();
     }
 
+	/**
+	 * Método encargado de iniciar la pantalla de Modificación, reseteando e iniciando los datos que deben ir en las opciones elegibles y de escritura para el usuario
+	 * @param evento Es el evento que se modificará y por lo tanto, del que se toman los datos
+	 */
 	public void muestraModificacion(Evento evento) {
         inicializacion();
 		System.out.println("Se inicia la ventana de creación de evento");
@@ -246,6 +261,22 @@ public class VentanaGestionEvento {
 		}else{
 			switchBorradorModificacion.setSelected(true);
 		}
+
+		// Muestra la imagen si es que el evento tiene una ruta guardada
+        String rutaImagen = evento.getVisualRecinto();
+        if (rutaImagen != null && !rutaImagen.isBlank()) {
+            File archivoFisico = new File(rutaImagen);
+            if (archivoFisico.exists()) {
+                Image img = new Image(archivoFisico.toURI().toString());
+                imageVisualizacionModificacion.setImage(img);
+				subirFotoModificacion.setVisible(false);
+            }
+        } else {
+            // Si no tiene imagen, la deja en blanco
+            imageVisualizacionModificacion.setImage(null);
+			subirFotoModificacion.setVisible(true);
+        }
+
 		System.out.println("Se asignan los valores del evento a los textos correspondientes");
 
 		botonModificar.setUserData(evento); // Guardamos el evento en el botón para poder usarlo al presionarlo
@@ -319,6 +350,8 @@ public class VentanaGestionEvento {
 		textDireccionCreacion.setText(null);
 		textReferenciasCreacion.setText(null);
 		textNotasCreacion.setText(null);
+		imageVisualizacionCreacion.setImage(null);;
+		subirFotoCreacion.setVisible(true);
 
 		// Se limpian todos los textos de modificación
 		textTipoModificacion.setValue(null);
@@ -334,6 +367,8 @@ public class VentanaGestionEvento {
 		textNotasModificacion.setText(null);
 		switchConfirmadoModificacion.setSelected(false);
 		switchBorradorModificacion.setSelected(false);
+		imageVisualizacionModificacion.setImage(null);
+		subirFotoModificacion.setVisible(true);
 
 		// Se limpian los eventos guardados en los botones de modificación y eliminación
 		botonModificar.setUserData(null);
@@ -386,6 +421,7 @@ public class VentanaGestionEvento {
 			muestraErrorDatos();
 			return false;
 		}
+		// Validación de que al menos uno de los switches esté seleccionado en caso del modo de modificación
 		if(switchConfirmado != null && switchBorrador != null) {
 			if(!switchConfirmado.isSelected() && !switchBorrador.isSelected()){
 				muestraErrorDatos();
@@ -472,10 +508,33 @@ public class VentanaGestionEvento {
 
 		LocalTime horaEvento = LocalTime.of(hora, minuto);
 
+		String rutaImagen = "";
+		if(archivoImagenSeleccionado != null) {
+			try {
+                // 1. Creamos la carpeta donde vivirá la imagen (si no existe)
+                Path carpetaDestino = Path.of("imagenes_eventos");
+                Files.createDirectories(carpetaDestino);
+
+                // 2. Definimos el nombre final del archivo (le dejamos el nombre original)
+                Path archivoDestino = carpetaDestino.resolve(archivoImagenSeleccionado.getName());
+
+                // 3. Copiamos el archivo de la compu del usuario a nuestra carpeta
+                Files.copy(archivoImagenSeleccionado.toPath(), archivoDestino, StandardCopyOption.REPLACE_EXISTING);
+
+                // 4. Guardamos la ruta en formato texto para la base de datos
+                rutaImagen = archivoDestino.toString();
+            } catch (IOException e) {
+                System.err.println("Error al guardar la imagen: " + e.getMessage());
+            }
+		}
+
 		if(datoFecha instanceof LocalDate fecha)
-			control.guardaEvento(tipo, nombre, num, fecha, horaEvento, lugar, direccion, referencias, notas);
+			control.guardaEvento(tipo, nombre, num, fecha, horaEvento, lugar, direccion, referencias, rutaImagen, notas);
 	}
 
+	/**
+	 * Cuando se presiona el botón para modificar, se valida que los datos mínimos sigan presentes y en formato para proceder a la modificación
+	 */
 	@FXML
 	private void presionarBotonModificar(){
 		if(!validaDatos(textTipoModificacion, null, textTelefonoModificacion, textFechaModificacion, horaModificacion, minutoModificacion, textDireccionModificacion, textNombreModificacion, switchConfirmadoModificacion, switchBorradorModificacion)) return;
@@ -494,14 +553,63 @@ public class VentanaGestionEvento {
 			estado = EstadoEvento.CONFIRMADO;
 		else
 			estado = EstadoEvento.BORRADOR;
+
 		Evento evento = (Evento) botonModificar.getUserData(); // Recuperamos el evento que estaba guardado en el botón para poder modificarlo
 
-		control.modificaEvento(evento, fecha, tipo, LocalTime.of(hora, minuto), lugar, direccion, referencias, "imagen", notas, estado);
+		String rutaImagen = evento.getVisualRecinto(); // Por defecto, se mantiene la ruta de la imagen que ya tenía el evento
+		// Si fuera nulo significa que el usuario no seleccionó una imagen nueva, por lo que se mantiene la que ya tenía el evento. En caso de que sí haya seleccionado una nueva, se guarda la nueva ruta
+		if(archivoImagenSeleccionado != null) {
+			try {
+				Path carpetaDestino = Path.of("imagenes_eventos");
+				Files.createDirectories(carpetaDestino);
+
+				Path archivoDestino = carpetaDestino.resolve(archivoImagenSeleccionado.getName());
+
+				// StandardCopyOption.REPLACE_EXISTING sobreescribe el archivo si ya existía con el mismo nombre
+				Files.copy(archivoImagenSeleccionado.toPath(), archivoDestino, StandardCopyOption.REPLACE_EXISTING);
+
+				// Actualizamos la ruta String para guardar en la BD
+				rutaImagen = archivoDestino.toString();
+
+			} catch (IOException e) {
+				System.err.println("Error al reemplazar la imagen: " + e.getMessage());
+			}
+		}
+		control.modificaEvento(evento, fecha, tipo, LocalTime.of(hora, minuto), lugar, direccion, referencias, rutaImagen, notas, estado);
 	}	
 
+	/**
+	 * Cuando se presiona el botón para eliminar, sigue el camino de pantallas de confirmación para eliminarlo
+	 */
 	@FXML
 	private void presionarBotonEliminar(){
 		control.solicitaEliminacionEvento();
+	}
+
+	/**
+	 * Método encargado de tomar la imágen para el image de la visualización del recinto
+	 */
+	@FXML
+	private void accionSeleccionarImagen(){
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Seleccionar Imagen");
+
+		// Filtro para que el usuario solo pueda elegir imágenes
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
+        );
+
+		// Abre la ventana de selección de Windows/Mac
+        archivoImagenSeleccionado = fileChooser.showOpenDialog(stage);
+
+		if (archivoImagenSeleccionado != null) {
+            // Si el usuario sí eligió una foto, la mostramos en el ImageView
+            Image img = new Image(archivoImagenSeleccionado.toURI().toString());
+            imageVisualizacionCreacion.setImage(img);
+			imageVisualizacionModificacion.setImage(img);
+			subirFotoCreacion.setVisible(false);
+			subirFotoModificacion.setVisible(false);
+        }
 	}
 
 

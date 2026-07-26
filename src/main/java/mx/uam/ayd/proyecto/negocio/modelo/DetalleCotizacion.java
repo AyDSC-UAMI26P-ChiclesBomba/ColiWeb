@@ -60,6 +60,9 @@ public class DetalleCotizacion {
     public void setPreciosCompletos(boolean preciosCompletos){
         this.preciosCompletos = preciosCompletos;
     }
-    
+    public void setCotizacion(Cotizacion cotizacion){
+        this.cotizacion = cotizacion;
+    }
+
 }
 

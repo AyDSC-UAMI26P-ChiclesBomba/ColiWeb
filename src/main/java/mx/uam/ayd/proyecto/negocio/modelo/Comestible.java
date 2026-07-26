@@ -24,4 +24,10 @@ public class Comestible extends Material{
 
     // Métodos de la cotización como getters y setters
     // ...
+    public void setTipoComestible(TipoComestible tipoComestible){
+        this.tipoComestible = tipoComestible;
+    }
+    public TipoComestible getTipoComestible(){
+        return tipoComestible;
+    }
 }

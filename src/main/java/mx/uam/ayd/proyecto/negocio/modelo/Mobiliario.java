@@ -46,6 +46,9 @@ public class Mobiliario extends Material {
     public TipoDano getTipoDano(){
         return tipoDano;
     }
+    public TipoMobiliario getTipoMobiliario(){
+        return tipoMobiliario;
+    }
 
 
     public void setEstadoMobiliario(boolean estadoMobiliario){
@@ -62,5 +65,8 @@ public class Mobiliario extends Material {
     }
     public void setTipoDano(TipoDano tipoDano){
         this.tipoDano = tipoDano;
+    }
+    public void setTipoMobiliario(TipoMobiliario tipoMobiliario){
+        this.tipoMobiliario = tipoMobiliario;
     }
 }

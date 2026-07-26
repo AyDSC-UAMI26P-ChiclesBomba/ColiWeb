@@ -147,7 +147,7 @@ public class Evento {
     public void setEstadoEvento(EstadoEvento edoEvento){
         this.estadoEvento = edoEvento;
     }public void setCotizacion(Cotizacion cotizacion) throws Exception{
-        if(cotizacion.getId() == null) throw new InvalidAttributeIdentifierException("La cotización ingresada no tiene id lleno (no existe en su repositorio");
+        if(cotizacion.getIdCotizacion() == null) throw new InvalidAttributeIdentifierException("La cotización ingresada no tiene id lleno (no existe en su repositorio");
         this.cotizacion = cotizacion;
     }public void setTipoEvento(TipoEvento tipoEvento){
         this.tipoEvento = tipoEvento;

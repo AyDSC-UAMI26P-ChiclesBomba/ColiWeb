@@ -13,14 +13,22 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import mx.uam.ayd.proyecto.datos.RepositorioCliente;
+import mx.uam.ayd.proyecto.datos.RepositorioComestible;
 import mx.uam.ayd.proyecto.datos.RepositorioCotizacion;
 import mx.uam.ayd.proyecto.datos.RepositorioEvento;
+import mx.uam.ayd.proyecto.datos.RepositorioGlobo;
+import mx.uam.ayd.proyecto.datos.RepositorioMaterialDecorativo;
+import mx.uam.ayd.proyecto.datos.RepositorioMobiliario;
 import mx.uam.ayd.proyecto.negocio.modelo.Cliente;
+import mx.uam.ayd.proyecto.negocio.modelo.Comestible;
 import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento.EstadoEvento;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento.EstadoPago;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento.TipoEvento;
+import mx.uam.ayd.proyecto.negocio.modelo.Globo;
+import mx.uam.ayd.proyecto.negocio.modelo.MaterialDecorativo;
+import mx.uam.ayd.proyecto.negocio.modelo.Mobiliario;
 import mx.uam.ayd.proyecto.presentacion.calendario.ControlCalendario;
 
 /**
@@ -39,13 +47,22 @@ public class ProyectoApplication {
 	private final RepositorioEvento repositorioEvento;
 	private final RepositorioCotizacion repositorioCotizacion;
 	private final RepositorioCliente repositorioCliente;
+	private final RepositorioGlobo repositorioGlobo;
+	private final RepositorioMobiliario repositorioMobiliario;
+	private final RepositorioComestible repositorioComestible;
+	private final RepositorioMaterialDecorativo repositorioMaterialDecorativo;
+
 	
 	@Autowired
-	public ProyectoApplication(ControlCalendario controlCalendario, RepositorioEvento repositorioEvento, RepositorioCotizacion repositorioCotizacion, RepositorioCliente repositorioCliente) {
+	public ProyectoApplication(ControlCalendario controlCalendario, RepositorioEvento repositorioEvento, RepositorioCotizacion repositorioCotizacion, RepositorioCliente repositorioCliente, RepositorioGlobo repositorioGlobo, RepositorioMobiliario repositorioMobiliario, RepositorioComestible repositorioComestible, RepositorioMaterialDecorativo repositorioMaterialDecorativo) {
 		this.controlCalendario = controlCalendario;
 		this.repositorioEvento = repositorioEvento;
 		this.repositorioCotizacion = repositorioCotizacion;
 		this.repositorioCliente = repositorioCliente;
+		this.repositorioGlobo = repositorioGlobo;
+		this.repositorioMobiliario = repositorioMobiliario;
+		this.repositorioComestible = repositorioComestible;
+		this.repositorioMaterialDecorativo = repositorioMaterialDecorativo;
 	}
 
 	/**
@@ -222,5 +239,148 @@ public class ProyectoApplication {
 		repositorioEvento.save(evento4);
 		repositorioEvento.save(evento5);
 		System.out.println(repositorioEvento.findByOrderByFechaAsc());
+
+
+
+
+
+
+		// --- GLOBO 1 ---
+        Globo globo1 = new Globo();
+        globo1.setNombre("Globo Metálico Estrella Dorada");
+        globo1.setPrecio(25.50f);
+        globo1.setCantInventario(150);
+        globo1.setImagen("src/main/resources/img/materilaes/images.jpeg");
+        globo1.setColor(Globo.Color.DORADO);
+        globo1.setMedida(18); // Por ejemplo, 18 pulgadas
+        globo1.setTipoGlobo(Globo.TipoGlobo.METALICO);
+        globo1.setMarca(Globo.Marca.SEMPERTEX);
+
+        // --- GLOBO 2 ---
+        Globo globo2 = new Globo();
+        globo2.setNombre("Paquete Globos Látex Rojo (50 pzas)");
+        globo2.setPrecio(85.00f);
+        globo2.setCantInventario(40);
+        globo2.setImagen("src/main/resources/img/materilaes/D_Q_NP_660205-MLA100065765363_122025-O.webp");
+        globo2.setColor(Globo.Color.ROJO);
+        globo2.setMedida(12); // 12 pulgadas, tamaño estándar
+        globo2.setTipoGlobo(Globo.TipoGlobo.LATEX);
+        globo2.setMarca(Globo.Marca.PAYASO);
+
+        // --- GLOBO 3 ---
+        Globo globo3 = new Globo();
+        globo3.setNombre("Globo Burbuja Gigante Transparente");
+        globo3.setPrecio(45.00f);
+        globo3.setCantInventario(80);
+        globo3.setImagen("https://storage.miservicio.com/materiales/globo_burbuja_24.jpg");
+        globo3.setColor(Globo.Color.BLANCO); 
+        globo3.setMedida(24); // 24 pulgadas
+        globo3.setTipoGlobo(Globo.TipoGlobo.BURBUJA);
+        globo3.setMarca(Globo.Marca.BALLONZONE);
+
+		repositorioGlobo.save(globo1);
+		repositorioGlobo.save(globo2);
+		repositorioGlobo.save(globo3);
+
+		// --- MOBILIARIO 1 ---
+        Mobiliario mobiliario1 = new Mobiliario();
+        mobiliario1.setNombre("Mesa Redonda de Madera Plegable");
+        mobiliario1.setPrecio(150.00f);
+        mobiliario1.setCantInventario(20);
+        mobiliario1.setImagen("https://storage.miservicio.com/materiales/mesa_madera_redonda.jpg");
+        mobiliario1.setTipoMobiliario(Mobiliario.TipoMobiliario.MESASDEMADERA);
+        mobiliario1.setEstadoMobiliario(true);
+        mobiliario1.setPrecioCompra(1200.00f);
+        mobiliario1.setCostoDanoTotal(1200.00f);
+        mobiliario1.setCostoDanoParcial(300.00f);
+        mobiliario1.setTipoDano(Mobiliario.TipoDano.PARCIAL);
+
+        // --- MOBILIARIO 2 ---
+        Mobiliario mobiliario2 = new Mobiliario();
+        mobiliario2.setNombre("Mampara de Madera Vintage 2x1m");
+        mobiliario2.setPrecio(450.00f);
+        mobiliario2.setCantInventario(8);
+        mobiliario2.setImagen("https://storage.miservicio.com/materiales/mampara_madera.jpg");
+        mobiliario2.setTipoMobiliario(Mobiliario.TipoMobiliario.MAMPARASDEMADERA);
+        mobiliario2.setEstadoMobiliario(true);
+        mobiliario2.setPrecioCompra(3500.00f);
+        mobiliario2.setCostoDanoTotal(3500.00f);
+        mobiliario2.setCostoDanoParcial(800.00f);
+        mobiliario2.setTipoDano(Mobiliario.TipoDano.NINGUNO);
+
+        // --- MOBILIARIO 3 ---
+        Mobiliario mobiliario3 = new Mobiliario();
+        mobiliario3.setNombre("Carrito de Dulces Estilo Carreta");
+        mobiliario3.setPrecio(850.00f);
+        mobiliario3.setCantInventario(3);
+        mobiliario3.setImagen("https://storage.miservicio.com/materiales/carrito_dulces.jpg");
+        mobiliario3.setTipoMobiliario(Mobiliario.TipoMobiliario.CARRITODEDULCES);
+        mobiliario3.setEstadoMobiliario(true);
+        mobiliario3.setPrecioCompra(6500.00f);
+        mobiliario3.setCostoDanoTotal(6500.00f);
+        mobiliario3.setCostoDanoParcial(1500.00f);
+        mobiliario3.setTipoDano(Mobiliario.TipoDano.TOTAL);
+
+		repositorioMobiliario.save(mobiliario1);
+		repositorioMobiliario.save(mobiliario2);
+		repositorioMobiliario.save(mobiliario3);
+
+		// --- MATERIAL DECORATIVO 1 ---
+        MaterialDecorativo decorativo1 = new MaterialDecorativo();
+        decorativo1.setNombre("Set de Mariposas Decorativas 3D (50 pzas)");
+        decorativo1.setPrecio(120.00f);
+        decorativo1.setCantInventario(35);
+        decorativo1.setImagen("https://storage.miservicio.com/materiales/mariposas_3d_set.jpg");
+        decorativo1.setTipoDecoracion(MaterialDecorativo.TipoDecoracion.MARIPOSAS);
+
+        // --- MATERIAL DECORATIVO 2 ---
+        MaterialDecorativo decorativo2 = new MaterialDecorativo();
+        decorativo2.setNombre("Bolsa de Lentejuelas Doradas 500g");
+        decorativo2.setPrecio(85.50f);
+        decorativo2.setCantInventario(100);
+        decorativo2.setImagen("https://storage.miservicio.com/materiales/lentejuelas_oro.jpg");
+        decorativo2.setTipoDecoracion(MaterialDecorativo.TipoDecoracion.LENTEJUELAS);
+
+        // --- MATERIAL DECORATIVO 3 ---
+        MaterialDecorativo decorativo3 = new MaterialDecorativo();
+        decorativo3.setNombre("Paquete de Vasos Dulceros Neón");
+        decorativo3.setPrecio(15.00f);
+        decorativo3.setCantInventario(500);
+        decorativo3.setImagen("https://storage.miservicio.com/materiales/vasos_dulceros_neon.jpg");
+        decorativo3.setTipoDecoracion(MaterialDecorativo.TipoDecoracion.VASODULCERO);
+
+		repositorioMaterialDecorativo.save(decorativo1);
+		repositorioMaterialDecorativo.save(decorativo2);
+		repositorioMaterialDecorativo.save(decorativo3);
+
+		// --- COMESTIBLE 1 ---
+        Comestible comestible1 = new Comestible();
+        comestible1.setNombre("Bolsa de Palomitas de Maíz Mantequilla 1kg");
+        comestible1.setPrecio(65.00f);
+        comestible1.setCantInventario(60);
+        comestible1.setImagen("https://storage.miservicio.com/materiales/palomitas_mantequilla.jpg");
+        comestible1.setTipoComestible(Comestible.TipoComestible.BOTANAS);
+
+        // --- COMESTIBLE 2 ---
+        Comestible comestible2 = new Comestible();
+        comestible2.setNombre("Mix de Dulces y Chocolates Surtidos (100 pzas)");
+        comestible2.setPrecio(220.00f);
+        comestible2.setCantInventario(25);
+        comestible2.setImagen("https://storage.miservicio.com/materiales/mix_dulces_surtidos.jpg");
+        comestible2.setTipoComestible(Comestible.TipoComestible.DULCE);
+
+        // --- COMESTIBLE 3 ---
+        Comestible comestible3 = new Comestible();
+        comestible3.setNombre("Cacahuates Japoneses Granel 1kg");
+        comestible3.setPrecio(55.00f);
+        comestible3.setCantInventario(40);
+        comestible3.setImagen("https://storage.miservicio.com/materiales/cacahuates_japoneses.jpg");
+        comestible3.setTipoComestible(Comestible.TipoComestible.SALADO);
+
+		repositorioComestible.save(comestible1);
+		repositorioComestible.save(comestible2);
+		repositorioComestible.save(comestible3);
+
+
 	}
 }
