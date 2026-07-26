@@ -72,16 +72,6 @@ public class ServicioEvento {
     }
 
     /**
-     * Toma el Evento que le es dado y regresa el valor del atributo estadoEvento
-     * @param evento Es el evento del que se coonseguirá el atributo buscado
-     * @return Es el valor del atributo estadoEvento
-     */
-    public EstadoEvento determinaEstado(Evento evento) throws IllegalArgumentException {
-        if(evento == null) throw new IllegalArgumentException("El evento no puede ser nulo.");
-        return evento.getEstadoEvento();
-    }
-
-    /**
      * La función recibe un evento y por medio del mismo, encuentra la cotización asociada y encuentra los detalles asociados a esa cotización
      * @param evento Es el evento del que se quieren obtener Cotizacion y DetalleCotizacion
      * @return Regresa un arreglo que contiene al objeto cotizacion y la lista con los DetallesCotizacion
@@ -209,10 +199,11 @@ public class ServicioEvento {
         return cotizacion;
     }
 
-    public Cliente obtenerCliente(Evento evento){
-        return repositorioCliente.findByEventosContains(evento);
-    }
-
+    /**
+     * Cuando un día en Calendario es presionado, se toman todos los datos necesarios para regresarlos en un array
+     * @param evento
+     * @return
+     */
     public List<Object> diaPresionado(Evento evento){
         List<Object> datos = new ArrayList<>();
         String estadoEvento = evento.getEstadoEvento().toString();
