@@ -1,9 +1,6 @@
 package mx.uam.ayd.proyecto.negocio;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -22,7 +19,7 @@ import mx.uam.ayd.proyecto.negocio.modelo.Evento;
  * Permite:
  * - Obtener las cláusulas de un contrato.
  * - Actualizar las cláusulas de un evento específico.
- * - Actualizar la plantilla general.
+ * - Actualizar temporalmente la plantilla general.
  * - Generar un archivo PDF real.
  *
  * La firma física del contrato no se administra aquí.
@@ -36,13 +33,12 @@ public class ServicioContrato {
     private final RepositorioEvento repositorioEvento;
 
     /**
-     * Ruta del archivo donde se guarda la plantilla general.
+     * Plantilla general conservada únicamente en memoria.
      *
-     * La plantilla se conserva fuera de la base de datos para no
-     * modificar el modelo de entidades ni el diagrama existente.
+     * Su contenido existe mientras la aplicación permanece abierta.
+     * Al cerrar y volver a iniciar la aplicación, vuelve a estar vacía.
      */
-    private static final Path RUTA_PLANTILLA =
-        Path.of("data", "plantilla-contrato.txt");
+    private String plantillaTemporal = "";
 
     /**
      * Constructor utilizado por Spring para inyectar
@@ -161,7 +157,7 @@ public class ServicioContrato {
     public void actualizarPlantilla(String nuevaPlantilla) {
 
         /*
-         * Se valida el contenido antes de guardarlo.
+         * Se valida el contenido antes de conservarlo.
          */
         if (!validarClausulas(nuevaPlantilla)) {
             throw new IllegalArgumentException(
@@ -169,31 +165,13 @@ public class ServicioContrato {
             );
         }
 
-        try {
-
-            /*
-             * Se crea la carpeta data si todavía no existe.
-             */
-            Files.createDirectories(RUTA_PLANTILLA.getParent());
-
-            /*
-             * Se guarda la plantilla en un archivo persistente.
-             * Si ya existe, su contenido se reemplaza.
-             */
-            Files.writeString(
-                RUTA_PLANTILLA,
-                nuevaPlantilla.trim(),
-                StandardOpenOption.CREATE,
-                StandardOpenOption.TRUNCATE_EXISTING
-            );
-
-        } catch (IOException e) {
-
-            throw new IllegalStateException(
-                "No fue posible guardar la plantilla.",
-                e
-            );
-        }
+        /*
+         * La plantilla se guarda solamente en memoria.
+         *
+         * No se crea ni se modifica ningún archivo del proyecto.
+         * Cuando la aplicación se cierre, este valor se perderá.
+         */
+        plantillaTemporal = nuevaPlantilla.trim();
     }
 
     /**
@@ -203,20 +181,12 @@ public class ServicioContrato {
      */
     private String obtenerPlantilla() {
 
-        if (!Files.exists(RUTA_PLANTILLA)) {
-            return "";
-        }
-
-        try {
-            return Files.readString(RUTA_PLANTILLA).trim();
-
-        } catch (IOException e) {
-
-            throw new IllegalStateException(
-                "No fue posible leer la plantilla.",
-                e
-            );
-        }
+        /*
+         * Devuelve la plantilla almacenada durante la ejecución actual.
+         *
+         * Si todavía no se ha guardado una plantilla, devuelve texto vacío.
+         */
+        return plantillaTemporal;
     }
 
     /**
