@@ -421,6 +421,7 @@ public class VentanaGestionEvento {
 			muestraErrorDatos();
 			return false;
 		}
+		// Validación de que al menos uno de los switches esté seleccionado en caso del modo de modificación
 		if(switchConfirmado != null && switchBorrador != null) {
 			if(!switchConfirmado.isSelected() && !switchBorrador.isSelected()){
 				muestraErrorDatos();
@@ -522,17 +523,18 @@ public class VentanaGestionEvento {
 
                 // 4. Guardamos la ruta en formato texto para la base de datos
                 rutaImagen = archivoDestino.toString();
-                
             } catch (IOException e) {
                 System.err.println("Error al guardar la imagen: " + e.getMessage());
             }
 		}
 
-
 		if(datoFecha instanceof LocalDate fecha)
 			control.guardaEvento(tipo, nombre, num, fecha, horaEvento, lugar, direccion, referencias, rutaImagen, notas);
 	}
 
+	/**
+	 * Cuando se presiona el botón para modificar, se valida que los datos mínimos sigan presentes y en formato para proceder a la modificación
+	 */
 	@FXML
 	private void presionarBotonModificar(){
 		if(!validaDatos(textTipoModificacion, null, textTelefonoModificacion, textFechaModificacion, horaModificacion, minutoModificacion, textDireccionModificacion, textNombreModificacion, switchConfirmadoModificacion, switchBorradorModificacion)) return;
@@ -576,11 +578,17 @@ public class VentanaGestionEvento {
 		control.modificaEvento(evento, fecha, tipo, LocalTime.of(hora, minuto), lugar, direccion, referencias, rutaImagen, notas, estado);
 	}	
 
+	/**
+	 * Cuando se presiona el botón para eliminar, sigue el camino de pantallas de confirmación para eliminarlo
+	 */
 	@FXML
 	private void presionarBotonEliminar(){
 		control.solicitaEliminacionEvento();
 	}
 
+	/**
+	 * Método encargado de tomar la imágen para el image de la visualización del recinto
+	 */
 	@FXML
 	private void accionSeleccionarImagen(){
 		FileChooser fileChooser = new FileChooser();

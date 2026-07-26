@@ -113,7 +113,7 @@ public class ServicioEvento {
      */
     public boolean modificaEvento(Evento evento, LocalDate fecha, TipoEvento tipoEvento, LocalTime hora, String lugar, String direccion, String referencias, String imagen, String notas, EstadoEvento estadoEvento) {
         if(evento == null || fecha == null || tipoEvento == null || hora == null || direccion == null || estadoEvento == null) throw new IllegalArgumentException("Algunos datos son obligatorios");
-        modificaObjEvento(evento, fecha, tipoEvento, hora, lugar, direccion, referencias, imagen, notas, estadoEvento);
+        modificaObjEvento(evento, fecha, tipoEvento, hora, lugar, direccion, referencias, imagen, notas, estadoEvento); // Aprovechamos la mutabilidad de Evento
         try {
             repositorioEvento.save(evento);
             return true;
@@ -192,6 +192,7 @@ public class ServicioEvento {
         Cliente cliente = repositorioCliente.findByNombreAndNumTelefono(nombre, num);
         if(cliente == null){
             cliente = new Cliente(nombre, num);
+            cliente = repositorioCliente.save(cliente);
         }
         
         // Verifica que no exista en el repositorio otro evento con la misma fecha
@@ -200,7 +201,6 @@ public class ServicioEvento {
         // Crea a la cotización
         Cotizacion cotizacion = new Cotizacion();
         cotizacion = repositorioCotizacion.save(cotizacion);
-        cliente = repositorioCliente.save(cliente);
         
         // Crea al evento
         Evento evento = new Evento(tipoEvento, fecha, hora, lugar, referencias, direccion, referencias, imagen, cotizacion, cliente);

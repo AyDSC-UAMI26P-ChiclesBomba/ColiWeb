@@ -36,7 +36,7 @@ public class ServicioCliente {
         return cliente;
     }
     
-    public String obtieneInfoCliente(String nombre) throws Exception {
+    public String obtieneNumCliente(String nombre) throws Exception {
         Cliente cliente = repositorioCliente.findByNombre(nombre);
         if(cliente == null) throw new IllegalArgumentException("El cliente no puede ser nulo");
         return cliente.getNumTelefono();
