@@ -3,8 +3,6 @@ package mx.uam.ayd.proyecto.presentacion.cotizacionTotal;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import mx.uam.ayd.proyecto.negocio.modelo.DetalleCotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Material;
 
@@ -22,8 +20,6 @@ public class MaterialListaResumenSinPrecioController {
     @FXML 
     private Label IdlCosto;
 
-    @FXML
-    private ImageView imgMaterial;
 
     private DetalleCotizacion detalleCotizacion;
     private Material material;
@@ -53,18 +49,6 @@ public class MaterialListaResumenSinPrecioController {
             IdlPrecio.setText(String.valueOf(material.getPrecio()));
             actualizarCostoTotal(material.getPrecio());
         }
-
-        // Imagen del Material (si aplica)
-        if (material != null && imgMaterial != null && material.getImagen() != null && !material.getImagen().isBlank()) {
-            try {
-                Image image = new Image(getClass().getResourceAsStream(material.getImagen()));
-                imgMaterial.setImage(image);
-            } catch (Exception e) {
-                // Si la imagen no se encuentra, la ignora
-            }
-        }
-
-        // Configurar la validación del TextField para recibir solo números
         configurarValidacionPrecio();
     }
 

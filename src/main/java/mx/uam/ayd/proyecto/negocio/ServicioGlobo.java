@@ -30,12 +30,4 @@ public class ServicioGlobo {
         }
         return globos;
     }
-
-    public List<Globo> recuperaGlobosFiltro(Color color, int medida, TipoGlobo tipoGlobo){
-        ArrayList<Globo> globosfiltro = new ArrayList<>();
-        for(Globo globo:repositorioGlobo.findByColorAndMedidaAndTipoGlobo(color, medida, tipoGlobo)){
-            globosfiltro.add(globo);
-        }
-        return globosfiltro;
-    }
 }

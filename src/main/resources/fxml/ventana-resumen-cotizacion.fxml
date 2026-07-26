@@ -156,7 +156,7 @@
                <center>
                   <ScrollPane prefHeight="688.0" prefWidth="952.0" BorderPane.alignment="CENTER">
                      <content>
-                        <FlowPane fx:id="flowMateriales" prefHeight="70.0" prefWidth="999.0" />
+                        <FlowPane fx:id="flowMateriales" prefHeight="643.0" prefWidth="999.0" />
                      </content>
                   </ScrollPane>
                </center>

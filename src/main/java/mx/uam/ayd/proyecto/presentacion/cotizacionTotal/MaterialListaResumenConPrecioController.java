@@ -2,8 +2,6 @@ package mx.uam.ayd.proyecto.presentacion.cotizacionTotal;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import mx.uam.ayd.proyecto.negocio.modelo.DetalleCotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Material;
 
@@ -21,8 +19,6 @@ public class MaterialListaResumenConPrecioController {
     @FXML 
     private Label IdlCosto;
 
-    @FXML
-    private ImageView imgMaterial;
 
     private DetalleCotizacion detalleCotizacion;
     private Material material;
@@ -59,14 +55,5 @@ public class MaterialListaResumenConPrecioController {
             IdlCosto.setText(String.format("$ %.2f", costoTotal));
         }
 
-        // Imagen del Material (si aplica)
-        if (material != null && imgMaterial != null && material.getImagen() != null && !material.getImagen().isBlank()) {
-            try {
-                Image image = new Image(getClass().getResourceAsStream(material.getImagen()));
-                imgMaterial.setImage(image);
-            } catch (Exception e) {
-                // Si la imagen no se encuentra o falla la carga, simplemente no la muestra
-            }
-        }
     }
 }

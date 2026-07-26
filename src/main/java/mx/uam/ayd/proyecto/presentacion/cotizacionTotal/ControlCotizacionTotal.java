@@ -91,6 +91,7 @@ public class ControlCotizacionTotal {
             ventanaCotizacionTotal.deshabilitaGuardarBorradorYConsultarPrecio();
         }
     }
+    
 /** 
     public void consultarPrecios(List<DetalleCotizacion> listaMaterialSeleccionado){
 

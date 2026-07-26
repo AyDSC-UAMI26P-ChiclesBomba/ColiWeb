@@ -87,7 +87,36 @@ public class Cotizacion {
     public float getTotal(){
         return total;
     }
-
+    public float getTotalMaterial(){
+        return totalMaterial;
+    }
+    public float getExtra(){
+        return extra;
+    }
+    public float getConsumibles(){
+        return consumibles;
+    }
+    public Tamano getTamano(){
+        return tamano;
+    }
+    public float getTransporte(){
+        return transporte;
+    }
+    public float getMaterialPersonalizado(){
+        return materialPersonalizado;
+    }
+    public float getMaterialCliente(){
+        return materialCliente;
+    }
+    public float getManoObra(){
+        return manoDeObra;
+    }
+    public float getGanancia(){
+        return ganancia;
+    }
+    public boolean getAprobada(){
+        return aprobada;
+    }
     // setters
     public void setTransporte(float transporte){
         this.transporte = transporte;

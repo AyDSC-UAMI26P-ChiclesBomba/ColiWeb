@@ -17,5 +17,4 @@ public interface RepositorioGlobo extends CrudRepository <Globo, Long> {
     // ...
     List<Globo> findAll();
 
-    List<Globo> findByColorAndMedidaAndTipoGlobo(Color color, int medida, TipoGlobo tipoGlobo);
 }

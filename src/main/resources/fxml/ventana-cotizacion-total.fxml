@@ -321,7 +321,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="72.0" prefWidth="246.0">
                            <children>
-                              <Label fx:id="IdLGanacia" text="\$ 1450.00">
+                              <Label fx:id="IdlGanancia" text="\$ 1450.00">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

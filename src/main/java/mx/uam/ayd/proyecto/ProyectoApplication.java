@@ -250,7 +250,7 @@ public class ProyectoApplication {
         globo1.setNombre("Globo Metálico Estrella Dorada");
         globo1.setPrecio(25.50f);
         globo1.setCantInventario(150);
-        globo1.setImagen("src/main/resources/img/materilaes/images.jpeg");
+        globo1.setImagen("src/main/resources/img/materilaes/image_picture_icon_149459.png");
         globo1.setColor(Globo.Color.DORADO);
         globo1.setMedida(18); // Por ejemplo, 18 pulgadas
         globo1.setTipoGlobo(Globo.TipoGlobo.METALICO);
@@ -261,7 +261,7 @@ public class ProyectoApplication {
         globo2.setNombre("Paquete Globos Látex Rojo (50 pzas)");
         globo2.setPrecio(85.00f);
         globo2.setCantInventario(40);
-        globo2.setImagen("src/main/resources/img/materilaes/D_Q_NP_660205-MLA100065765363_122025-O.webp");
+        globo2.setImagen("src/main/resources/img/materilaes/image_picture_icon_149459.png");
         globo2.setColor(Globo.Color.ROJO);
         globo2.setMedida(12); // 12 pulgadas, tamaño estándar
         globo2.setTipoGlobo(Globo.TipoGlobo.LATEX);
@@ -272,7 +272,7 @@ public class ProyectoApplication {
         globo3.setNombre("Globo Burbuja Gigante Transparente");
         globo3.setPrecio(45.00f);
         globo3.setCantInventario(80);
-        globo3.setImagen("https://storage.miservicio.com/materiales/globo_burbuja_24.jpg");
+        globo3.setImagen("src/main/resources/img/materilaes/image_picture_icon_149459.png");
         globo3.setColor(Globo.Color.BLANCO); 
         globo3.setMedida(24); // 24 pulgadas
         globo3.setTipoGlobo(Globo.TipoGlobo.BURBUJA);

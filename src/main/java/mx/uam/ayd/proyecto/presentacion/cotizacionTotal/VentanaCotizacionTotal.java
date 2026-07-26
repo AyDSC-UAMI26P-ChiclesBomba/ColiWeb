@@ -67,7 +67,7 @@ public class VentanaCotizacionTotal {
     @FXML private Label IdlExtra;
     @FXML private Label IdlConsumibles;
     @FXML private Label IdlManoObra;
-    @FXML private Label IdLGanacia;
+    @FXML private Label IdlGanancia;
     @FXML private Label IdlDetalles;
 
     @FXML private Button btnVolverCatalogo;
@@ -105,61 +105,71 @@ public class VentanaCotizacionTotal {
     // ==========================================
 
     public void muestraResumenCotizacion(List<DetalleCotizacion> listaMaterialSeleccionado, Cotizacion cotizacion) {
-        this.listaMaterialesActual = listaMaterialSeleccionado;
-        this.cotizacionActual = cotizacion;
-        
-        // 1. Cambiar la vista a Resumen
-        cambiarVista("/fxml/ventana-resumen-cotizacion.fxml");
+    this.listaMaterialesActual = listaMaterialSeleccionado;
+    this.cotizacionActual = cotizacion;
+    
+    // 1. Cambiar la vista primero
+    cambiarVista("/fxml/ventana-resumen-cotizacion.fxml");
 
-        // 2. Cargar lista de materiales si existen
-        if (listaMaterialSeleccionado != null) {
-            cargarMateriales(listaMaterialSeleccionado);
-        }
-
-        if (!stage.isShowing()) {
-            stage.show();
-        }
+    // 2. Mostrar la ventana para asegurar que la escena y la jerarquía de nodos estén activas
+    if (stage != null && !stage.isShowing()) {
+        stage.show();
     }
+
+    // 3. Cargar la lista
+    if (listaMaterialSeleccionado != null) {
+        cargarMateriales(listaMaterialSeleccionado);
+    }
+}
 
     public void cargarMateriales(List<DetalleCotizacion> materiales) {
-        if (flowMateriales == null) return;
-
-        flowMateriales.getChildren().clear();
-
-        for (DetalleCotizacion detalle : materiales) {
-            try {
-                FXMLLoader loader;
-                Material material = detalle.getMaterial();
-
-                if (detalle.getPreciosCompletos()) {
-                    loader = new FXMLLoader(getClass().getResource("/fxml/MaterialListaResumenConPrecio.fxml"));
-                    Node nodo = loader.load();
-
-                    MaterialListaResumenConPrecioController controller = loader.getController();
-                    if (controller != null) {
-                        controller.setMaterialListaResumen(material, controlCotizacionTotal, detalle);
-                    }
-                    flowMateriales.getChildren().add(nodo);
-
-                } else {
-                    loader = new FXMLLoader(getClass().getResource("/fxml/MaterialListaResumenSinPrecio.fxml"));
-                    Node nodo = loader.load();
-
-                    MaterialListaResumenSinPrecioController controller = loader.getController();
-                    if (controller != null) {
-                        controller.setMaterialListaResumen(material, controlCotizacionTotal, detalle);
-                    }
-                    flowMateriales.getChildren().add(nodo);
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        materialesCargados = true;
-        actualizarEstadoBotones();
+    // Si la inyección falló, intentamos buscar el FlowPane directamente en la escena actual
+    if (flowMateriales == null && stage != null && stage.getScene() != null) {
+        flowMateriales = (FlowPane) stage.getScene().lookup("#flowMateriales");
     }
+
+    // Si sigue siendo nulo tras la búsqueda, cancelamos para evitar NullPointerException
+    if (flowMateriales == null) {
+        System.err.println("Advertencia: No se encontró el componente 'flowMateriales' en la vista actual.");
+        return;
+    }
+
+    flowMateriales.getChildren().clear();
+
+    for (DetalleCotizacion detalle : materiales) {
+        try {
+            FXMLLoader loader;
+            Material material = detalle.getMaterial();
+
+            if (detalle.getPreciosCompletos()) {
+                loader = new FXMLLoader(getClass().getResource("/fxml/MaterialListaResumenConPrecio.fxml"));
+                Node nodo = loader.load();
+
+                MaterialListaResumenConPrecioController controller = loader.getController();
+                if (controller != null) {
+                    controller.setMaterialListaResumen(material, controlCotizacionTotal, detalle);
+                }
+                flowMateriales.getChildren().add(nodo);
+
+            } else {
+                loader = new FXMLLoader(getClass().getResource("/fxml/MaterialListaResumenSinPrecio.fxml"));
+                Node nodo = loader.load();
+
+                MaterialListaResumenSinPrecioController controller = loader.getController();
+                if (controller != null) {
+                    controller.setMaterialListaResumen(material, controlCotizacionTotal, detalle);
+                }
+                flowMateriales.getChildren().add(nodo);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    materialesCargados = true;
+    actualizarEstadoBotones();
+}
 
     private void actualizarEstadoBotones() {
         if (materialesCargados) {
@@ -183,6 +193,7 @@ public class VentanaCotizacionTotal {
 
     public void muestraCotizacionTotal(Cotizacion cotizacion) {
         this.cotizacionActual = cotizacion;
+
         
         // 1. Inflar la pantalla primero para que los @FXML se vinculen
         cambiarVista("/fxml/ventana-cotizacion-total.fxml");
@@ -191,6 +202,20 @@ public class VentanaCotizacionTotal {
         if (cotizacion != null && IdlTotal != null) {
             IdlTotal.setText(String.format("$ %.2f", cotizacion.getTotal()));
         }
+        if (cotizacion != null && IdlTotalMaterial != null) {
+            IdlTotalMaterial.setText(String.format("$ %.2f", cotizacion.getTotalMaterial()));
+        }
+        if (cotizacion != null && IdlConsumibles != null) {
+            IdlConsumibles.setText(String.format("$ %.2f", cotizacion.getConsumibles()));
+        }
+        if (cotizacion != null && IdlManoObra != null) {
+            IdlTotalMaterial.setText(String.format("$ %.2f", cotizacion.getManoObra()));
+        }if (cotizacion != null && IdlGanancia != null) {
+            IdlGanancia.setText(String.format("$ %.2f", cotizacion.getGanancia()));
+        }
+        
+
+
     }
 
     public void muestraListaMaterialActualizada(DetalleCotizacion material) {

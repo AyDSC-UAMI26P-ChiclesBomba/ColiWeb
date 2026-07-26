@@ -92,10 +92,6 @@ public class ControlCatalogo {
         ventanaCatalogo.muestraCatalogoGlobos(servicioGlobo.recuperaTodoGlobo());
     }
 
-    public void recuperarTodoGloboFiltro(Color color, int medida, TipoGlobo tipoGlobo) {
-        ventanaCatalogo.muestraCatalogoGloboFiltro(servicioGlobo.recuperaGlobosFiltro(color, medida, tipoGlobo));
-    }
-
     public void recuperarTodoMaterialDecorativo() {
         ventanaCatalogo.muestraCatalogoDecoraciones(servicioMaterialDecorativo.recuperaTodoMaterialDecorativo());
     }

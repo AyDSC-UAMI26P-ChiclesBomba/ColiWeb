@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -32,9 +31,8 @@ public class VentanaCatalogo {
 
     @FXML
     private FlowPane flowMateriales;
-
     @FXML
-    private ListView<String> listaMaterialSeleccionado;
+    private FlowPane flowListaMaterial;
 
     @FXML
     private Button btnContinuarCotizacion;
@@ -93,22 +91,48 @@ public class VentanaCatalogo {
         muestraListaMaterial(listaMaterialSeleccionado);
     }
 
-    public void muestraListaMaterial(List<DetalleCotizacion> listaSeleccionada) {
-        ejecutarEnHiloJavaFX(() -> {
-            validaListaVacia(listaSeleccionada);
-            if (this.listaMaterialSeleccionado != null) {
-                this.listaMaterialSeleccionado.getItems().clear();
-                if (listaSeleccionada != null) {
-                    for (DetalleCotizacion detalle : listaSeleccionada) {
-                        if (detalle.getMaterial() != null) {
-                            String renglon = detalle.getMaterial().getNombre() + " x" + detalle.getCantidad() + " ($" + detalle.getCosto() + ")";
-                            this.listaMaterialSeleccionado.getItems().add(renglon);
-                        }
-                    }
-                }
+
+    public void muestraListaMaterial(List<DetalleCotizacion> listaMaterialSeleccionado) {
+
+    ejecutarEnHiloJavaFX(() -> {
+
+        validaListaVacia(listaMaterialSeleccionado);
+
+        if (flowListaMaterial == null) {
+            return;
+        }
+
+        flowListaMaterial.getChildren().clear();
+
+        if (listaMaterialSeleccionado == null) {
+            return;
+        }
+
+        for (DetalleCotizacion detalle : listaMaterialSeleccionado) {
+
+            try {
+
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/fxml/detalleCotizacion.fxml"));
+
+                Parent tarjeta = loader.load();
+
+                DetalleCotizacionController controller =
+                        loader.getController();
+
+                controller.setDetalle(detalle, controlCatalogo);
+
+                flowListaMaterial.getChildren().add(tarjeta);
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
-    }
+
+        }
+
+    });
+
+}
 
     public void muestraMensajeNoAgregarMobiliarioDanoTotal() {
         ejecutarEnHiloJavaFX(() -> {
@@ -122,10 +146,6 @@ public class VentanaCatalogo {
 
     public void muestraCatalogoGlobos(List<Globo> todoGlobo) {
         ejecutarEnHiloJavaFX(() -> cargarTarjetas(todoGlobo));
-    }
-
-    public void muestraCatalogoGloboFiltro(List<Globo> todoGloboFiltro) {
-        ejecutarEnHiloJavaFX(() -> cargarTarjetas(todoGloboFiltro));
     }
 
     public void muestraCatalogoDecoraciones(List<MaterialDecorativo> todoDecoracion) {
