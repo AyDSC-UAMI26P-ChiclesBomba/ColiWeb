@@ -67,7 +67,7 @@ public class Cotizacion {
     
     // Relación con DetalleCotizacion (no guarda columna)
     @OneToMany(mappedBy = "cotizacion", targetEntity = DetalleCotizacion.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List <DetalleCotizacion> listaMaterialSeleccionado;
+    private List <DetalleCotizacion> detalles;
 
     // Relación con Cliente (sí guarda columna)
     @ManyToOne
@@ -78,6 +78,16 @@ public class Cotizacion {
     // ----------- MÉTODOS -----------
 
     // getters
+    public List<DetalleCotizacion> getDetalles(){
+        List<DetalleCotizacion> detalles = new ArrayList<>();
+        return detalles;
+    }public Long getIdCotizacion(){
+        return idCotizacion;
+    }
+    public float getTotal(){
+        return total;
+    }
+
     // setters
     public void setTransporte(float transporte){
         this.transporte = transporte;
@@ -112,56 +122,7 @@ public class Cotizacion {
     public void setAprobada(boolean aprobada){
         this.aprobada = aprobada;
     }
-    public float getTransporte() {
-    return transporte;
+    public void setIdCotizacion(Long idCotizacion){
+        this.idCotizacion = idCotizacion;
     }
-
-    public float getMaterialPersonalizado() {
-        return materialPersonalizado;
-    }
-
-    public float getMaterialCliente() {
-        return materialCliente;
-    }
-
-    public float getExtra() {
-        return extra;
-    }
-
-    public float getGanancia() {
-        return ganancia;
-    }
-
-    public float getConsumibles() {
-        return consumibles;
-    }
-
-    public float getManoObra() {
-        return manoDeObra;
-    }
-
-    public float getAnticipo() {
-        return anticipo;
-    }
-
-    public float getTotalMaterial() {
-        return totalMaterial;
-    }
-
-    public Tamano getTamano() {
-        return tamano;
-    }
-
-    public boolean getAprobada() {
-        return aprobada;
-    }
-
-    public float getTotal(){
-        return total;
-    }
-    public Long getId(){
-        return idCotizacion;
-    }
-    
 }
-

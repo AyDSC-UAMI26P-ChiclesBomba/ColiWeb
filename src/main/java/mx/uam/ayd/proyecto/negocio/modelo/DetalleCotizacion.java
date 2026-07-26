@@ -47,7 +47,6 @@ public class DetalleCotizacion {
     public boolean getPreciosCompletos(){
         return preciosCompletos;
     }
-      
     public void setMaterial(Material material){
         this.material = material;
     }
@@ -60,6 +59,9 @@ public class DetalleCotizacion {
     public void setPreciosCompletos(boolean preciosCompletos){
         this.preciosCompletos = preciosCompletos;
     }
-    
+    public void setCotizacion(Cotizacion cotizacion){
+        this.cotizacion = cotizacion;
+    }
+
 }
 
