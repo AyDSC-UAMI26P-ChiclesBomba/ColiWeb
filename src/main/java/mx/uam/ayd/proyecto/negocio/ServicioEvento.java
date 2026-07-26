@@ -212,20 +212,26 @@ public class ServicioEvento {
      * @return
      */
     public List<Object> diaPresionado(Evento evento){
-        List<Object> datos = new ArrayList<>();
-        String estadoEvento = evento.getEstadoEvento().toString();
-        datos.add(estadoEvento.toString());
-        datos.add(evento.toString());
-        datos.add(evento.getHora().format(DateTimeFormatter.ofPattern("HH:mm")));   
-        if(evento.getLugar() != null && evento.getLugar() != "") datos.add(evento.getLugar());
-        else datos.add(evento.getDireccion());
-        datos.add(evento.getCliente().toString());
-        datos.add(evento.getTotalPagado());
-        
-        if(!estadoEvento.equals("FINALIZADO"))
-            datos.add(evento.getEstadoPago().toString());
+        if(evento == null) throw new IllegalArgumentException("El evento no puede ser nulo");
 
-        return datos;
+        try {
+            List<Object> datos = new ArrayList<>();
+            String estadoEvento = evento.getEstadoEvento().toString();
+            datos.add(estadoEvento.toString());
+            datos.add(evento.toString());
+            datos.add(evento.getHora().format(DateTimeFormatter.ofPattern("HH:mm")));   
+            if(evento.getLugar() != null && !evento.getLugar().isEmpty()) datos.add(evento.getLugar());
+            else datos.add(evento.getDireccion());
+            datos.add(evento.getCliente().toString());
+            datos.add(evento.getTotalPagado());
+            
+            if(!estadoEvento.equals("FINALIZADO"))
+                datos.add(evento.getEstadoPago().toString());
+
+            return datos;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("No pueden ser nulos");
+        }
     }
 
     /**
@@ -251,14 +257,26 @@ public class ServicioEvento {
         return LocalDate.now();
     }
     
+    /**
+     * Aumenta el valor del mes que le llega en 1
+     * @param fecha es la fecha a la que se le aumenta el mes
+     * @return regresa el día 1 del mes calculado
+     */
     public LocalDate aumentarMes(LocalDate fecha){
+        if(fecha == null) throw new IllegalArgumentException("La fecha no puede ser nula");
         fecha = fecha.withDayOfMonth(1);
         fecha = fecha.plusMonths(1);
         return fecha;
     }
+    /**
+     * Disminuye el valor del mes que le llega en 1
+     * @param fecha es la fecha a la que se le disminuye el mes
+     * @return regresa el día 1 del mes calculado
+     */
     public LocalDate disminuirMes(LocalDate fecha){
+        if(fecha == null) throw new IllegalArgumentException("La fecha no puede ser nula");
         fecha = fecha.withDayOfMonth(1);
-        fecha = fecha.plusMonths(-1);
+        fecha = fecha.minusMonths(1);
         return fecha;
     }
 }
