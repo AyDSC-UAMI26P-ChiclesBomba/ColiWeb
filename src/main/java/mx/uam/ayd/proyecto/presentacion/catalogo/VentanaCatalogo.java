@@ -54,11 +54,13 @@ public class VentanaCatalogo {
                 Parent root = loader.load();
 
                 stage = new Stage();
-                stage.setTitle("Catálogo de Insumos");
+                stage.setTitle("Catálogo de Materiales");
                 
                 // Dimensiones explícitas para evitar la pantalla negra
                 Scene scene = new Scene(root, 1100, 750);
                 stage.setScene(scene);
+                
+                stage.setMaximized(true);
                 
                 // Bloquea ventanas anteriores mientras el catálogo esté abierto
                 stage.initModality(Modality.APPLICATION_MODAL);
@@ -99,9 +101,7 @@ public class VentanaCatalogo {
                 if (listaSeleccionada != null) {
                     for (DetalleCotizacion detalle : listaSeleccionada) {
                         if (detalle.getMaterial() != null) {
-                            String renglon = detalle.getMaterial().getNombre() + 
-                                             " x" + detalle.getCantidad() + 
-                                             " ($" + detalle.getCosto() + ")";
+                            String renglon = detalle.getMaterial().getNombre() + " x" + detalle.getCantidad() + " ($" + detalle.getCosto() + ")";
                             this.listaMaterialSeleccionado.getItems().add(renglon);
                         }
                     }
@@ -216,6 +216,12 @@ public class VentanaCatalogo {
     System.out.println("Ventana cargada");
 
     }   
+    @FXML 
+    public void continuarCotizacion() { 
+        if (controlCatalogo != null) {
+            controlCatalogo.iniciarCotizacion(); 
+        }
+    }
 
     /* =========================================================================
      * MANEJO DE EVENTOS FXML (Botones OnAction)
