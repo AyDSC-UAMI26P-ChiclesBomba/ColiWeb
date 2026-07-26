@@ -143,12 +143,4 @@ public class ControlGestionEvento {
         controlCalendario.iniciaCalendario();
         ventana.cierra();
     }
-
-    /**
-     * Regresa al calendario
-     */
-    public void regresar(){
-        controlCalendario.iniciaCalendario();
-        ventana.cierra();
-    }
 }

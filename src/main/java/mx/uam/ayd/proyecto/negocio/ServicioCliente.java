@@ -30,11 +30,6 @@ public class ServicioCliente {
         }
         return clientes;
     }
-
-    public Cliente encontrarClientePorNombre(String nombre){
-        Cliente cliente = repositorioCliente.findByNombre(nombre);
-        return cliente;
-    }
     
     public String obtieneNumCliente(String nombre) throws Exception {
         Cliente cliente = repositorioCliente.findByNombre(nombre);
