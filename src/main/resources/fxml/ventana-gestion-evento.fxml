@@ -368,8 +368,7 @@
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <ImageView fx:id="imageVisualizacionCreacion" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
-                                                      <VBox alignment="CENTER" maxHeight="150.0" maxWidth="150.0" minHeight="150.0" minWidth="150.0" prefHeight="150.0" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                                      <VBox fx:id="subirFotoCreacion" alignment="CENTER" maxHeight="150.0" maxWidth="150.0" minHeight="150.0" minWidth="150.0" prefHeight="150.0" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                                          <children>
                                                             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
@@ -388,6 +387,7 @@
                                                             </Label>
                                                          </children>
                                                       </VBox>
+                                                      <ImageView fx:id="imageVisualizacionCreacion" fitHeight="150.0" fitWidth="150.0" onMouseClicked="#accionSeleccionarImagen" pickOnBounds="true" preserveRatio="true" />
                                                    </children>
                                                 </GridPane>
                                              </children>
@@ -727,8 +727,7 @@
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                    </rowConstraints>
                                                    <children>
-                                                      <ImageView fx:id="imageVisualizacionModificacion" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
-                                                      <VBox alignment="CENTER" maxHeight="150.0" maxWidth="150.0" minHeight="150.0" minWidth="150.0" prefHeight="150.0" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                                      <VBox fx:id="subirFotoModificacion" alignment="CENTER" maxHeight="150.0" maxWidth="150.0" minHeight="150.0" minWidth="150.0" prefHeight="150.0" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                                          <children>
                                                             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
@@ -747,6 +746,7 @@
                                                             </Label>
                                                          </children>
                                                       </VBox>
+                                                      <ImageView fx:id="imageVisualizacionModificacion" fitHeight="150.0" fitWidth="150.0" onMouseClicked="#accionSeleccionarImagen" pickOnBounds="true" preserveRatio="true" />
                                                    </children>
                                                 </GridPane>
                                              </children>

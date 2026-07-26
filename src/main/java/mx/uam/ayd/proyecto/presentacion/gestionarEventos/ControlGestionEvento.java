@@ -64,8 +64,8 @@ public class ControlGestionEvento {
         }
     }    
 
-    public void guardaEvento(TipoEvento tipo, String nombre, String num, LocalDate fecha, LocalTime hora, String lugar, String direccion, String referencias, String notas){
-        Cotizacion exito = servicioEvento.guardaEvento(nombre, num, fecha, tipo, hora, lugar, direccion, referencias, "imagen", notas);
+    public void guardaEvento(TipoEvento tipo, String nombre, String num, LocalDate fecha, LocalTime hora, String lugar, String direccion, String referencias, String imagen, String notas){
+        Cotizacion exito = servicioEvento.guardaEvento(nombre, num, fecha, tipo, hora, lugar, direccion, referencias, imagen, notas);
         if(exito != null){
             System.out.println("Se guardó el evento");
             controlCatalogo.inicia(exito);
@@ -74,10 +74,10 @@ public class ControlGestionEvento {
         }
     }
 
-    
     public void iniciaModificacionEvento(Evento evento){
         ventana.muestraModificacion(evento);
     }
+
     public void modificaEvento(Evento evento, LocalDate fecha, TipoEvento tipoEvento, LocalTime hora, String lugar, String direccion, String referencias, String imagen, String notas, EstadoEvento estadoEvento) {
         boolean exito = servicioEvento.modificaEvento(evento, fecha, tipoEvento, hora, lugar, direccion, referencias, imagen, notas, estadoEvento);
         if(exito){

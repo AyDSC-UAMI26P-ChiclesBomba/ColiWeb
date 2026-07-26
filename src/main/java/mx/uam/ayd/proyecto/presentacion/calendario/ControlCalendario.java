@@ -9,9 +9,7 @@ import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
 import mx.uam.ayd.proyecto.negocio.ServicioEvento;
-import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
-import mx.uam.ayd.proyecto.presentacion.catalogo.ControlCatalogo;
 import mx.uam.ayd.proyecto.presentacion.gestionarEventos.ControlGestionEvento;
 
 /**
@@ -24,14 +22,12 @@ public class ControlCalendario {
     private final ServicioEvento servicioEvento;
     private final VentanaCalendario ventana;
     private final ControlGestionEvento controlGestion;
-    private final ControlCatalogo controlCatalogo;
 
     @Autowired
-    public ControlCalendario(ServicioEvento servicioEvento, VentanaCalendario ventana, ControlGestionEvento controlGestion, ControlCatalogo controlCatalogo) {
+    public ControlCalendario(ServicioEvento servicioEvento, VentanaCalendario ventana, ControlGestionEvento controlGestion) {
         this.servicioEvento = servicioEvento;
         this.ventana = ventana;
         this.controlGestion = controlGestion;
-        this.controlCatalogo = controlCatalogo;
     }
 
     /**

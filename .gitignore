@@ -41,3 +41,6 @@ doc/
 *.db
 *.mv.db
 *.trace.db
+
+#Archivos de imagenes de eventos
+imagenes_eventos
