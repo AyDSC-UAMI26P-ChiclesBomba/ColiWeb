@@ -22,15 +22,13 @@ public class ServicioCotizacion {
     RepositorioCliente repositorioCliente;
 
     @Autowired
-    public ServicioCotizacion(RepositorioCotizacion repositorioCotizacion){
+    public ServicioCotizacion(RepositorioCotizacion repositorioCotizacion,RepositorioCliente repositorioCliente, RepositorioEvento repositorioEvento ){
         this.repositorioCotizacion = repositorioCotizacion;
+        this.repositorioCliente = repositorioCliente;
+        this.repositorioEvento = repositorioEvento;
     }
 
-    public boolean actualizaDetallesCotizacion(Float transporte, Float materialPersonalizado, Float materialCliente, Tamano tamano, String detalles, List<DetalleCotizacion> listaMaterialSeleccionado, Cotizacion cotizacion, Evento evento){
-        try{
-            if (cotizacion == null || evento== null){
-                return false;
-            }
+    public Cotizacion actualizaDetallesCotizacion(Float transporte, Float materialPersonalizado, Float materialCliente, Tamano tamano, String detalles, List<DetalleCotizacion> listaMaterialSeleccionado, Cotizacion cotizacion, Evento evento){
 
         cotizacion.setTransporte(transporte);
         cotizacion.setMaterialPersonalizado(materialPersonalizado);
@@ -49,15 +47,8 @@ public class ServicioCotizacion {
         cotizacion.setGanancia(costoganancia);
         float total = costoTotal(costototal, costoextra, costoconsumibles, costomanoora, costoganancia);
         cotizacion.setTotal(total);
-        
-        repositorioCotizacion.save(cotizacion);
-        repositorioEvento.save(evento);
 
-        return true;
-        } catch (Exception e){
-            System.err.println("Error al actualizar los detalles de la cotización: " + e.getMessage());
-            return false;
-        }
+        return cotizacion;
     }
 
     private float costoTotalMaterial(List<DetalleCotizacion> listaMaterialSeleccionado){

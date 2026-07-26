@@ -125,8 +125,7 @@ public class ServicioDetalleCotizacion {
         return true;
     }
 
-    public boolean actualizaPrecio(float precio, DetalleCotizacion materialLista){
-        try{
+    public DetalleCotizacion actualizaPrecio(float precio, DetalleCotizacion materialLista){
             Material material = materialLista.getMaterial();
             material.setPrecio(precio);
             float nuevoCosto = materialLista.getCantidad() * precio;
@@ -134,11 +133,8 @@ public class ServicioDetalleCotizacion {
 
             repositorioDetalleCotizacion.save(materialLista);
 
-            return true;
-        } catch(Exception e){
-            System.err.println("Error al actualizar el precio: " + e.getMessage());
-            return false;
-        }
+            return materialLista;
+        
     }
 
 

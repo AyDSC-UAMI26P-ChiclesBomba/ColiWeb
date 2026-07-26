@@ -33,20 +33,21 @@
 -->
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="833.0" prefWidth="1284.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="707.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <MenuBar prefHeight="126.0" prefWidth="792.0" VBox.vgrow="NEVER">
+    <MenuBar prefWidth="742.0" VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -85,48 +86,283 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="896.0" prefWidth="1299.0" VBox.vgrow="ALWAYS">
-      <children>
-        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
-          <font>
-            <Font size="18.0" />
-          </font>
-        </Label>
-            <BorderPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <top>
-                  <VBox prefHeight="74.0" prefWidth="1284.0" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="688.0" prefWidth="1051.0">
+         <top>
+            <VBox alignment="CENTER" prefHeight="85.0" prefWidth="1051.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Cotizacion Total">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </top>
+         <right>
+            <VBox prefHeight="637.0" prefWidth="305.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="55.0" prefWidth="305.0">
                      <children>
-                        <HBox prefHeight="42.0" prefWidth="1284.0">
+                        <Label alignment="CENTER" prefHeight="62.0" prefWidth="202.0" text="Total ">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="66.0" prefWidth="305.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="66.0" prefWidth="312.0">
                            <children>
-                              <Label prefHeight="35.0" prefWidth="77.0" text="Cotizacion:">
-                                 <HBox.margin>
-                                    <Insets left="20.0" />
-                                 </HBox.margin>
+                              <Label fx:id="IdlTotal" alignment="CENTER" prefHeight="63.0" prefWidth="191.0" text="\$ 3069.62">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
                               </Label>
-                              <Label prefHeight="35.0" prefWidth="150.0" text="20394" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="15.0" prefWidth="1284.0">
-                           <children>
-                              <Label prefHeight="38.0" prefWidth="56.0" text="Cliente: ">
-                                 <HBox.margin>
-                                    <Insets left="20.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label text="Maria Fernanda " />
-                              <Label text="Fecha:">
-                                 <padding>
-                                    <Insets left="30.0" />
-                                 </padding>
-                              </Label>
-                              <Label text="20/07/27" />
                            </children>
                         </HBox>
                      </children>
-                  </VBox>
-               </top>
-            </BorderPane>
-      </children>
-    </AnchorPane>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="45.0" prefWidth="305.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#copiaTotalCotizacion" prefHeight="36.0" prefWidth="162.0" text="Copiar Total">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="49.0" prefWidth="305.0">
+                     <children>
+                        <Label alignment="BOTTOM_CENTER" prefHeight="26.0" prefWidth="536.0" text="Confirma todos los detalles antes de proceder.">
+                           <HBox.margin>
+                              <Insets top="12.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="66.0" prefWidth="305.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#deshabilitaVolverCatalogo" prefHeight="36.0" prefWidth="162.0" text="Confirmar Cotizacion">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="66.0" prefWidth="305.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="162.0" text="Generar Contrato">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="66.0" prefWidth="305.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="162.0" text="Guardar Cotizacion">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="66.0" prefWidth="305.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#muestraCatalogo" prefHeight="36.0" prefWidth="162.0" text="Volver al Catalogo">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="66.0" prefWidth="305.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#muestraMensajeBorradoExito" prefHeight="36.0" prefWidth="162.0" text="Borrar Cotizacion">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </right>
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="72.0" prefWidth="746.0">
+                     <children>
+                        <HBox prefHeight="72.0" prefWidth="83.0">
+                           <children>
+                              <ImageView fitHeight="72.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="72.0" prefWidth="434.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="180.0" text="Costo de Materiales">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="72.0" prefWidth="246.0">
+                           <children>
+                              <Label fx:id="IdlTotalMaterial" text="\$ 1450.00">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="72.0" prefWidth="746.0">
+                     <children>
+                        <HBox prefHeight="72.0" prefWidth="83.0">
+                           <children>
+                              <ImageView fitHeight="72.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="72.0" prefWidth="434.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="180.0" text="Costos Extras">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="72.0" prefWidth="246.0">
+                           <children>
+                              <Label fx:id="IdlExtra" text="\$ 1450.00">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="72.0" prefWidth="746.0">
+                     <children>
+                        <HBox prefHeight="72.0" prefWidth="83.0">
+                           <children>
+                              <ImageView fitHeight="72.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="72.0" prefWidth="434.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="229.0" text="Consumibles">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="72.0" prefWidth="246.0">
+                           <children>
+                              <Label fx:id="IdlConsumibles" text="\$ 1450.00">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="72.0" prefWidth="746.0">
+                     <children>
+                        <HBox prefHeight="72.0" prefWidth="83.0">
+                           <children>
+                              <ImageView fitHeight="72.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="72.0" prefWidth="434.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="180.0" text="Mano de Obra">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="72.0" prefWidth="246.0">
+                           <children>
+                              <Label fx:id="IdlManoObra" text="\$ 1450.00">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="72.0" prefWidth="746.0">
+                     <children>
+                        <HBox prefHeight="72.0" prefWidth="83.0">
+                           <children>
+                              <ImageView fitHeight="72.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="72.0" prefWidth="434.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="180.0" text="Ganancia">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="72.0" prefWidth="246.0">
+                           <children>
+                              <Label fx:id="IdLGanacia" text="\$ 1450.00">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="72.0" prefWidth="746.0">
+                     <children>
+                        <HBox prefHeight="72.0" prefWidth="83.0">
+                           <children>
+                              <ImageView fitHeight="72.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="72.0" prefWidth="668.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="180.0" text="Detalles y Notas">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="IdlDetalles" alignment="TOP_LEFT" prefHeight="105.0" prefWidth="759.0" text="Escreibe aqui los detalles especificos como paleta de colores, materiales o restricciones de horario del salon." textAlignment="RIGHT" wrapText="true">
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                           <font>
+                              <Font size="13.5" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
   </children>
 </VBox>
