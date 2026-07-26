@@ -96,6 +96,14 @@
 			<version>4.0.17</version>
 			<scope>test</scope>
 		</dependency>
+
+        <!-- Apache PDFBox: permite crear archivos PDF reales -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>3.0.8</version>
+        </dependency>
+
 	</dependencies>
 
 	<build>
