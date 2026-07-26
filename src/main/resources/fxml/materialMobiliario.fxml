@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="180.0" spacing="10.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uam.ayd.proyecto.presentacion.catalogo.MaterialMobiliarioController">
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <children>
+      <ImageView fx:id="imgMaterial" fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="lblNombre" alignment="CENTER" text="Silla Tiffany" wrapText="true" />
+      <HBox alignment="CENTER" spacing="5.0">
+         <children>
+            <Label fx:id="lblEstado" text="Disponible" />
+            <Label text="|" />
+            <Label fx:id="lblPrecio" text="\$250" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" spacing="5.0">
+         <children>
+            <Label text="Daño:" />
+            <Label fx:id="lblTipoDano" text="Ninguno" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="160.0" spacing="10.0">
+         <children>
+            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarMaterial" text="+" />
+            <Label fx:id="lblCantidad" text="0" />
+            <Button fx:id="btnQuitar" mnemonicParsing="false" onAction="#quitarMaterial" text="-" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

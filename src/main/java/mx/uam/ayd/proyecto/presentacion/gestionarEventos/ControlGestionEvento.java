@@ -12,10 +12,12 @@ import jakarta.annotation.PostConstruct;
 import mx.uam.ayd.proyecto.negocio.ServicioCliente;
 import mx.uam.ayd.proyecto.negocio.ServicioEvento;
 import mx.uam.ayd.proyecto.negocio.modelo.Cliente;
+import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento.EstadoEvento;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento.TipoEvento;
 import mx.uam.ayd.proyecto.presentacion.calendario.ControlCalendario;
+import mx.uam.ayd.proyecto.presentacion.catalogo.ControlCatalogo;
 
 /**
  * Módulo de control para la HU-5
@@ -28,13 +30,15 @@ public class ControlGestionEvento {
     private final ServicioCliente servicioCliente;
     private final VentanaGestionEvento ventana;
     private final ControlCalendario controlCalendario;
+    private final ControlCatalogo controlCatalogo;
 
     @Autowired
-    public ControlGestionEvento(ServicioEvento servicioEvento, ServicioCliente servicioCliente, VentanaGestionEvento ventanaGestion, @Lazy ControlCalendario controlCalendario){
+    public ControlGestionEvento(ServicioEvento servicioEvento, ServicioCliente servicioCliente, VentanaGestionEvento ventanaGestion, @Lazy ControlCalendario controlCalendario, ControlCatalogo controlCatalogo){
         this.servicioEvento = servicioEvento;
         this.servicioCliente = servicioCliente;
         this.ventana = ventanaGestion;
         this.controlCalendario = controlCalendario;
+        this.controlCatalogo = controlCatalogo;
     }
 
     /**
@@ -61,9 +65,10 @@ public class ControlGestionEvento {
     }    
 
     public void guardaEvento(TipoEvento tipo, String nombre, String num, LocalDate fecha, LocalTime hora, String lugar, String direccion, String referencias, String notas){
-        boolean exito = servicioEvento.guardaEvento(nombre, num, fecha, tipo, hora, lugar, direccion, referencias, "imagen", notas);
-        if(exito){
+        Cotizacion exito = servicioEvento.guardaEvento(nombre, num, fecha, tipo, hora, lugar, direccion, referencias, "imagen", notas);
+        if(exito != null){
             System.out.println("Se guardó el evento");
+            controlCatalogo.inicia(exito);
         }else{
             ventana.muestraErrorEventoExistente();
         }

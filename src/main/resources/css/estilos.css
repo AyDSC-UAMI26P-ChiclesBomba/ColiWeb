@@ -172,8 +172,6 @@
     -fx-background-color: #808080 !important;
     background-color: #808080;
 }
-
-
 .switchEstadoBorrador {
     -fx-background-color: transparent;
     -fx-text-fill: black;
