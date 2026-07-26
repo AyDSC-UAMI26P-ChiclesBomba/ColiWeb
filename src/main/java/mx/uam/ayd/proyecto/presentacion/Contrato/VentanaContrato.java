@@ -1,6 +1,7 @@
 package mx.uam.ayd.proyecto.presentacion.Contrato;
 
 import java.io.File;
+import java.net.URL;
 
 import org.springframework.stereotype.Component;
 
@@ -17,18 +18,23 @@ import javafx.stage.Stage;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
 
 /**
- * Ventana correspondiente a la HU-6: Contratos.
+ * Ventana correspondiente a la Historia de Usuario 6:
+ * Gestión de Contratos.
  *
  * Esta clase pertenece a la capa de presentación.
  *
- * Se encarga de:
+ * Sus responsabilidades son:
  *
- * 1. Mostrar las cláusulas del contrato.
- * 2. Permitir la edición de las cláusulas.
- * 3. Solicitar que se guarde el contrato actual.
- * 4. Solicitar que se actualice la plantilla general.
- * 5. Elegir dónde guardar el PDF.
- * 6. Mostrar mensajes al usuario.
+ * 1. Cargar la interfaz definida en ventana-contrato.fxml.
+ * 2. Mostrar las cláusulas del contrato seleccionado.
+ * 3. Permitir al usuario editar las cláusulas.
+ * 4. Enviar al controlador las solicitudes de guardado.
+ * 5. Permitir actualizar la plantilla general.
+ * 6. Permitir seleccionar la ubicación del archivo PDF.
+ * 7. Mostrar mensajes informativos y mensajes de error.
+ *
+ * La ventana no contiene lógica de negocio ni accede directamente
+ * al repositorio. Todas las operaciones se delegan a ControlContrato.
  *
  * La firma física del contrato no se administra en esta clase.
  */
@@ -38,6 +44,9 @@ public class VentanaContrato {
     /**
      * Área de texto definida en el archivo FXML.
      *
+     * En este componente se muestran y editan las cláusulas
+     * correspondientes al contrato del evento actual.
+     *
      * Debe coincidir con:
      *
      * fx:id="textAreaClausulas"
@@ -46,19 +55,31 @@ public class VentanaContrato {
     private TextArea textAreaClausulas;
 
     /**
-     * Controlador de la historia de usuario.
+     * Controlador de la Historia de Usuario 6.
      *
-     * La ventana envía las acciones del usuario al controlador.
+     * La ventana utiliza esta referencia para enviar las acciones
+     * realizadas por el usuario.
+     *
+     * Por ejemplo:
+     *
+     * - Guardar cláusulas.
+     * - Actualizar la plantilla.
+     * - Generar el archivo PDF.
      */
     private ControlContrato control;
 
     /**
-     * Evento cuyo contrato se está editando actualmente.
+     * Evento cuyo contrato está siendo mostrado o editado.
+     *
+     * Se guarda temporalmente para utilizarlo cuando el usuario
+     * presiona Guardar o Generar PDF.
      */
     private Evento eventoActual;
 
     /**
-     * Ventana principal de JavaFX para esta historia de usuario.
+     * Ventana de JavaFX utilizada por esta Historia de Usuario.
+     *
+     * El Stage se crea solamente la primera vez y después se reutiliza.
      */
     private Stage stage;
 
@@ -66,23 +87,34 @@ public class VentanaContrato {
      * Asigna el controlador de contratos a esta ventana.
      *
      * Este método es llamado desde el método init()
-     * de ControlContrato.
+     * de ControlContrato después de que Spring crea los componentes.
      *
-     * @param control controlador de la HU-6
+     * Con esta asignación se establece la comunicación:
+     *
+     * VentanaContrato → ControlContrato
+     *
+     * @param control controlador de la Historia de Usuario 6
      */
     public void setControlContrato(ControlContrato control) {
 
+        /*
+         * Guarda la referencia al controlador para poder enviar
+         * posteriormente las acciones realizadas por el usuario.
+         */
         this.control = control;
     }
 
     /**
-     * Muestra la ventana del contrato.
+     * Muestra la ventana del contrato de un evento.
      *
      * Recibe el evento seleccionado y las cláusulas que deben
      * aparecer en el área de texto.
      *
-     * @param evento evento cuyo contrato se editará
-     * @param clausulas cláusulas actuales del contrato
+     * Si la ventana todavía no ha sido creada, carga el archivo FXML.
+     * Si ya existe, reutiliza el mismo Stage.
+     *
+     * @param evento evento cuyo contrato será administrado
+     * @param clausulas cláusulas que se mostrarán en la ventana
      */
     public void muestraContrato(Evento evento, String clausulas) {
 
@@ -101,15 +133,18 @@ public class VentanaContrato {
         }
 
         /*
-         * Guarda el evento para utilizarlo cuando el usuario
-         * presione Guardar o Generar PDF.
+         * Guarda el evento recibido como el evento actual.
+         *
+         * Esta referencia será utilizada en las operaciones
+         * de guardado y generación del PDF.
          */
         this.eventoActual = evento;
 
         /*
-         * La ventana se crea solamente la primera vez.
+         * La ventana se crea únicamente la primera vez.
          *
-         * Si ya existe, se reutiliza.
+         * En llamadas posteriores se reutiliza el Stage,
+         * evitando cargar nuevamente el archivo FXML.
          */
         if (stage == null) {
 
@@ -117,21 +152,18 @@ public class VentanaContrato {
         }
 
         /*
-         * Si las cláusulas son nulas, se muestra un texto vacío.
+         * JavaFX TextArea no debe recibir un valor nulo.
          *
-         * Esto evita enviar null al TextArea.
+         * Si las cláusulas son nulas, se muestra una cadena vacía.
+         * En caso contrario, se muestra el texto recibido.
          */
-        if (clausulas == null) {
-
-            textAreaClausulas.setText("");
-
-        } else {
-
-            textAreaClausulas.setText(clausulas);
-        }
+        textAreaClausulas.setText(
+            clausulas == null ? "" : clausulas
+        );
 
         /*
-         * Coloca el cursor al inicio del texto.
+         * Coloca el cursor al inicio del texto para que el usuario
+         * vea el contrato desde la primera línea.
          */
         textAreaClausulas.positionCaret(0);
 
@@ -141,52 +173,125 @@ public class VentanaContrato {
         stage.show();
 
         /*
-         * Lleva la ventana al frente.
+         * Lleva la ventana al frente en caso de que estuviera
+         * detrás de otra ventana de la aplicación.
          */
         stage.toFront();
     }
 
     /**
-     * Carga el archivo FXML y crea la ventana.
+     * Carga el archivo FXML y crea la ventana JavaFX.
      *
-     * Es privado porque solamente se utiliza dentro
-     * de VentanaContrato.
+     * Este método es privado porque únicamente se utiliza
+     * dentro de VentanaContrato.
+     *
+     * @throws IllegalStateException si el archivo FXML no existe
+     *                               o no puede cargarse
      */
     private void crearVentana() {
 
         try {
-            // ===== INICIO CORRECCIÓN DE CARGA FXML =====
-            java.net.URL rutaFXML =
+
+            /*
+             * Busca el archivo FXML dentro de:
+             *
+             * src/main/resources/fxml/ventana-contrato.fxml
+             */
+            URL rutaFXML =
                 getClass().getResource("/fxml/ventana-contrato.fxml");
 
+            /*
+             * Si getResource devuelve null, significa que el archivo
+             * no fue encontrado en los recursos de la aplicación.
+             */
             if (rutaFXML == null) {
+
                 throw new IllegalStateException(
                     "No se encontró /fxml/ventana-contrato.fxml. "
                     + "Debe estar en src/main/resources/fxml/"
                 );
             }
 
+            /*
+             * Crea el cargador encargado de leer el archivo FXML.
+             */
             FXMLLoader loader = new FXMLLoader(rutaFXML);
+
+            /*
+             * Indica que esta misma instancia de VentanaContrato
+             * funcionará como controlador del archivo FXML.
+             *
+             * Por esta razón, el archivo FXML no debe declarar
+             * otro fx:controller diferente.
+             */
             loader.setController(this);
 
+            /*
+             * Carga la estructura visual definida en el FXML.
+             */
             Parent root = loader.load();
 
+            /*
+             * Crea el Stage principal de esta Historia de Usuario.
+             */
             stage = new Stage();
+
+            /*
+             * Establece el título mostrado en la barra de la ventana.
+             */
             stage.setTitle("Gestión de contrato");
+
+            /*
+             * Configura la ventana como modal.
+             *
+             * Mientras esta ventana esté abierta, el usuario debe
+             * terminar la interacción antes de volver a otra ventana.
+             */
             stage.initModality(Modality.APPLICATION_MODAL);
+
+            /*
+             * Crea la escena con los componentes cargados desde FXML
+             * y la asigna al Stage.
+             */
             stage.setScene(new Scene(root));
-            // ===== FIN CORRECCIÓN DE CARGA FXML =====
+
+            /*
+             * Intercepta el cierre realizado desde la X de la ventana.
+             *
+             * En lugar de destruir el Stage, llama cerrarVentana()
+             * para ocultarlo y permitir reutilizarlo posteriormente.
+             */
+            stage.setOnCloseRequest(eventoCierre -> {
+
+                /*
+                 * Evita que JavaFX destruya automáticamente la ventana.
+                 */
+                eventoCierre.consume();
+
+                /*
+                 * Ejecuta el mismo procedimiento utilizado
+                 * por el botón Cancelar.
+                 */
+                cerrarVentana();
+            });
 
         } catch (Exception e) {
 
-            System.err.println("ERROR AL ABRIR VENTANA CONTRATO");
-            e.printStackTrace();
-
+            /*
+             * Muestra un mensaje comprensible para el usuario.
+             */
             mostrarError(
                 "Error al abrir la ventana",
                 "No fue posible cargar ventana-contrato.fxml."
             );
 
+            /*
+             * Convierte el error original en una excepción
+             * de estado de la aplicación.
+             *
+             * La causa original se conserva dentro de la excepción
+             * para facilitar el diagnóstico del problema.
+             */
             throw new IllegalStateException(
                 "No fue posible cargar la ventana de contratos.",
                 e
@@ -195,49 +300,35 @@ public class VentanaContrato {
     }
 
     /**
-     * Se ejecuta al presionar el botón Guardar contrato.
+     * Se ejecuta cuando el usuario presiona el botón
+     * Guardar contrato.
      *
-     * Guarda únicamente las cláusulas del evento actual.
-     *
-     * No modifica la plantilla general.
+     * Guarda únicamente las cláusulas asociadas al evento actual.
+     * Esta operación no modifica la plantilla general.
      */
     @FXML
     private void handleGuardar() {
 
         /*
-         * Verifica que la ventana tenga un controlador.
+         * Comprueba que la ventana tenga un controlador asignado
+         * y que exista un evento actual.
          */
-        if (control == null) {
-
-            mostrarError(
-                "Error de configuración",
-                "No se ha asignado el controlador de contratos."
-            );
+        if (!configuracionValida()) {
 
             return;
         }
 
         /*
-         * Verifica que exista un evento actual.
-         */
-        if (eventoActual == null) {
-
-            mostrarError(
-                "Evento no seleccionado",
-                "No existe un evento para guardar el contrato."
-            );
-
-            return;
-        }
-
-        /*
-         * Obtiene el texto escrito dentro del TextArea.
+         * Obtiene el contenido escrito por el usuario
+         * dentro del área de texto.
          */
         String clausulas = textAreaClausulas.getText();
 
         /*
-         * Realiza una validación sencilla antes
-         * de enviar la información al controlador.
+         * Evita guardar un contrato sin cláusulas.
+         *
+         * isBlank también detecta textos formados únicamente
+         * por espacios o saltos de línea.
          */
         if (clausulas == null || clausulas.isBlank()) {
 
@@ -254,7 +345,8 @@ public class VentanaContrato {
             /*
              * Envía las cláusulas al controlador.
              *
-             * El controlador las enviará al ServicioContrato.
+             * El controlador delegará la operación
+             * a ServicioContrato, quien realizará el guardado.
              */
             control.guardarClausulas(
                 eventoActual,
@@ -262,7 +354,8 @@ public class VentanaContrato {
             );
 
             /*
-             * Informa que el guardado terminó correctamente.
+             * Informa al usuario que la operación terminó
+             * correctamente.
              */
             mostrarInformacion(
                 "Contrato guardado",
@@ -272,7 +365,8 @@ public class VentanaContrato {
         } catch (IllegalArgumentException e) {
 
             /*
-             * Captura errores relacionados con datos inválidos.
+             * Captura problemas relacionados con datos inválidos,
+             * por ejemplo un evento nulo o cláusulas vacías.
              */
             mostrarError(
                 "No se pudo guardar el contrato",
@@ -282,8 +376,8 @@ public class VentanaContrato {
         } catch (IllegalStateException e) {
 
             /*
-             * Captura errores ocurridos al guardar
-             * en la base de datos.
+             * Captura problemas ocurridos durante la persistencia
+             * de la información.
              */
             mostrarError(
                 "Error al guardar",
@@ -293,18 +387,22 @@ public class VentanaContrato {
     }
 
     /**
-     * Se ejecuta al presionar Guardar plantilla.
+     * Se ejecuta cuando el usuario presiona
+     * el botón Guardar plantilla.
      *
-     * Guarda el contenido actual como la plantilla que utilizarán
-     * los contratos que se creen posteriormente.
+     * Guarda el contenido actual del área de texto como
+     * la plantilla general para contratos posteriores.
      *
-     * No modifica contratos anteriores.
+     * Esta operación no modifica contratos anteriores.
      */
     @FXML
     private void handleGuardarPlantilla() {
 
         /*
-         * Comprueba que exista el controlador.
+         * Comprueba que el controlador haya sido asignado.
+         *
+         * Sin controlador no es posible enviar la solicitud
+         * a la capa de negocio.
          */
         if (control == null) {
 
@@ -317,12 +415,14 @@ public class VentanaContrato {
         }
 
         /*
-         * Obtiene el texto que se desea guardar como plantilla.
+         * Obtiene el texto que será utilizado
+         * como nueva plantilla general.
          */
         String nuevaPlantilla = textAreaClausulas.getText();
 
         /*
-         * Evita guardar una plantilla vacía.
+         * Evita guardar una plantilla nula, vacía
+         * o formada solamente por espacios.
          */
         if (nuevaPlantilla == null || nuevaPlantilla.isBlank()) {
 
@@ -335,34 +435,47 @@ public class VentanaContrato {
         }
 
         /*
-         * Muestra una alerta de confirmación.
+         * Crea una alerta de confirmación para evitar
+         * que la plantilla general sea reemplazada accidentalmente.
          */
         Alert confirmacion = new Alert(
             Alert.AlertType.CONFIRMATION
         );
 
+        /*
+         * Configura el título de la alerta.
+         */
         confirmacion.setTitle("Guardar plantilla");
 
+        /*
+         * Explica al usuario la operación que está por realizarse.
+         */
         confirmacion.setHeaderText(
             "¿Desea actualizar la plantilla general?"
         );
 
+        /*
+         * Aclara que el cambio se aplicará solamente
+         * a contratos posteriores.
+         */
         confirmacion.setContentText(
             "Esta plantilla será utilizada en los contratos siguientes. "
             + "Los contratos anteriores no serán modificados."
         );
 
         /*
-         * Espera la respuesta del usuario.
+         * Muestra la alerta y espera la respuesta del usuario.
          *
-         * El resultado será true solamente si presiona Aceptar.
+         * El resultado será verdadero únicamente
+         * si el usuario presiona Aceptar.
          */
         boolean aceptado = confirmacion.showAndWait()
             .filter(respuesta -> respuesta == ButtonType.OK)
             .isPresent();
 
         /*
-         * Si el usuario cancela, no se realiza ningún cambio.
+         * Si el usuario cancela la confirmación,
+         * no se realiza ningún cambio.
          */
         if (!aceptado) {
 
@@ -372,12 +485,15 @@ public class VentanaContrato {
         try {
 
             /*
-             * Envía el texto al controlador.
+             * Envía la nueva plantilla al controlador.
+             *
+             * El controlador delegará la escritura del archivo
+             * a ServicioContrato.
              */
             control.actualizarPlantilla(nuevaPlantilla);
 
             /*
-             * Muestra la confirmación del guardado.
+             * Informa que la plantilla fue actualizada.
              */
             mostrarInformacion(
                 "Plantilla actualizada",
@@ -386,6 +502,9 @@ public class VentanaContrato {
 
         } catch (IllegalArgumentException e) {
 
+            /*
+             * Captura errores relacionados con una plantilla inválida.
+             */
             mostrarError(
                 "No se pudo actualizar la plantilla",
                 e.getMessage()
@@ -393,6 +512,10 @@ public class VentanaContrato {
 
         } catch (IllegalStateException e) {
 
+            /*
+             * Captura errores ocurridos al escribir
+             * el archivo de la plantilla.
+             */
             mostrarError(
                 "Error al actualizar la plantilla",
                 e.getMessage()
@@ -401,57 +524,44 @@ public class VentanaContrato {
     }
 
     /**
-     * Se ejecuta al presionar Generar PDF.
+     * Se ejecuta cuando el usuario presiona
+     * el botón Generar PDF.
      *
-     * Permite que el usuario seleccione el nombre y la ubicación
-     * donde se guardará el archivo.
+     * Permite seleccionar el nombre y la ubicación
+     * donde se guardará el contrato.
      */
     @FXML
     private void handleGenerarPDF() {
 
         /*
-         * Comprueba que exista el controlador.
+         * Comprueba que exista el controlador
+         * y un evento actualmente seleccionado.
          */
-        if (control == null) {
-
-            mostrarError(
-                "Error de configuración",
-                "No se ha asignado el controlador de contratos."
-            );
+        if (!configuracionValida()) {
 
             return;
         }
 
         /*
-         * Comprueba que exista un evento.
-         */
-        if (eventoActual == null) {
-
-            mostrarError(
-                "Evento no seleccionado",
-                "No existe un evento para generar el contrato."
-            );
-
-            return;
-        }
-
-        /*
-         * Crea el selector de archivos.
+         * Crea el selector de archivos utilizado
+         * para elegir la ubicación del PDF.
          */
         FileChooser selector = new FileChooser();
 
         /*
-         * Establece el título del selector.
+         * Establece el título mostrado
+         * en el selector de archivos.
          */
         selector.setTitle("Guardar contrato en PDF");
 
         /*
-         * Crea el nombre inicial del archivo.
+         * Define el nombre inicial sugerido.
          */
         String nombreArchivo = "contrato";
 
         /*
-         * Si el evento tiene fecha, se agrega al nombre.
+         * Si el evento tiene una fecha, la agrega al nombre
+         * para facilitar la identificación del archivo.
          */
         if (eventoActual.getFecha() != null) {
 
@@ -459,17 +569,17 @@ public class VentanaContrato {
         }
 
         /*
-         * Agrega la extensión PDF.
+         * Agrega la extensión del formato PDF.
          */
         nombreArchivo += ".pdf";
 
         /*
-         * Coloca el nombre sugerido.
+         * Coloca el nombre sugerido en el selector.
          */
         selector.setInitialFileName(nombreArchivo);
 
         /*
-         * Configura el selector para archivos PDF.
+         * Limita la selección a archivos con extensión .pdf.
          */
         selector.getExtensionFilters().add(
             new FileChooser.ExtensionFilter(
@@ -479,24 +589,29 @@ public class VentanaContrato {
         );
 
         /*
-         * Abre el selector para guardar el archivo.
+         * Muestra el selector de archivos.
          *
          * Si el usuario presiona Cancelar, el resultado será null.
          */
         File archivo = selector.showSaveDialog(stage);
 
+        /*
+         * Si no se eligió un archivo, termina la operación
+         * sin generar ningún documento.
+         */
         if (archivo == null) {
 
             return;
         }
 
         /*
-         * Obtiene la ruta completa seleccionada.
+         * Obtiene la ruta completa seleccionada por el usuario.
          */
         String rutaArchivo = archivo.getAbsolutePath();
 
         /*
-         * Asegura que el nombre termine con .pdf.
+         * Asegura que el nombre final termine con .pdf,
+         * aunque el usuario no haya escrito la extensión.
          */
         if (!rutaArchivo.toLowerCase().endsWith(".pdf")) {
 
@@ -506,7 +621,10 @@ public class VentanaContrato {
         try {
 
             /*
-             * Solicita al controlador que genere el PDF.
+             * Solicita al controlador la generación del documento.
+             *
+             * El controlador delegará la operación
+             * a ServicioContrato.
              */
             control.generarPDF(
                 eventoActual,
@@ -514,7 +632,8 @@ public class VentanaContrato {
             );
 
             /*
-             * Muestra la ubicación donde fue guardado.
+             * Informa al usuario la ubicación
+             * donde fue guardado el archivo.
              */
             mostrarInformacion(
                 "PDF generado",
@@ -524,6 +643,10 @@ public class VentanaContrato {
 
         } catch (IllegalArgumentException e) {
 
+            /*
+             * Captura errores relacionados con datos inválidos,
+             * por ejemplo una ruta vacía o un evento nulo.
+             */
             mostrarError(
                 "No se pudo generar el PDF",
                 e.getMessage()
@@ -531,6 +654,10 @@ public class VentanaContrato {
 
         } catch (IllegalStateException e) {
 
+            /*
+             * Captura errores ocurridos durante
+             * la creación o escritura del documento.
+             */
             mostrarError(
                 "Error al generar el PDF",
                 e.getMessage()
@@ -539,23 +666,78 @@ public class VentanaContrato {
     }
 
     /**
-     * Se ejecuta al presionar el botón Cancelar.
+     * Verifica que la ventana esté preparada para realizar
+     * una operación sobre el contrato.
+     *
+     * Comprueba:
+     *
+     * 1. Que exista un controlador asignado.
+     * 2. Que exista un evento actualmente seleccionado.
+     *
+     * @return true si la configuración es válida;
+     *         false si falta el controlador o el evento
+     */
+    private boolean configuracionValida() {
+
+        /*
+         * Sin controlador, la ventana no puede comunicarse
+         * con la capa de negocio.
+         */
+        if (control == null) {
+
+            mostrarError(
+                "Error de configuración",
+                "No se ha asignado el controlador de contratos."
+            );
+
+            return false;
+        }
+
+        /*
+         * Sin evento actual, no es posible guardar cláusulas
+         * ni generar el contrato.
+         */
+        if (eventoActual == null) {
+
+            mostrarError(
+                "Evento no seleccionado",
+                "No existe un evento para realizar esta operación."
+            );
+
+            return false;
+        }
+
+        /*
+         * La ventana tiene todos los elementos necesarios
+         * para continuar con la operación.
+         */
+        return true;
+    }
+
+    /**
+     * Se ejecuta cuando el usuario presiona
+     * el botón Cancelar.
      */
     @FXML
     private void handleCancelar() {
 
+        /*
+         * Cierra la interacción actual sin destruir el Stage.
+         */
         cerrarVentana();
     }
 
     /**
-     * Oculta la ventana y limpia el evento actual.
+     * Oculta la ventana y limpia la referencia
+     * al evento actual.
+     *
+     * Se utiliza hide() en lugar de close() para poder
+     * reutilizar el mismo Stage posteriormente.
      */
     private void cerrarVentana() {
 
         /*
-         * Oculta el Stage si ya fue creado.
-         *
-         * Se utiliza hide() para poder reutilizarlo posteriormente.
+         * Oculta el Stage solamente si ya fue creado.
          */
         if (stage != null) {
 
@@ -563,7 +745,8 @@ public class VentanaContrato {
         }
 
         /*
-         * Informa al controlador que terminó la interacción.
+         * Informa al controlador que terminó
+         * la interacción con la ventana.
          */
         if (control != null) {
 
@@ -571,17 +754,19 @@ public class VentanaContrato {
         }
 
         /*
-         * Limpia la referencia para evitar utilizar
-         * accidentalmente el evento anterior.
+         * Elimina la referencia al evento anterior.
+         *
+         * Esto evita que una operación posterior utilice
+         * accidentalmente un evento que ya no está seleccionado.
          */
         eventoActual = null;
     }
 
     /**
-     * Muestra una alerta informativa.
+     * Muestra una alerta informativa al usuario.
      *
      * @param titulo título de la alerta
-     * @param mensaje texto que se mostrará
+     * @param mensaje contenido que se mostrará
      */
     private void mostrarInformacion(
             String titulo,
@@ -594,18 +779,21 @@ public class VentanaContrato {
             Alert.AlertType.INFORMATION
         );
 
+        /*
+         * Configura los textos de la alerta.
+         */
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
 
         /*
-         * Muestra la alerta y espera que el usuario la cierre.
+         * Muestra la alerta y espera a que el usuario la cierre.
          */
         alerta.showAndWait();
     }
 
     /**
-     * Muestra una alerta de error.
+     * Muestra una alerta de error al usuario.
      *
      * @param titulo título de la alerta
      * @param mensaje descripción del problema
@@ -621,25 +809,27 @@ public class VentanaContrato {
             Alert.AlertType.ERROR
         );
 
+        /*
+         * Configura el título y elimina
+         * el encabezado adicional.
+         */
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
 
         /*
-         * Evita mostrar null o un mensaje completamente vacío.
+         * Evita mostrar un mensaje nulo o completamente vacío.
+         *
+         * Si no existe un mensaje específico, se utiliza
+         * una descripción genérica.
          */
-        if (mensaje == null || mensaje.isBlank()) {
-
-            alerta.setContentText(
-                "Ocurrió un error inesperado."
-            );
-
-        } else {
-
-            alerta.setContentText(mensaje);
-        }
+        alerta.setContentText(
+            mensaje == null || mensaje.isBlank()
+                ? "Ocurrió un error inesperado."
+                : mensaje
+        );
 
         /*
-         * Muestra la alerta.
+         * Muestra la alerta y espera a que el usuario la cierre.
          */
         alerta.showAndWait();
     }
