@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
 import mx.uam.ayd.proyecto.negocio.ServicioEvento;
+import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
+import mx.uam.ayd.proyecto.negocio.modelo.DetalleCotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
 import mx.uam.ayd.proyecto.presentacion.Publicacion.ControlPublicacion;
+import mx.uam.ayd.proyecto.presentacion.cotizacionTotal.ControlCotizacionTotal;
 import mx.uam.ayd.proyecto.presentacion.gestionarEventos.ControlGestionEvento;
 
 /**
@@ -24,13 +28,15 @@ public class ControlCalendario {
     private final VentanaCalendario ventana;
     private final ControlGestionEvento controlGestion;
     private final ControlPublicacion controlPublicacion;
+    private final ControlCotizacionTotal controlCotizacionTotal;
 
     @Autowired
-    public ControlCalendario(ServicioEvento servicioEvento, VentanaCalendario ventana, ControlGestionEvento controlGestion, ControlPublicacion controlPublicacion) {
+    public ControlCalendario(ServicioEvento servicioEvento, VentanaCalendario ventana, ControlGestionEvento controlGestion, ControlPublicacion controlPublicacion, @Lazy ControlCotizacionTotal controlCotizacionTotal) {
         this.servicioEvento = servicioEvento;
         this.ventana = ventana;
         this.controlGestion = controlGestion;
         this.controlPublicacion = controlPublicacion;
+        this.controlCotizacionTotal = controlCotizacionTotal;
     }
 
     /**
@@ -118,9 +124,7 @@ public class ControlCalendario {
     public void verCotizacion(Evento evento){
         Object[] datos = new Object[2];
         datos = servicioEvento.obtenerCotizacionDetalles(evento);
-        /*Cotizacion cotizacion = (Cotizacion) datos[0];
-
-        controlCatalogo.inicia(cotizacion);*/ // No es esa conexión
+        controlCotizacionTotal.iniciaCotizacionTotal((List<DetalleCotizacion>)datos[1], (Cotizacion)datos[0]);
         ventana.cierra();
 
         System.out.println("Cambio a HU-2, ver cotización");
