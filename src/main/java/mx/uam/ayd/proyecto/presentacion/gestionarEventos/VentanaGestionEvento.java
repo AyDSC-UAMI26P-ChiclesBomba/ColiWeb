@@ -483,7 +483,7 @@ public class VentanaGestionEvento {
 	@FXML
 	private void presionarBotonCancelar(){
 		reiniciarValores();
-		control.regresar();
+		control.abreCalendario();
 	}
 	/**
 	 * Cuando se presiona el botón para crear, se validan los datos y se cambian de tipos en caso de ser neceario para mandarlos al control a guardarlos

@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -26,7 +25,7 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="720.0" prefWidth="1048.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
             <BorderPane prefHeight="623.0" prefWidth="989.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <top>
@@ -72,18 +71,22 @@
                   </ScrollPane>
                </center>
                <right>
-                  <VBox prefHeight="729.0" prefWidth="242.0" spacing="15.0" BorderPane.alignment="CENTER">
+                  <VBox prefHeight="671.0" prefWidth="467.0" spacing="15.0" BorderPane.alignment="CENTER">
                      <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
                      <children>
-                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="215.0" text="Material Seleccionado" textFill="#260139">
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="425.0" text="Material Seleccionado" textFill="#260139">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="listaMaterialSeleccionado" prefHeight="500.0" prefWidth="202.0" />
-                        <Button fx:id="btnContinuarCotizacion" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="45.0" text="Continuar a Cotización" />
+                        <ScrollPane prefHeight="557.0" prefWidth="349.0">
+                           <content>
+                              <FlowPane fx:id="flowListaMaterial" prefHeight="542.0" prefWidth="429.0" />
+                           </content>
+                        </ScrollPane>
+                        <Button fx:id="btnContinuarCotizacion" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#continuarCotizacion" prefHeight="45.0" text="Continuar a Cotización" />
                      </children>
                   </VBox>
                </right>

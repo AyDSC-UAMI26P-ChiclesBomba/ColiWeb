@@ -1,8 +1,11 @@
 package mx.uam.ayd.proyecto.presentacion.catalogo;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
@@ -16,6 +19,7 @@ import mx.uam.ayd.proyecto.negocio.ServicioMobiliario;
 import mx.uam.ayd.proyecto.negocio.modelo.Cotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.DetalleCotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Globo.TipoGlobo;
+import mx.uam.ayd.proyecto.presentacion.cotizacionTotal.ControlCotizacionTotal;
 import mx.uam.ayd.proyecto.negocio.modelo.Material;
 import mx.uam.ayd.proyecto.negocio.modelo.Mobiliario;
 
@@ -33,19 +37,13 @@ public class ControlCatalogo {
     private final ServicioDetalleCotizacion servicioDetalleCotizacion;
 
     private final VentanaCatalogo ventanaCatalogo;
+    private ControlCotizacionTotal controlCotizacionTotal;
 
 
     private Cotizacion cotizacion;
 
     @Autowired
-    public ControlCatalogo(
-            ServicioMaterial servicioMaterial,
-            ServicioGlobo servicioGlobo,
-            ServicioMobiliario servicioMobiliario,
-            ServicioMaterialDecorativo servicioMaterialDecorativo,
-            ServicioComestible servicioComestible,
-            ServicioDetalleCotizacion servicioDetalleCotizacion,
-            VentanaCatalogo ventanaCatalogo) {
+    public ControlCatalogo(ServicioMaterial servicioMaterial, ServicioGlobo servicioGlobo, ServicioMobiliario servicioMobiliario, ServicioMaterialDecorativo servicioMaterialDecorativo, ServicioComestible servicioComestible, ServicioDetalleCotizacion servicioDetalleCotizacion,VentanaCatalogo ventanaCatalogo) {
 
         this.servicioMaterial = servicioMaterial;
         this.servicioGlobo = servicioGlobo;
@@ -54,6 +52,11 @@ public class ControlCatalogo {
         this.servicioComestible = servicioComestible;
         this.servicioDetalleCotizacion = servicioDetalleCotizacion;
         this.ventanaCatalogo = ventanaCatalogo;
+    }
+
+    @Autowired
+    public void setControlCotizacionTotal(@Lazy ControlCotizacionTotal controlCotizacionTotal) {
+        this.controlCotizacionTotal = controlCotizacionTotal;
     }
 
     @PostConstruct
@@ -78,7 +81,7 @@ public class ControlCatalogo {
                 return;
             }
         }
-        ventanaCatalogo.muestraListaMaterial(servicioDetalleCotizacion.agregaMaterialLista(materialSeleccionado));
+        ventanaCatalogo.muestraListaMaterial(servicioDetalleCotizacion.agregaMaterialLista(materialSeleccionado, this.cotizacion));
     }
 
     public void recuperarTodoMaterial() {
@@ -87,10 +90,6 @@ public class ControlCatalogo {
 
     public void recuperarTodoGlobos() {
         ventanaCatalogo.muestraCatalogoGlobos(servicioGlobo.recuperaTodoGlobo());
-    }
-
-    public void recuperarTodoGloboFiltro(Color color, int medida, TipoGlobo tipoGlobo) {
-        ventanaCatalogo.muestraCatalogoGloboFiltro(servicioGlobo.recuperaGlobosFiltro(color, medida, tipoGlobo));
     }
 
     public void recuperarTodoMaterialDecorativo() {
@@ -119,6 +118,13 @@ public class ControlCatalogo {
 
     public void borrarMaterialLista(DetalleCotizacion detalleCotizacion){
         ventanaCatalogo.muestraMaterialLista(servicioDetalleCotizacion.borraMaterialLista(detalleCotizacion));
+    }
+
+    public void iniciarCotizacion(){
+        List<DetalleCotizacion> listaSeleccionada = servicioDetalleCotizacion.verificarListaMaterial(this.cotizacion);
+        System.out.println("Lista del servicio: " + listaSeleccionada.size());
+        ventanaCatalogo.cierra();
+        controlCotizacionTotal.iniciaCotizacionTotal(listaSeleccionada, this.cotizacion);
     }
 
 } 

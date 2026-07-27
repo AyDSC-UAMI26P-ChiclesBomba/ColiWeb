@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -32,9 +31,8 @@ public class VentanaCatalogo {
 
     @FXML
     private FlowPane flowMateriales;
-
     @FXML
-    private ListView<String> listaMaterialSeleccionado;
+    private FlowPane flowListaMaterial;
 
     @FXML
     private Button btnContinuarCotizacion;
@@ -54,11 +52,13 @@ public class VentanaCatalogo {
                 Parent root = loader.load();
 
                 stage = new Stage();
-                stage.setTitle("Catálogo de Insumos");
+                stage.setTitle("Catálogo de Materiales");
                 
                 // Dimensiones explícitas para evitar la pantalla negra
                 Scene scene = new Scene(root, 1100, 750);
                 stage.setScene(scene);
+                
+                stage.setMaximized(true);
                 
                 // Bloquea ventanas anteriores mientras el catálogo esté abierto
                 stage.initModality(Modality.APPLICATION_MODAL);
@@ -91,24 +91,60 @@ public class VentanaCatalogo {
         muestraListaMaterial(listaMaterialSeleccionado);
     }
 
-    public void muestraListaMaterial(List<DetalleCotizacion> listaSeleccionada) {
-        ejecutarEnHiloJavaFX(() -> {
-            validaListaVacia(listaSeleccionada);
-            if (this.listaMaterialSeleccionado != null) {
-                this.listaMaterialSeleccionado.getItems().clear();
-                if (listaSeleccionada != null) {
-                    for (DetalleCotizacion detalle : listaSeleccionada) {
-                        if (detalle.getMaterial() != null) {
-                            String renglon = detalle.getMaterial().getNombre() + 
-                                             " x" + detalle.getCantidad() + 
-                                             " ($" + detalle.getCosto() + ")";
-                            this.listaMaterialSeleccionado.getItems().add(renglon);
-                        }
-                    }
-                }
+
+    public void muestraListaMaterial(List<DetalleCotizacion> listaMaterialSeleccionado) {
+
+    ejecutarEnHiloJavaFX(() -> {
+
+        validaListaVacia(listaMaterialSeleccionado);
+
+        if (flowListaMaterial == null) {
+            return;
+        }
+
+        flowListaMaterial.getChildren().clear();
+
+        if (listaMaterialSeleccionado == null) {
+            return;
+        }
+
+        for (DetalleCotizacion detalle : listaMaterialSeleccionado) {
+
+            try {
+
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/fxml/detalleCotizacion.fxml"));
+
+                Parent tarjeta = loader.load();
+
+                DetalleCotizacionController controller =
+                        loader.getController();
+
+                controller.setDetalle(detalle, controlCatalogo);
+
+                flowListaMaterial.getChildren().add(tarjeta);
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
+
+        }
+
+    });
+     actualizarBotonContinuar();
+
+}
+
+private void actualizarBotonContinuar() {
+
+    if (btnContinuarCotizacion == null || flowListaMaterial == null) {
+        return;
     }
+
+    btnContinuarCotizacion.setDisable(flowListaMaterial.getChildren().isEmpty());
+
+}
+
 
     public void muestraMensajeNoAgregarMobiliarioDanoTotal() {
         ejecutarEnHiloJavaFX(() -> {
@@ -122,10 +158,6 @@ public class VentanaCatalogo {
 
     public void muestraCatalogoGlobos(List<Globo> todoGlobo) {
         ejecutarEnHiloJavaFX(() -> cargarTarjetas(todoGlobo));
-    }
-
-    public void muestraCatalogoGloboFiltro(List<Globo> todoGloboFiltro) {
-        ejecutarEnHiloJavaFX(() -> cargarTarjetas(todoGloboFiltro));
     }
 
     public void muestraCatalogoDecoraciones(List<MaterialDecorativo> todoDecoracion) {
@@ -213,9 +245,18 @@ public class VentanaCatalogo {
     @FXML
     public void initialize() {
 
-    System.out.println("Ventana cargada");
-
+        btnContinuarCotizacion.setDisable(true);
     }   
+    @FXML 
+    public void continuarCotizacion() { 
+        System.out.println("Se presionó Continuar Cotización");
+        if (controlCatalogo != null) {
+            System.out.println("controlCatalogo NO es null");
+            controlCatalogo.iniciarCotizacion(); 
+        }else{
+             System.out.println("controlCatalogo ES null");
+        }
+    }
 
     /* =========================================================================
      * MANEJO DE EVENTOS FXML (Botones OnAction)
