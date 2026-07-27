@@ -270,7 +270,7 @@ public class ProyectoApplication {
         // --- GLOBO 3 ---
         Globo globo3 = new Globo();
         globo3.setNombre("Globo Burbuja Gigante Transparente");
-        globo3.setPrecio(45.00f);
+        globo3.setPrecio(1200.00f);
         globo3.setCantInventario(80);
         globo3.setImagen("/img/image_picture_icon_149459.png");
         globo3.setColor(Globo.Color.BLANCO); 

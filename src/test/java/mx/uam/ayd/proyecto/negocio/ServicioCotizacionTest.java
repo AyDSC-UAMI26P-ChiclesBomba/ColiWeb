@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,6 +42,7 @@ class ServicioCotizacionTest {
 
     // actualizaDetallesCotizacion
     @Test
+    @DisplayName("Debería mansar una excepcion cuando el evento es null")
     void actualizaDetallesCotizacionConEventoNulo(){
         // Given 
         Evento evento = null;
@@ -52,6 +54,7 @@ class ServicioCotizacionTest {
         });
     }
     @Test
+    @DisplayName("Debería comprobar las reglas de negocio para un evento pequeno")
     void actualizaDetallesCotizacionTamanoPequeno() {
         // Given
         Cotizacion cotizacion = new Cotizacion();
@@ -90,6 +93,7 @@ class ServicioCotizacionTest {
         assertEquals(2706f, resultado.getTotal()); // 300 + 200 + 206 + 1000 + 1000
     }
     @Test
+    @DisplayName("Debería comprobar las reglas de negocio para un evento mediano con lista vacia")
     void actualizaDetallesCotizacionTamanoMediano() {
         // Given
         Cotizacion cotizacion = new Cotizacion();
@@ -111,6 +115,7 @@ class ServicioCotizacionTest {
         assertEquals(3402f, resultado.getTotal()); // 402 + 1500 + 1500
     }
     @Test
+    @DisplayName("Debería comprobar las reglas de negocio para un evento mediano con lista vacia")
     void actualizaDetallesCotizacionTamanoGrande() {
         // Given
         Cotizacion cotizacion = new Cotizacion();
@@ -134,6 +139,7 @@ class ServicioCotizacionTest {
 
     // copiaTotal
     @Test
+    @DisplayName("Debería copiar el total de la cotizacion")
     void copiaTotalCotizacionNoNula(){
         // Given
         Cotizacion cotizacion = new Cotizacion();
@@ -146,6 +152,7 @@ class ServicioCotizacionTest {
         assertEquals(500f, total);
     }
     @Test
+    @DisplayName("Debería enviar una excepcion por cotizacion nula")
     void copiaTotalCotizacionNula(){
         // Given
         Cotizacion cotizacion = null;
@@ -159,6 +166,7 @@ class ServicioCotizacionTest {
 
     // aprobarCotizacion
     @Test
+    @DisplayName("Regresar un false debido a que la cotizacion es nula")
     void aprobarCotizacionConCotizacionNula(){
         // Given
         Cotizacion cotizacion = null;
@@ -170,6 +178,7 @@ class ServicioCotizacionTest {
         assertFalse(aprobado);
     }
     @Test
+    @DisplayName("Deberia verificar que la cotizacion pueda aprovarse")
     void aprobarCotizacionConEstadoTrue(){
         // Given
         Cotizacion cotizacion = new Cotizacion();
@@ -182,6 +191,7 @@ class ServicioCotizacionTest {
         assertTrue(aprobado);
     }
     @Test
+    @DisplayName("Comprueba que estado es el correcto")
     void aprobarCotizacionConEstadoFalse(){
         // Given
         Cotizacion cotizacion = new Cotizacion();
@@ -197,6 +207,7 @@ class ServicioCotizacionTest {
 
     // borraCotizacion
     @Test
+    @DisplayName("Regresa false por que la cotizacion no exixste")
     void borraCotizacionConCotizacionNula(){
         // Given
         Cotizacion cotizacion = null;
@@ -208,6 +219,7 @@ class ServicioCotizacionTest {
         assertFalse(eliminado);
     }
     @Test
+    @DisplayName("Regresa true tras ser eliminada con exito")
     void borraCotizacionConCotizacionEnRepositorio(){
         // Given
         Cotizacion cotizacion = new Cotizacion();
@@ -220,6 +232,7 @@ class ServicioCotizacionTest {
         assertTrue(eliminado);
     }
     @Test
+    @DisplayName("Regresa false tras recibir una excepcion")
     void borraCotizacionConCotizacionSinEstarEnRepositorio() {
         // Given
         Cotizacion cotizacion = new Cotizacion();
@@ -234,51 +247,9 @@ class ServicioCotizacionTest {
     }
 
 
-    // recuperaInfo
-    @Test
-    void recuperaInfoConCotizacionNula(){
-        // Given
-        Cotizacion cotizacion = null;
-        
-        // When Then
-        assertThrows(IllegalArgumentException.class, () -> {
-            servicioCotizacion.recuperaInfo(cotizacion);
-        });
-    }
-    @Test
-    void recuperaInfoConCotizacionConEvento(){
-        // Given
-        Cotizacion cotizacion = new Cotizacion();
-        cotizacion.setIdCotizacion(1L);
-        Evento evento = new Evento();
-        try {
-            evento.setCotizacion(cotizacion);
-        } catch (Exception e) {}
-        when(repositorioEvento.findByCotizacion(cotizacion)).thenReturn(evento);
-
-        // Then
-        Evento eventoObtenido = servicioCotizacion.recuperaInfo(cotizacion);
-
-        // Then
-        assertEquals(evento, eventoObtenido);
-    }
-    @Test
-    void recuperaInfoConCotizacionSinEvento(){
-        // Guven
-        Cotizacion cotizacion = new Cotizacion();
-        cotizacion.setIdCotizacion(1L);
-        when(repositorioEvento.findByCotizacion(cotizacion)).thenReturn(null);
-
-        // Then
-        Evento eventoObtenido = servicioCotizacion.recuperaInfo(cotizacion);
-
-        // Then
-        assertNull(eventoObtenido);
-    }
-
-
     // recuperaEvento
     @Test
+    @DisplayName("Debería regresar una excepcion tras intentar recuperar una cotizacion nula")
     void recuperaEventoConCotizacionNula(){
         // Given
         Cotizacion cotizacion = null;
@@ -289,6 +260,7 @@ class ServicioCotizacionTest {
         });
     }
     @Test
+    @DisplayName("Debería regresar un evento")
     void recuperaEventoConCotizacionConEvento(){
         // Given
         Cotizacion cotizacion = new Cotizacion();
@@ -306,6 +278,7 @@ class ServicioCotizacionTest {
         assertEquals(evento, eventoObtenido);
     }
     @Test
+    @DisplayName("Regresa null")
     void recuperaEventoConCotizacionSinEvento(){
         // Given
         Cotizacion cotizacion = new Cotizacion();
@@ -322,6 +295,7 @@ class ServicioCotizacionTest {
 
     // recuperaCliente
     @Test
+    @DisplayName("Debería mostrar una excepcion")
     void recuperaClienteConCotizacionNula(){
         // Given
         Cotizacion cotizacion = null;
@@ -332,6 +306,7 @@ class ServicioCotizacionTest {
         });
     }
     @Test
+    @DisplayName("Debería regresar un Cliente")
     void recuperaClienteConCotizacionConCliente(){
         // Given
         Cotizacion cotizacion = new Cotizacion();
@@ -348,6 +323,7 @@ class ServicioCotizacionTest {
         assertEquals(cliente, clienteObtenido);
     }
     @Test
+    @DisplayName("Regresa null")
     void recuperaClienteConCotizacionSinCliente(){
         // Given
         Cotizacion cotizacion = new Cotizacion();

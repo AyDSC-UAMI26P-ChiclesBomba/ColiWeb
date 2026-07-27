@@ -4,6 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import mx.uam.ayd.proyecto.negocio.modelo.DetalleCotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Material;
+/**
+ * Controlador de la tarjeta que muestra un material dentro del resumen
+ * de la cotización, incluyendo su nombre, cantidad, precio unitario
+ * y costo total.
+ */
 
 public class MaterialListaResumenConPrecioController {
 
@@ -25,8 +30,12 @@ public class MaterialListaResumenConPrecioController {
     private ControlCotizacionTotal controlCotizacionTotal;
 
     /**
-     * Muestra la información del material y el detalle de la cotización.
-     * Solo presenta la información en pantalla sin modificar ningún dato.
+     * Inicializa la tarjeta con la información del material seleccionado
+     * y del detalle de la cotización.
+     * @param material material que será mostrado.
+     * @param controlCotizacionTotal controlador principal de la ventana de
+     *                               cotización total.
+     * @param detalleCotizacion detalle de la cotización asociado al material.
      */
     public void setMaterialListaResumen(Material material, ControlCotizacionTotal controlCotizacionTotal, DetalleCotizacion detalleCotizacion) {
 

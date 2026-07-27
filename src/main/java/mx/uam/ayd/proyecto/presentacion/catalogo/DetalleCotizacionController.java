@@ -6,6 +6,11 @@ import javafx.scene.control.Label;
 
 import mx.uam.ayd.proyecto.negocio.modelo.DetalleCotizacion;
 
+/**
+ * Controlador de la tarjeta que representa un material dentro de la lista de
+ * materiales seleccionados para una cotización
+ */
+
 public class DetalleCotizacionController {
 
     @FXML
@@ -24,11 +29,20 @@ public class DetalleCotizacionController {
     private Button btnMenos;
 
     @FXML
-    private Button btnEliminar;
+    private Button btnBorrar;
 
     private DetalleCotizacion detalle;
     private ControlCatalogo controlCatalogo;
 
+    /**
+     * Asigna el detalle de cotización que será mostrado en la tarjeta y
+     * actualiza la información visual correspondiente.
+     *
+     * @param detalle detalle de cotización que contiene el material, la cantidad
+     *                y el costo.
+     * @param controlCatalogo controlador del catálogo encargado de procesar las
+     *                        acciones del usuario.
+     */
     public void setDetalle(DetalleCotizacion detalle, ControlCatalogo controlCatalogo) {
 
         this.detalle = detalle;
@@ -39,18 +53,31 @@ public class DetalleCotizacionController {
         IdlCosto.setText("$" + detalle.getCosto());
     }
 
+    /**
+     * Incrementa la cantidad del material asociado al detalle de cotización.
+     */
     @FXML
     private void aumentar() {
+        if (detalle != null) {
         controlCatalogo.aumentarMaterial(detalle);
     }
-
+    }
+    /**
+     * Disminuye la cantidad del material asociado al detalle de cotización
+     */
     @FXML
     private void disminuir() {
+        if (detalle != null && detalle.getCantidad() > 1) {
         controlCatalogo.disminuirMaterial(detalle);
     }
-
+    }
+    /**
+     * Elimina el material asociado del listado de materiales de la cotización
+     */
     @FXML
-    private void eliminar() {
+    private void borrar() {
+        if (detalle != null) {
         controlCatalogo.borrarMaterialLista(detalle);
+    }
     }
 }

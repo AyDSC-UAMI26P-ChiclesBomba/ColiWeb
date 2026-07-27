@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,6 +26,7 @@ class ServicioMaterialTest {
     private ServicioMaterial servicioMaterial;
 
     @Test
+    @DisplayName("Deberia verificar que se recuperen los materiales correctamente")
     void recuperaTodoMaterialConListaNoVacia(){
         // Given
         Material material1 = new Material();
@@ -41,6 +43,7 @@ class ServicioMaterialTest {
         assertEquals(2, materiales.size());
     }
     @Test
+    @DisplayName("Deberia regresar una lista vacia")
     void recuperaTodoMaterialConListaVacia() {
         // Given
         List<Material> lista = new ArrayList<>();

@@ -7,6 +7,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import mx.uam.ayd.proyecto.negocio.modelo.Material;
 
+/**
+ * Controlador de la tarjeta que representa un material dentro del catálogo
+ */
+
 public class MaterialController {
 
     @FXML
@@ -26,7 +30,10 @@ public class MaterialController {
     private ControlCatalogo controlCatalogo;
 
     /**
-     * Inicializa la tarjeta del material.
+     * Inicializa la tarjeta con la información del material seleccionado.
+     * @param material material cuyos datos serán mostrados en la tarjeta.
+     * @param controlCatalogo controlador del catálogo encargado de procesar
+     *                        las acciones realizadas por el usuario.
      */
     public void setMaterial(Material material, ControlCatalogo controlCatalogo) {
 
@@ -53,7 +60,7 @@ public class MaterialController {
     }
 
     /**
-     * Agrega el material a la lista de cotización.
+     * Agrega el material a la lista de material seleccionado
      */
     @FXML
     private void agregarMaterial() {

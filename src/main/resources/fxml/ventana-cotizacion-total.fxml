@@ -180,15 +180,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="66.0" prefWidth="305.0">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#muestraMensajeBorradoExito" prefHeight="36.0" prefWidth="162.0" text="Borrar Cotizacion">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="66.0" prefWidth="305.0" />
                </children>
             </VBox>
          </right>
@@ -213,7 +205,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="72.0" prefWidth="246.0">
                            <children>
-                              <Label fx:id="IdlTotalMaterial" text="\$ 1450.00">
+                              <Label fx:id="IdlTotalMaterial" text="\$ 00.00">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -240,7 +232,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="72.0" prefWidth="246.0">
                            <children>
-                              <Label fx:id="IdlExtra" text="\$ 1450.00">
+                              <Label fx:id="IdlExtra" text="\$ 00.00">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -267,7 +259,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="72.0" prefWidth="246.0">
                            <children>
-                              <Label fx:id="IdlConsumibles" text="\$ 1450.00">
+                              <Label fx:id="IdlConsumibles" text="\$ 00.00">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -294,7 +286,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="72.0" prefWidth="246.0">
                            <children>
-                              <Label fx:id="IdlManoObra" text="\$ 1450.00">
+                              <Label fx:id="IdlManoObra" text="\$ 00.00">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -321,7 +313,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="72.0" prefWidth="246.0">
                            <children>
-                              <Label fx:id="IdlGanancia" text="\$ 1450.00">
+                              <Label fx:id="IdlGanancia" text="\$ 00.00">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

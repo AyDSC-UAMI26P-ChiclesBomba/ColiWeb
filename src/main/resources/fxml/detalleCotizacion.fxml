@@ -21,12 +21,17 @@
             <Label fx:id="IdlCosto" alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="72.0" text="\$ 250" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="60.0" prefWidth="219.0" spacing="20.0">
-         <children>
-            <Button fx:id="btnMas" mnemonicParsing="false" onAction="#aumentar" text="+" />
-            <Button fx:id="btnMenos" mnemonicParsing="false" onAction="#disminuir" text="-" />
-            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" text="Borrar" />
-         </children>
-      </HBox>
+         <HBox alignment="CENTER" prefHeight="60.0" prefWidth="219.0" spacing="20.0">
+      <children>
+      <!-- Botón MÁS -> debe apuntar a #aumentar -->
+      <Button fx:id="btnMas" mnemonicParsing="false" onAction="#aumentar" text="+" />
+
+      <!-- Botón MENOS -> debe apuntar a #disminuir -->
+      <Button fx:id="btnMenos" mnemonicParsing="false" onAction="#disminuir" text="-" />
+
+      <!-- Botón BORRAR -> debe apuntar a #borrar -->
+      <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#borrar" text="Borrar" />
+   </children>
+</HBox>
    </children>
 </HBox>

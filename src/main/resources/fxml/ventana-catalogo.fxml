@@ -31,13 +31,13 @@
                <top>
                   <VBox prefHeight="106.0" prefWidth="1136.0" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="1187.0" spacing="20.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="1187.0" spacing="90.0">
                            <children>
-                              <Button focusTraversable="false" mnemonicParsing="false" onAction="#muestraCatalogo" prefHeight="35.0" text="Todos" />
-                              <Button focusTraversable="false" mnemonicParsing="false" onAction="#muestraCatalogoGlobos" prefHeight="35.0" text="Globos" />
-                              <Button focusTraversable="false" mnemonicParsing="false" onAction="#muestraCatalogoDecoraciones" prefHeight="35.0" text="Decoraciones" />
-                              <Button focusTraversable="false" mnemonicParsing="false" onAction="#muestraCatalogoMobiliario" prefHeight="35.0" text="Mobiliario" />
-                              <Button focusTraversable="false" mnemonicParsing="false" onAction="#muestraCatalogoComestible" prefHeight="35.0" text="Comestibles" />
+                              <Button focusTraversable="false" mnemonicParsing="false" onAction="#muestraCatalogo" prefHeight="26.0" prefWidth="105.0" text="Todos" />
+                              <Button focusTraversable="false" mnemonicParsing="false" onAction="#muestraCatalogoGlobos" prefHeight="35.0" prefWidth="105.0" text="Globo" />
+                              <Button focusTraversable="false" mnemonicParsing="false" onAction="#muestraCatalogoDecoraciones" prefHeight="35.0" prefWidth="105.0" text="Decoraciones" />
+                              <Button focusTraversable="false" mnemonicParsing="false" onAction="#muestraCatalogoMobiliario" prefHeight="35.0" prefWidth="105.0" text="Mobiliario" />
+                              <Button focusTraversable="false" mnemonicParsing="false" onAction="#muestraCatalogoComestible" prefHeight="35.0" prefWidth="105.0" text="Comestible" />
                            </children>
                            <padding>
                               <Insets top="10.0" />

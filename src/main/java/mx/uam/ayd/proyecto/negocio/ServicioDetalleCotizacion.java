@@ -33,22 +33,34 @@ public class ServicioDetalleCotizacion {
     }
 
     public List<DetalleCotizacion> agregaMaterialLista(Material materialSeleccionado, Cotizacion cotizacion){
-        DetalleCotizacion materialLista = new DetalleCotizacion();
+
+    DetalleCotizacion materialLista = null;
+
+    for (DetalleCotizacion detalle : repositorioDetalleCotizacion.findByCotizacion(cotizacion)) {
+        if (detalle.getMaterial().getIdMaterial().equals(materialSeleccionado.getIdMaterial())) {
+            materialLista = detalle;
+            break;
+        }
+    }
+
+    if (materialLista == null) {
+        materialLista = new DetalleCotizacion();
         materialLista.setMaterial(materialSeleccionado);
         materialLista.setCotizacion(cotizacion);
-        repositorioDetalleCotizacion.save(materialLista);
-
-        aumentarCantidadUno(materialLista);
-        calcularCostoMaterialElegido(materialLista);
-        validarTienePrecio(materialLista);
-        repositorioDetalleCotizacion.save(materialLista);
-
-        ArrayList<DetalleCotizacion> listaMaterialSeleccionado = new ArrayList<>();
-        for (DetalleCotizacion detalle : repositorioDetalleCotizacion.findAll()) {
-            listaMaterialSeleccionado.add(detalle);
-        }
-        return listaMaterialSeleccionado;
+        materialLista.setCantidad(0);
     }
+
+    aumentarCantidadUno(materialLista);
+    calcularCostoMaterialElegido(materialLista);
+    validarTienePrecio(materialLista);
+    repositorioDetalleCotizacion.save(materialLista);
+
+    ArrayList<DetalleCotizacion> listaMaterialSeleccionado = new ArrayList<>();
+    for (DetalleCotizacion detalle : repositorioDetalleCotizacion.findByCotizacion(cotizacion)) {
+        listaMaterialSeleccionado.add(detalle);
+    }
+    return listaMaterialSeleccionado;
+}
 
     private void aumentarCantidadUno(DetalleCotizacion materialLista){
         materialLista.setCantidad(materialLista.getCantidad()+1);        
@@ -67,7 +79,7 @@ public class ServicioDetalleCotizacion {
         repositorioDetalleCotizacion.save(materialLista);
 
         ArrayList<DetalleCotizacion> listaMaterialSeleccionado = new ArrayList<>();
-        for (DetalleCotizacion detalle : repositorioDetalleCotizacion.findAll()) {
+        for (DetalleCotizacion detalle : repositorioDetalleCotizacion.findByCotizacion(materialLista.getCotizacion())) {
             listaMaterialSeleccionado.add(detalle);
         }
         return listaMaterialSeleccionado;
@@ -80,7 +92,7 @@ public class ServicioDetalleCotizacion {
         repositorioDetalleCotizacion.save(materialLista);
 
         ArrayList<DetalleCotizacion> listaMaterialSeleccionado = new ArrayList<>();
-        for (DetalleCotizacion detalle : repositorioDetalleCotizacion.findAll()) {
+        for (DetalleCotizacion detalle : repositorioDetalleCotizacion.findByCotizacion(materialLista.getCotizacion())) {
             listaMaterialSeleccionado.add(detalle);
         }
         return listaMaterialSeleccionado;
@@ -93,7 +105,7 @@ public class ServicioDetalleCotizacion {
     public List<DetalleCotizacion> borraMaterialLista(DetalleCotizacion materialLista){
             borra(materialLista);
             ArrayList<DetalleCotizacion> listaMaterialSeleccionado = new ArrayList<>();
-                for (DetalleCotizacion detalle : repositorioDetalleCotizacion.findAll()) {
+                for (DetalleCotizacion detalle : repositorioDetalleCotizacion.findByCotizacion(materialLista.getCotizacion())) {
             listaMaterialSeleccionado.add(detalle);
         }
         return listaMaterialSeleccionado;
@@ -139,5 +151,6 @@ public class ServicioDetalleCotizacion {
     }
 
 
+    
 
 }

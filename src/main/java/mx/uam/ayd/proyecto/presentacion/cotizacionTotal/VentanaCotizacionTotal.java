@@ -38,13 +38,12 @@ public class VentanaCotizacionTotal {
     // Estado local para los parámetros requeridos por el Control
     private Cotizacion cotizacionActual;
     private Evento eventoActual;
+    private Cliente clienteActual;
     private List<DetalleCotizacion> listaMaterialesActual;
 
     // ==========================================
     // Componentes FXML - Vista 1: Resumen Cotización
     // ==========================================
-    @FXML private Label IdlNombre;
-    @FXML private Label IdlNumTelefono;
     @FXML private Label IdlFecha;
     @FXML private Label IdlDireccion;
 
@@ -73,6 +72,7 @@ public class VentanaCotizacionTotal {
     @FXML private Label IdlDetalles;
 
     @FXML private Button btnVolverCatalogo;
+    @FXML private Button btnGenerarContrato;
     @FXML private FlowPane flowMateriales;
 
     private boolean materialesCargados = false;
@@ -196,12 +196,8 @@ public class VentanaCotizacionTotal {
         }
     }
 
-    public void muestraDetallesCotizacion(Cliente cliente, Evento evento) {
+    public void muestraDetallesCotizacionLlenos(Cliente cliente, Evento evento) {
         this.eventoActual = evento;
-        if (cliente != null) {
-            if (IdlNombre != null) IdlNombre.setText(cliente.getNombre());
-            if (IdlNumTelefono != null) IdlNumTelefono.setText(cliente.getNumTelefono());
-        }
         if (evento != null) {
             if (IdlFecha != null && evento.getFecha() != null) IdlFecha.setText(evento.getFecha().toString());
             if (IdlDireccion != null) IdlDireccion.setText(evento.getDireccion());
@@ -209,30 +205,36 @@ public class VentanaCotizacionTotal {
     }
 
     public void muestraCotizacionTotal(Cotizacion cotizacion) {
-        this.cotizacionActual = cotizacion;
+    this.cotizacionActual = cotizacion;
 
-        
-        // 1. Inflar la pantalla primero para que los @FXML se vinculen
-        cambiarVista("/fxml/ventana-cotizacion-total.fxml");
+    // 1. Inflar la pantalla primero para que los @FXML se vinculen
+    cambiarVista("/fxml/ventana-cotizacion-total.fxml");
 
-        // 2. Despujar valores en los labels ya vinculados
-        if (cotizacion != null && IdlTotal != null) {
-            IdlTotal.setText(String.format("$ %.2f", cotizacion.getTotal()));
-        }
-        if (cotizacion != null && IdlTotalMaterial != null) {
-            IdlTotalMaterial.setText(String.format("$ %.2f", cotizacion.getTotalMaterial()));
-        }
-        if (cotizacion != null && IdlConsumibles != null) {
-            IdlConsumibles.setText(String.format("$ %.2f", cotizacion.getConsumibles()));
-        }
-        if (cotizacion != null && IdlManoObra != null) {
-            IdlTotalMaterial.setText(String.format("$ %.2f", cotizacion.getManoObra()));
-        }if (cotizacion != null && IdlGanancia != null) {
-            IdlGanancia.setText(String.format("$ %.2f", cotizacion.getGanancia()));
-        }
-        
+    // 2. Desplegar valores en las etiquetas vinculadas
+    if (cotizacion != null) {
+        if (IdlTotal != null) IdlTotal.setText(String.format("$ %.2f", cotizacion.getTotal()));
+        if (IdlTotalMaterial != null) IdlTotalMaterial.setText(String.format("$ %.2f", cotizacion.getTotalMaterial()));
+        if (IdlExtra != null) IdlExtra.setText(String.format("$ %.2f", cotizacion.getExtra())); // <-- Se agrega
+        if (IdlConsumibles != null) IdlConsumibles.setText(String.format("$ %.2f", cotizacion.getConsumibles()));
+        if (IdlManoObra != null) IdlManoObra.setText(String.format("$ %.2f", cotizacion.getManoObra())); // <-- Corregido
+        if (IdlGanancia != null) IdlGanancia.setText(String.format("$ %.2f", cotizacion.getGanancia()));
+    }
+}
 
+    public void muestraDetallesCotizacion(Cliente cliente, Evento evento) {
+        this.clienteActual = cliente; // Guardar cliente en la variable de estado
+        this.eventoActual = evento;
+        System.out.println("--- DIAGNÓSTICO ---");
+        poblarDatosClienteYEvento();
+    }
 
+    private void poblarDatosClienteYEvento() {
+        if (eventoActual != null) {
+            if (IdlFecha != null && eventoActual.getFecha() != null) {
+                IdlFecha.setText(eventoActual.getFecha().toString());
+            }
+            if (IdlDireccion != null) IdlDireccion.setText(eventoActual.getDireccion());
+        }
     }
 
     public void muestraListaMaterialActualizada(DetalleCotizacion material) {
@@ -267,7 +269,7 @@ public class VentanaCotizacionTotal {
     public void muestraMensajeBorradoExito(boolean exito) {
         if (exito) {
             cierra();
-            controlCotizacionTotal.volverCalendario();
+            controlCotizacionTotal.guardarCotizacion();
         }
     }
 
@@ -283,7 +285,7 @@ public class VentanaCotizacionTotal {
 
     @FXML
     void muestraDetallesCotizacionLlenos(ActionEvent event) {
-        // Invocado cuando cambia la selección de RadioButton
+        
     }
 
     @FXML
@@ -320,6 +322,7 @@ public class VentanaCotizacionTotal {
     @FXML
     void continuarCotizacion(ActionEvent event) {
         cambiarVista("/fxml/ventana-detalle-cotizacion.fxml");
+        poblarDatosClienteYEvento();
     }
 
     @FXML
@@ -352,6 +355,10 @@ public class VentanaCotizacionTotal {
             eventoActual,
             cotizacionActual
         );
+    }
+    @FXML
+    void generarContrato(ActionEvent event){
+        controlCotizacionTotal.iniciaContrato(listaMaterialesActual, eventoActual, cotizacionActual);
     }
 
     // ===== FIN CAMBIO HU-6 =====
