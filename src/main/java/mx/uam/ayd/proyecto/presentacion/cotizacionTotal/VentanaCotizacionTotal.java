@@ -2,6 +2,7 @@ package mx.uam.ayd.proyecto.presentacion.cotizacionTotal;
 
 import javafx.scene.Node;
 
+
 import java.net.URL;
 import java.util.List;
 import org.springframework.stereotype.Component;
@@ -72,10 +73,10 @@ public class VentanaCotizacionTotal {
     @FXML private Label IdlDetalles;
 
     @FXML private Button btnVolverCatalogo;
-    @FXML private Button btnGenerarContrato;
-    @FXML private Button btnGuardarCotizacion;
-    @FXML private Button btnConfirmarCotizacion;
-    @FXML private Button btncopiaTotalCotizacion;
+@FXML private Button botonGenerarContrato;
+@FXML private Button btnGuardarCotizacion;
+@FXML private Button btnConfirmarCotizacion;
+@FXML private Button btncopiaTotalCotizacion;
     @FXML private FlowPane flowMateriales;
 
     private boolean materialesCargados = false;
@@ -94,13 +95,53 @@ public class VentanaCotizacionTotal {
     private void cambiarVista(String vista) {
         try {
             inicializarVentana();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(vista));
+
+            URL recurso = getClass().getResource(vista);
+            if (recurso == null) {
+                throw new IllegalStateException("No se encontró el archivo FXML: " + vista);
+            }
+
+            System.out.println("Cargando FXML: " + recurso);
+
+            FXMLLoader loader = new FXMLLoader(recurso);
             loader.setController(this);
 
             Parent root = loader.load();
+
+            System.out.println("=================================");
+            System.out.println("CONTROLADOR: " + loader.getController());
+            System.out.println("BOTON: " + botonGenerarContrato);
+            System.out.println("=================================");
+
             stage.setScene(new Scene(root));
 
+            // Conexión directa del botón de HU-6.
+            // Esto garantiza que el clic invoque al controlador aunque falle el onAction del FXML.
+            if ("/fxml/ventana-cotizacion-total.fxml".equals(vista)) {
+                if (botonGenerarContrato == null) {
+                    throw new IllegalStateException(
+                        "No se encontró el botón con fx:id='botonGenerarContrato'"
+                    );
+                }
+
+                botonGenerarContrato.setOnAction(event -> {
+                    System.out.println("Se presionó Generar Contrato");
+
+                    if (controlCotizacionTotal == null) {
+                        System.err.println("ERROR: ControlCotizacionTotal no fue asignado.");
+                        return;
+                    }
+
+                    controlCotizacionTotal.iniciaContrato(
+                        listaMaterialesActual,
+                        eventoActual,
+                        cotizacionActual
+                    );
+                });
+            }
+
         } catch (Exception e) {
+            System.err.println("Error al cargar la vista: " + vista);
             e.printStackTrace();
         }
     }
@@ -156,7 +197,7 @@ public class VentanaCotizacionTotal {
             getClass().getResource("/fxml/materialListaResumenSinPrecio.fxml"));
 
             if (detalle.getPreciosCompletos()) {
-                loader = new FXMLLoader(getClass().getResource("/fxm/materialListaResumenSinPrecio.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/fxml/materialListaResumenSinPrecio.fxml"));
                 URL url = getClass().getResource("/fxml/materialListaResumenConPrecio.fxml");
                 System.out.println(url);
                 loader = new FXMLLoader(url);
@@ -293,6 +334,8 @@ public class VentanaCotizacionTotal {
 
     @FXML
     void generarCotizacion(ActionEvent event) {
+        System.out.println("ENTRÓ A generarCotizacion");
+
         Float transporte = parseFloat(txtTransporte != null ? txtTransporte.getText() : null);
         Float materialPersonalizado = parseFloat(txtMaterialPersonalizado != null ? txtMaterialPersonalizado.getText() : null);
         Float materialCliente = parseFloat(txtMaterialCliente != null ? txtMaterialCliente.getText() : null);
@@ -352,8 +395,14 @@ public class VentanaCotizacionTotal {
     // ===== INICIO CAMBIO HU-6 =====
 
     @FXML
-    void generarContrato(ActionEvent event){
-        controlCotizacionTotal.iniciaContrato(listaMaterialesActual, eventoActual, cotizacionActual);
+@FXML
+void botonGenerarContrato(ActionEvent event) {
+    controlCotizacionTotal.iniciaContrato(
+        listaMaterialesActual,
+        eventoActual,
+        cotizacionActual
+    );
+}
     }
 
     // ==========================================
