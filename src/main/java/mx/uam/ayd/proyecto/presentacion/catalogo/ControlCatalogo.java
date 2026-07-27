@@ -81,7 +81,7 @@ public class ControlCatalogo {
                 return;
             }
         }
-        ventanaCatalogo.muestraListaMaterial(servicioDetalleCotizacion.agregaMaterialLista(materialSeleccionado));
+        ventanaCatalogo.muestraListaMaterial(servicioDetalleCotizacion.agregaMaterialLista(materialSeleccionado, this.cotizacion));
     }
 
     public void recuperarTodoMaterial() {
@@ -122,6 +122,7 @@ public class ControlCatalogo {
 
     public void iniciarCotizacion(){
         List<DetalleCotizacion> listaSeleccionada = servicioDetalleCotizacion.verificarListaMaterial(this.cotizacion);
+        System.out.println("Lista del servicio: " + listaSeleccionada.size());
         ventanaCatalogo.cierra();
         controlCotizacionTotal.iniciaCotizacionTotal(listaSeleccionada, this.cotizacion);
     }
