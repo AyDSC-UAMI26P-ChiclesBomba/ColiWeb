@@ -342,6 +342,20 @@ public class VentanaCotizacionTotal {
         controlCotizacionTotal.borrarCotizacion(cotizacionActual);
     }
 
+
+    // ===== INICIO CAMBIO HU-6 =====
+
+    @FXML
+    void botonGenerarContrato(ActionEvent event) {
+        controlCotizacionTotal.iniciaContrato(
+            listaMaterialesActual,
+            eventoActual,
+            cotizacionActual
+        );
+    }
+
+    // ===== FIN CAMBIO HU-6 =====
+
     // ==========================================
     // Métodos Auxiliares
     // ==========================================
