@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import jakarta.annotation.PostConstruct;
 import mx.uam.ayd.proyecto.negocio.ServicioEvento;
 import mx.uam.ayd.proyecto.negocio.modelo.Evento;
+import mx.uam.ayd.proyecto.presentacion.Publicacion.ControlPublicacion;
 import mx.uam.ayd.proyecto.presentacion.gestionarEventos.ControlGestionEvento;
 
 /**
@@ -22,12 +23,14 @@ public class ControlCalendario {
     private final ServicioEvento servicioEvento;
     private final VentanaCalendario ventana;
     private final ControlGestionEvento controlGestion;
+    private final ControlPublicacion controlPublicacion;
 
     @Autowired
-    public ControlCalendario(ServicioEvento servicioEvento, VentanaCalendario ventana, ControlGestionEvento controlGestion) {
+    public ControlCalendario(ServicioEvento servicioEvento, VentanaCalendario ventana, ControlGestionEvento controlGestion, ControlPublicacion controlPublicacion) {
         this.servicioEvento = servicioEvento;
         this.ventana = ventana;
         this.controlGestion = controlGestion;
+        this.controlPublicacion = controlPublicacion;
     }
 
     /**
@@ -143,6 +146,7 @@ public class ControlCalendario {
      * @param evento
      */
     public void verPublicar(Evento evento){
+        controlPublicacion.iniciaPublicacion(evento);
         ventana.cierra();
         // Llama al control correspondiente
     }
