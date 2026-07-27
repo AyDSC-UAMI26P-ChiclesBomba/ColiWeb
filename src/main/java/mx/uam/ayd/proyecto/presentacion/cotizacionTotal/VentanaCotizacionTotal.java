@@ -1,6 +1,8 @@
 package mx.uam.ayd.proyecto.presentacion.cotizacionTotal;
 
 import javafx.scene.Node;
+
+import java.net.URL;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -135,14 +137,26 @@ public class VentanaCotizacionTotal {
     }
 
     flowMateriales.getChildren().clear();
+        System.out.println("Cantidad de detalles: " + materiales.size());
 
     for (DetalleCotizacion detalle : materiales) {
         try {
             FXMLLoader loader;
             Material material = detalle.getMaterial();
 
+            System.out.println("Precios completos: " + detalle.getPreciosCompletos());
+
+            System.out.println("Con precio: " +
+            getClass().getResource("/fxml/materialListaResumenConPrecio.fxml"));
+
+            System.out.println("Sin precio: " +
+            getClass().getResource("/fxml/materialListaResumenSinPrecio.fxml"));
+
             if (detalle.getPreciosCompletos()) {
-                loader = new FXMLLoader(getClass().getResource("/fxml/MaterialListaResumenConPrecio.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/fxm/materialListaResumenSinPrecio.fxml"));
+                URL url = getClass().getResource("/fxml/materialListaResumenConPrecio.fxml");
+                System.out.println(url);
+                loader = new FXMLLoader(url);
                 Node nodo = loader.load();
 
                 MaterialListaResumenConPrecioController controller = loader.getController();
@@ -152,7 +166,10 @@ public class VentanaCotizacionTotal {
                 flowMateriales.getChildren().add(nodo);
 
             } else {
-                loader = new FXMLLoader(getClass().getResource("/fxml/MaterialListaResumenSinPrecio.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/fxml/materialListaResumenSinPrecio.fxml"));
+                URL url = getClass().getResource("/fxml/materialListaResumenConPrecio.fxml");
+                System.out.println(url);
+                loader = new FXMLLoader(url);
                 Node nodo = loader.load();
 
                 MaterialListaResumenSinPrecioController controller = loader.getController();

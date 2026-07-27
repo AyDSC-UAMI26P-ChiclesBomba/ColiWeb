@@ -32,9 +32,10 @@ public class ServicioDetalleCotizacion {
         return materialesSeleccionados;
     }
 
-    public List<DetalleCotizacion> agregaMaterialLista(Material materialSeleccionado){
+    public List<DetalleCotizacion> agregaMaterialLista(Material materialSeleccionado, Cotizacion cotizacion){
         DetalleCotizacion materialLista = new DetalleCotizacion();
         materialLista.setMaterial(materialSeleccionado);
+        materialLista.setCotizacion(cotizacion);
         repositorioDetalleCotizacion.save(materialLista);
 
         aumentarCantidadUno(materialLista);

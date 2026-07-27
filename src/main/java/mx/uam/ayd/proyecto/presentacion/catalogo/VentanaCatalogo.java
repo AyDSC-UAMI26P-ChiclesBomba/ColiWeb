@@ -131,8 +131,20 @@ public class VentanaCatalogo {
         }
 
     });
+     actualizarBotonContinuar();
 
 }
+
+private void actualizarBotonContinuar() {
+
+    if (btnContinuarCotizacion == null || flowListaMaterial == null) {
+        return;
+    }
+
+    btnContinuarCotizacion.setDisable(flowListaMaterial.getChildren().isEmpty());
+
+}
+
 
     public void muestraMensajeNoAgregarMobiliarioDanoTotal() {
         ejecutarEnHiloJavaFX(() -> {
@@ -233,13 +245,16 @@ public class VentanaCatalogo {
     @FXML
     public void initialize() {
 
-    System.out.println("Ventana cargada");
-
+        btnContinuarCotizacion.setDisable(true);
     }   
     @FXML 
     public void continuarCotizacion() { 
+        System.out.println("Se presionó Continuar Cotización");
         if (controlCatalogo != null) {
+            System.out.println("controlCatalogo NO es null");
             controlCatalogo.iniciarCotizacion(); 
+        }else{
+             System.out.println("controlCatalogo ES null");
         }
     }
 
