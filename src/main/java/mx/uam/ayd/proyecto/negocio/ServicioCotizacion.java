@@ -29,6 +29,7 @@ public class ServicioCotizacion {
     }
 
     public Cotizacion actualizaDetallesCotizacion(Float transporte, Float materialPersonalizado, Float materialCliente, Tamano tamano, String detalles, List<DetalleCotizacion> listaMaterialSeleccionado, Cotizacion cotizacion, Evento evento){
+        if(cotizacion == null) throw new IllegalArgumentException("La cotización no puede ser nulo"); // En caso de que Cotización ingresada sea nulo
 
         cotizacion.setTransporte(transporte);
         cotizacion.setMaterialPersonalizado(materialPersonalizado);
@@ -97,10 +98,12 @@ public class ServicioCotizacion {
     }
 
     public float copiaTotal(Cotizacion cotizacion){
+        if(cotizacion == null) throw new IllegalArgumentException();
         return cotizacion.getTotal();
     }
 
     public boolean aprobarCotizacion(Cotizacion cotizacion, boolean estado){
+        if(cotizacion == null) return false;
         cotizacion.setAprobada(estado);
         if(estado == true){
             return true;
@@ -123,13 +126,16 @@ public class ServicioCotizacion {
     }
 
     public Evento recuperaInfo(Cotizacion cotizacion){
+        if(cotizacion == null) throw new IllegalArgumentException();
         return repositorioEvento.findByCotizacion(cotizacion);
     }
 
     public Evento recuperaEvento(Cotizacion cotizacion){
+        if(cotizacion == null) throw new IllegalArgumentException();
         return repositorioEvento.findByCotizacion(cotizacion);
     }
     public Cliente recuperaCliente(Cotizacion cotizacion){
+        if(cotizacion == null) throw new IllegalArgumentException();
         return repositorioCliente.findByCotizaciones(cotizacion);
     }
 }

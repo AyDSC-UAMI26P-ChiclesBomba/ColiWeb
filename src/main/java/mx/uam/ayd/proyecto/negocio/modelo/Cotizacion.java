@@ -154,5 +154,8 @@ public class Cotizacion {
     public void setIdCotizacion(Long idCotizacion){
         this.idCotizacion = idCotizacion;
     }
+    public void setCliente(Cliente cliente){
+        this.cliente = cliente;
+    }
 }
 
