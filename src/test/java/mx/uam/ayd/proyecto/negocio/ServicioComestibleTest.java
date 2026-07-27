@@ -25,7 +25,7 @@ public class ServicioComestibleTest {
     private ServicioComestible servicioComestible;
 
     @Test
-    void recuperaTodoGloboConListaNoVacia(){
+    void recuperaTodoComestibleConListaNoVacia(){
         // Given
         Comestible globo1 = new Comestible();
         Comestible globo2 = new Comestible();
@@ -41,7 +41,7 @@ public class ServicioComestibleTest {
         assertEquals(2, comestibles.size());
     }
     @Test
-    void recuperaTodoGloboConListaVacia() {
+    void recuperaTodoComestibleConListaVacia() {
         // Given
         List<Comestible> lista = new ArrayList<>();
         when(repositorioComestible.findAll()).thenReturn(lista);

@@ -25,7 +25,7 @@ class ServicioMaterialTest {
     private ServicioMaterial servicioMaterial;
 
     @Test
-    void recuperaTodoGloboConListaNoVacia(){
+    void recuperaTodoMaterialConListaNoVacia(){
         // Given
         Material material1 = new Material();
         Material material2 = new Material();
@@ -41,7 +41,7 @@ class ServicioMaterialTest {
         assertEquals(2, materiales.size());
     }
     @Test
-    void recuperaTodoGloboConListaVacia() {
+    void recuperaTodoMaterialConListaVacia() {
         // Given
         List<Material> lista = new ArrayList<>();
         when(repositorioMaterial.findAll()).thenReturn(lista);

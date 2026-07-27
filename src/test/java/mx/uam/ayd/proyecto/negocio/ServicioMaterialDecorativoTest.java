@@ -25,7 +25,7 @@ class ServicioMaterialDecorativoTest {
     private ServicioMaterialDecorativo servicioMaterialDecorativo;
 
     @Test
-    void recuperaTodoGloboConListaNoVacia(){
+    void recuperaTodoMaterialDecorativoConListaNoVacia(){
         // Given
         MaterialDecorativo materialDecorativo1 = new MaterialDecorativo();
         MaterialDecorativo materialDecorativo2 = new MaterialDecorativo();
@@ -41,7 +41,7 @@ class ServicioMaterialDecorativoTest {
         assertEquals(2, materialesDecorativos.size());
     }
     @Test
-    void recuperaTodoGloboConListaVacia() {
+    void recuperaTodoMaterialDecorativoConListaVacia() {
         // Given
         List<MaterialDecorativo> lista = new ArrayList<>();
         when(repositorioMaterialDecorativo.findAll()).thenReturn(lista);
