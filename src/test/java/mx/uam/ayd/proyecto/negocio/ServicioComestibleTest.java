@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import mx.uam.ayd.proyecto.datos.RepositorioComestible;
 import mx.uam.ayd.proyecto.negocio.modelo.Comestible;
-import mx.uam.ayd.proyecto.negocio.modelo.Globo;
 
 @ExtendWith(MockitoExtension.class)
 public class ServicioComestibleTest {
