@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import mx.uam.ayd.proyecto.datos.RepositorioMaterial;
-import mx.uam.ayd.proyecto.negocio.modelo.Globo;
 import mx.uam.ayd.proyecto.negocio.modelo.Material;
 
 @ExtendWith(MockitoExtension.class)
