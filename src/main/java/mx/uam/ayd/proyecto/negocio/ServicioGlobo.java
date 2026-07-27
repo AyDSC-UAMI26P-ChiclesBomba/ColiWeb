@@ -7,10 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javafx.scene.paint.Color;
 import mx.uam.ayd.proyecto.datos.RepositorioGlobo;
 import mx.uam.ayd.proyecto.negocio.modelo.Globo;
-import mx.uam.ayd.proyecto.negocio.modelo.Globo.TipoGlobo;
 
 
 @Service
