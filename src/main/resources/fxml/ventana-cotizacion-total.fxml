@@ -9,10 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="850.0"
-      prefWidth="1300.0"
-      xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
 
     <children>
 
@@ -21,175 +18,76 @@
 
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="New"/>
-                        <MenuItem mnemonicParsing="false" text="Open"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" text="Close"/>
+                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" text="Open" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Close" />
                     </items>
                 </Menu>
 
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Copy"/>
-                        <MenuItem mnemonicParsing="false" text="Paste"/>
+                        <MenuItem mnemonicParsing="false" text="Copy" />
+                        <MenuItem mnemonicParsing="false" text="Paste" />
                     </items>
                 </Menu>
 
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About"/>
+                        <MenuItem mnemonicParsing="false" text="About" />
                     </items>
                 </Menu>
 
             </menus>
         </MenuBar>
 
-        <AnchorPane prefHeight="820.0"
-                    prefWidth="1300.0"
-                    VBox.vgrow="ALWAYS">
+        <AnchorPane prefHeight="820.0" prefWidth="1300.0" VBox.vgrow="ALWAYS">
 
             <children>
 
-                <Label layoutX="550.0"
-                       layoutY="35.0"
-                       style="-fx-font-size: 28px;"
-                       text="Cotización Total"/>
+                <Label layoutX="550.0" layoutY="35.0" style="-fx-font-size: 28px;" text="Cotización Total" />
 
-                <Label layoutX="270.0"
-                       layoutY="145.0"
-                       style="-fx-font-size: 21px;"
-                       text="Costo de Materiales"/>
+                <Label layoutX="270.0" layoutY="145.0" style="-fx-font-size: 21px;" text="Costo de Materiales" />
 
-                <Label fx:id="IdlTotalMaterial"
-                       layoutX="735.0"
-                       layoutY="145.0"
-                       style="-fx-font-size: 21px;"
-                       text="\$ 0.00"/>
+                <Label fx:id="IdlTotalMaterial" layoutX="735.0" layoutY="145.0" style="-fx-font-size: 21px;" text="\$ 0.00" />
 
-                <Label layoutX="305.0"
-                       layoutY="235.0"
-                       style="-fx-font-size: 21px;"
-                       text="Costos Extras"/>
+                <Label layoutX="305.0" layoutY="235.0" style="-fx-font-size: 21px;" text="Costos Extras" />
 
-                <Label fx:id="IdlExtra"
-                       layoutX="735.0"
-                       layoutY="235.0"
-                       style="-fx-font-size: 21px;"
-                       text="\$ 0.00"/>
+                <Label fx:id="IdlExtra" layoutX="735.0" layoutY="235.0" style="-fx-font-size: 21px;" text="\$ 0.00" />
 
-                <Label layoutX="305.0"
-                       layoutY="325.0"
-                       style="-fx-font-size: 21px;"
-                       text="Consumibles"/>
+                <Label layoutX="305.0" layoutY="325.0" style="-fx-font-size: 21px;" text="Consumibles" />
 
-                <Label fx:id="IdlConsumibles"
-                       layoutX="735.0"
-                       layoutY="325.0"
-                       style="-fx-font-size: 21px;"
-                       text="\$ 0.00"/>
+                <Label fx:id="IdlConsumibles" layoutX="735.0" layoutY="325.0" style="-fx-font-size: 21px;" text="\$ 0.00" />
 
-                <Label layoutX="295.0"
-                       layoutY="415.0"
-                       style="-fx-font-size: 21px;"
-                       text="Mano de Obra"/>
+                <Label layoutX="295.0" layoutY="415.0" style="-fx-font-size: 21px;" text="Mano de Obra" />
 
-                <Label fx:id="IdlManoObra"
-                       layoutX="735.0"
-                       layoutY="415.0"
-                       style="-fx-font-size: 21px;"
-                       text="\$ 0.00"/>
+                <Label fx:id="IdlManoObra" layoutX="735.0" layoutY="415.0" style="-fx-font-size: 21px;" text="\$ 0.00" />
 
-                <Label layoutX="325.0"
-                       layoutY="505.0"
-                       style="-fx-font-size: 21px;"
-                       text="Ganancia"/>
+                <Label layoutX="325.0" layoutY="505.0" style="-fx-font-size: 21px;" text="Ganancia" />
 
-                <Label fx:id="IdlGanancia"
-                       layoutX="735.0"
-                       layoutY="505.0"
-                       style="-fx-font-size: 21px;"
-                       text="\$ 0.00"/>
+                <Label fx:id="IdlGanancia" layoutX="735.0" layoutY="505.0" style="-fx-font-size: 21px;" text="\$ 0.00" />
 
-                <Label layoutX="435.0"
-                       layoutY="595.0"
-                       style="-fx-font-size: 21px;"
-                       text="Detalles y Notas"/>
+                <Label layoutX="435.0" layoutY="595.0" style="-fx-font-size: 21px;" text="Detalles y Notas" />
 
-                <Label fx:id="IdlDetalles"
-                       layoutX="25.0"
-                       layoutY="675.0"
-                       prefHeight="90.0"
-                       prefWidth="920.0"
-                       style="-fx-font-size: 16px;"
-                       text="Sin detalles adicionales."
-                       wrapText="true"/>
+                <Label fx:id="IdlDetalles" layoutX="25.0" layoutY="675.0" prefHeight="90.0" prefWidth="920.0" style="-fx-font-size: 16px;" text="Sin detalles adicionales." wrapText="true" />
 
-                <Label layoutX="1065.0"
-                       layoutY="115.0"
-                       style="-fx-font-size: 44px;"
-                       text="Total"/>
+                <Label layoutX="1065.0" layoutY="115.0" style="-fx-font-size: 44px;" text="Total" />
 
-                <Label fx:id="IdlTotal"
-                       layoutX="1055.0"
-                       layoutY="200.0"
-                       style="-fx-font-size: 28px;"
-                       text="\$ 0.00"/>
+                <Label fx:id="IdlTotal" layoutX="1055.0" layoutY="200.0" style="-fx-font-size: 28px;" text="\$ 0.00" />
 
-                <Button fx:id="btncopiaTotalCotizacion"
-                        layoutX="1020.0"
-                        layoutY="270.0"
-                        mnemonicParsing="false"
-                        onAction="#copiaTotalCotizacion"
-                        prefHeight="45.0"
-                        prefWidth="205.0"
-                        text="Copiar Total"/>
+                <Button fx:id="btncopiaTotalCotizacion" layoutX="1020.0" layoutY="270.0" mnemonicParsing="false" onAction="#copiaTotalCotizacion" prefHeight="45.0" prefWidth="205.0" text="Copiar Total" />
 
-                <Label layoutX="965.0"
-                       layoutY="360.0"
-                       text="Confirma todos los detalles antes de proceder."/>
+                <Label layoutX="965.0" layoutY="360.0" text="Confirma todos los detalles antes de proceder." />
 
-                <Button fx:id="btnConfirmarCotizacion"
-                        layoutX="1020.0"
-                        layoutY="390.0"
-                        mnemonicParsing="false"
-                        onAction="#deshabilitaVolverCatalogo"
-                        prefHeight="45.0"
-                        prefWidth="205.0"
-                        text="Confirmar Cotización"/>
+                <Button fx:id="btnConfirmarCotizacion" layoutX="1020.0" layoutY="390.0" mnemonicParsing="false" onAction="#deshabilitaVolverCatalogo" prefHeight="45.0" prefWidth="205.0" text="Confirmar Cotización" />
 
-                <Button fx:id="botonGenerarContrato"
-                        layoutX="1020.0"
-                        layoutY="485.0"
-                        mnemonicParsing="false"
-                        onAction="#botonGenerarContrato"
-                        prefHeight="45.0"
-                        prefWidth="205.0"
-                        text="Generar Contrato"/>
+                <Button fx:id="botonGenerarContrato" layoutX="1020.0" layoutY="446.0" mnemonicParsing="false" onAction="#botonGenerarContrato" prefHeight="45.0" prefWidth="205.0" text="Generar Contrato" />
 
-                <Button fx:id="btnGuardarCotizacion"
-                        layoutX="1020.0"
-                        layoutY="570.0"
-                        mnemonicParsing="false"
-                        prefHeight="45.0"
-                        prefWidth="205.0"
-                        text="Guardar Cotización"/>
+                <Button fx:id="btnGuardarCotizacion" layoutX="1020.0" layoutY="498.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="205.0" text="Guardar Cotización" />
 
-                <Button fx:id="btnVolverCatalogo"
-                        layoutX="1020.0"
-                        layoutY="655.0"
-                        mnemonicParsing="false"
-                        onAction="#muestraCatalogo"
-                        prefHeight="45.0"
-                        prefWidth="205.0"
-                        text="Volver al Catálogo"/>
+                <Button fx:id="btnVolverCatalogo" layoutX="1020.0" layoutY="558.0" mnemonicParsing="false" onAction="#muestraCatalogo" prefHeight="45.0" prefWidth="205.0" text="Volver al Catálogo" />
 
-                <Button layoutX="1020.0"
-                        layoutY="740.0"
-                        mnemonicParsing="false"
-                        onAction="#muestraMensajeBorradoExito"
-                        prefHeight="45.0"
-                        prefWidth="205.0"
-                        text="Borrar Cotización"/>
+                <Button layoutX="1020.0" layoutY="626.0" mnemonicParsing="false" onAction="#muestraMensajeBorradoExito" prefHeight="45.0" prefWidth="205.0" text="Borrar Cotización" />
 
             </children>
 
