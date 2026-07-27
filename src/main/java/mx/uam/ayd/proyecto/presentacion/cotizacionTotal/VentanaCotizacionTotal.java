@@ -73,6 +73,9 @@ public class VentanaCotizacionTotal {
 
     @FXML private Button btnVolverCatalogo;
     @FXML private Button btnGenerarContrato;
+    @FXML private Button btnGuardarCotizacion;
+    @FXML private Button btnConfirmarCotizacion;
+    @FXML private Button btncopiaTotalCotizacion;
     @FXML private FlowPane flowMateriales;
 
     private boolean materialesCargados = false;
@@ -349,19 +352,9 @@ public class VentanaCotizacionTotal {
     // ===== INICIO CAMBIO HU-6 =====
 
     @FXML
-    void botonGenerarContrato(ActionEvent event) {
-        controlCotizacionTotal.iniciaContrato(
-            listaMaterialesActual,
-            eventoActual,
-            cotizacionActual
-        );
-    }
-    @FXML
     void generarContrato(ActionEvent event){
         controlCotizacionTotal.iniciaContrato(listaMaterialesActual, eventoActual, cotizacionActual);
     }
-
-    // ===== FIN CAMBIO HU-6 =====
 
     // ==========================================
     // Métodos Auxiliares
