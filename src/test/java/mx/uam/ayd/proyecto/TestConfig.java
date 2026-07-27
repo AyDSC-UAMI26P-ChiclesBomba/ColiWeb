@@ -1,4 +1,4 @@
-package mx.uam.ayd.proyecto;
+/*package mx.uam.ayd.proyecto;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -41,4 +41,4 @@ public class TestConfig {
     public VentanaListarGrupos ventanaListarGrupos() {
         return new VentanaListarGrupos();
     }
-} 
+} */

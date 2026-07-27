@@ -514,23 +514,71 @@ public class VentanaPublicacion {
      *
      * @param event evento generado por JavaFX al presionar el botón
      */
-    @FXML
-    private void botonPublicar(ActionEvent event) {
+   @FXML
+private void botonPublicar(ActionEvent event) {
 
-        /*
-         * Se recupera el contenido actual del área de texto.
-         *
-         * Este contenido puede ser el mensaje generado por el
-         * servicio o una versión modificada por el usuario.
-         */
-        String mensaje = mensajePublicacion.getText();
+    DateTimeFormatter formato =
+            DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        /*
-         * Se llama al controlador para realizar la publicación
-         * simulada.
-         */
-        control.publicarEvento(mensaje);
-    }
+    String tipo = tipoEvento.getText() != null
+            ? tipoEvento.getText().trim()
+            : "";
+
+    String fecha = fechaEvento.getValue() != null
+            ? fechaEvento.getValue().format(formato)
+            : "";
+
+    String hora = horaEvento.getText() != null
+            ? horaEvento.getText().trim()
+            : "";
+
+    String lugar = lugarEvento.getText() != null
+            ? lugarEvento.getText().trim()
+            : "";
+
+    String direccion = direccionEvento.getText() != null
+            ? direccionEvento.getText().trim()
+            : "";
+
+    String detalles = detallesEvento.getText() != null
+            ? detallesEvento.getText().trim()
+            : "";
+
+    String mensaje = mensajePublicacion.getText() != null
+            ? mensajePublicacion.getText().trim()
+            : "";
+
+    StringBuilder publicacion = new StringBuilder();
+
+    publicacion.append("Evento: ")
+            .append(tipo)
+            .append("\n\n");
+
+    publicacion.append("Fecha: ")
+            .append(fecha)
+            .append("\n\n");
+
+    publicacion.append("Hora: ")
+            .append(hora)
+            .append("\n\n");
+
+    publicacion.append("Lugar: ")
+            .append(lugar)
+            .append("\n\n");
+
+    publicacion.append("Dirección: ")
+            .append(direccion)
+            .append("\n\n");
+
+    publicacion.append("Detalles: ")
+            .append(detalles)
+            .append("\n\n");
+
+    publicacion.append("Mensaje:\n")
+            .append(mensaje);
+
+    control.publicarEvento(publicacion.toString());
+}
 
     /**
      * Muestra las publicaciones realizadas durante la ejecución actual.
