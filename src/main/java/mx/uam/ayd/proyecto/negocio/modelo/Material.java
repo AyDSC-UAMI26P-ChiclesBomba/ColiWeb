@@ -32,7 +32,7 @@ public class Material {
         return precio;
     }
 
-    public void setPrecio(float precio){
+    public void setPrecio(Float precio){
         this.precio = precio;
     }
 
@@ -57,4 +57,7 @@ public class Material {
     public void setCantInventario(int cantInventario){
         this.cantInventario = cantInventario;
     }
+    public Long getIdMaterial(){
+    return idMaterial;
+}
 }

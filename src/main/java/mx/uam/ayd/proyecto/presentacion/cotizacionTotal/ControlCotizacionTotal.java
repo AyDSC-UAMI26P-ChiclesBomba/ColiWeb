@@ -30,7 +30,7 @@ public class ControlCotizacionTotal {
     private final ControlContrato contrato;
 
     @Autowired
-    public ControlCotizacionTotal(ServicioCotizacion servicioCotizacion, ServicioDetalleCotizacion servicioDetalleCotizacion, VentanaCotizacionTotal ventanaCotizacionTotal, @Lazy ControlCatalogo controlCatalogo, ControlCalendario controlCalendario, ControlContrato contrato){
+    public ControlCotizacionTotal(ServicioCotizacion servicioCotizacion, ServicioDetalleCotizacion servicioDetalleCotizacion, VentanaCotizacionTotal ventanaCotizacionTotal, @Lazy ControlCatalogo controlCatalogo, @Lazy ControlCalendario controlCalendario, @Lazy ControlContrato contrato){
         this.servicioCotizacion  = servicioCotizacion;
         this.servicioDetalleCotizacion = servicioDetalleCotizacion;
         this.ventanaCotizacionTotal = ventanaCotizacionTotal;
@@ -102,7 +102,7 @@ public class ControlCotizacionTotal {
         ventanaCotizacionTotal.cierra();
         controlCatalogo.inicia(cotizacion);
     }
-    public void volverCalendario(){
+    public void guardarCotizacion(){
         ventanaCotizacionTotal.cierra();
         controlCalendario.iniciaCalendario();
     }

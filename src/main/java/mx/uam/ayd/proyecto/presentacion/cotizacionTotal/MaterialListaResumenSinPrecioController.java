@@ -6,6 +6,11 @@ import javafx.scene.control.TextField;
 import mx.uam.ayd.proyecto.negocio.modelo.DetalleCotizacion;
 import mx.uam.ayd.proyecto.negocio.modelo.Material;
 
+/**
+ * Controlador de la tarjeta que muestra un material dentro del resumen
+ * de la cotización cuando aún no tiene un precio asignado.
+ */
+
 public class MaterialListaResumenSinPrecioController {
 
     @FXML
@@ -26,7 +31,12 @@ public class MaterialListaResumenSinPrecioController {
     private ControlCotizacionTotal controlCotizacionTotal;
 
     /**
-     * Muestra la información del material y configura el listener para validar el precio ingresado.
+     * Inicializa la tarjeta con la información del material y configura
+     * la validación del precio ingresado por el usuario.
+     * @param material material que será mostrado.
+     * @param controlCotizacionTotal controlador principal de la ventana de
+     *                               cotización total.
+     * @param detalleCotizacion detalle de la cotización asociado al material.
      */
     public void setMaterialListaResumen(Material material, ControlCotizacionTotal controlCotizacionTotal, DetalleCotizacion detalleCotizacion) {
 
@@ -53,7 +63,8 @@ public class MaterialListaResumenSinPrecioController {
     }
 
     /**
-     * Agrega un ChangeListener al TextField de precio para validar mientras el usuario escribe.
+     * Configura un listener sobre el campo de precio para validar el valor
+     * cada vez que el usuario modifica su contenido.
      */
     private void configurarValidacionPrecio() {
         if (IdlPrecio != null) {
@@ -64,8 +75,9 @@ public class MaterialListaResumenSinPrecioController {
     }
 
     /**
-     * Valida si el texto ingresado es un número flotante válido mayor o igual a cero.
-     * Si no es válido, marca el campo con un borde rojo y muestra un mensaje de error.
+     * Valida el precio capturado por el usuario.
+     * @param texto texto ingresado por el usuario.
+     * @return {@code true} si el precio es válido; {@code false} en caso contrario.
      */
     private boolean validarYProcesarPrecio(String texto) {
         if (texto == null || texto.trim().isEmpty()) {
@@ -105,7 +117,11 @@ public class MaterialListaResumenSinPrecioController {
     }
 
     /**
-     * Cambia el estilo del TextField a borde rojo si hay error o lo restaura si es válido.
+     * Marca o elimina el estado de error del campo de precio.
+     *
+     * @param conError {@code true} para mostrar un borde rojo indicando
+     *                 un error de validación; {@code false} para restaurar
+     *                 el estilo original.
      */
     private void marcarError(boolean conError) {
         if (IdlPrecio != null) {
@@ -118,7 +134,8 @@ public class MaterialListaResumenSinPrecioController {
     }
 
     /**
-     * Calcula y muestra el costo total (Cantidad * Precio unitario).
+     * Calcula y muestra el costo total del material.
+     * @param precio precio unitario del material.
      */
     private void actualizarCostoTotal(float precio) {
         if (detalleCotizacion != null && IdlCosto != null) {
@@ -128,7 +145,8 @@ public class MaterialListaResumenSinPrecioController {
     }
 
     /**
-     * Limpia el campo de costo total en caso de entrada inválida.
+     * Limpia el valor mostrado en el costo total cuando el precio ingresado
+     * no es válido.
      */
     private void limpiarCostoTotal() {
         if (IdlCosto != null) {

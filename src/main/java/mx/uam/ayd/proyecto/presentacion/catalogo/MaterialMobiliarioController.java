@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import mx.uam.ayd.proyecto.negocio.modelo.Mobiliario;
+/**
+ * Controlador de la tarjeta que representa un mobiliario dentro del catálogo.
+ */
 
 public class MaterialMobiliarioController {
 
@@ -32,7 +35,10 @@ public class MaterialMobiliarioController {
     private ControlCatalogo controlCatalogo;
 
     /**
-     * Inicializa la tarjeta del mobiliario.
+     * Inicializa la tarjeta con la información del mobiliario seleccionado
+     * @param mobiliario mobiliario cuyos datos serán mostrados en la tarjeta.
+     * @param controlCatalogo controlador del catálogo encargado de procesar
+     *                        las acciones realizadas por el usuario.
      */
     public void setMaterial(Mobiliario mobiliario, ControlCatalogo controlCatalogo) {
 
@@ -70,7 +76,8 @@ public class MaterialMobiliarioController {
     }
 
     /**
-     * Agrega el mobiliario a la lista de cotización.
+     * Agrega el mobiliario seleccionado a la lista de materiales 
+     * seleccionados.
      */
     @FXML
     private void agregarMaterial() {

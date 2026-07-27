@@ -24,6 +24,10 @@ import mx.uam.ayd.proyecto.negocio.modelo.Material;
 import mx.uam.ayd.proyecto.negocio.modelo.MaterialDecorativo;
 import mx.uam.ayd.proyecto.negocio.modelo.Mobiliario;
 
+/**
+ * Ventana que muestra el catálogo de materiales disponibles para una cotización.
+ */
+
 @Component
 public class VentanaCatalogo {
 
@@ -43,6 +47,9 @@ public class VentanaCatalogo {
         this.controlCatalogo = controlCatalogo;
     }
 
+    /**
+    * Inicializa la ventana del catálogo únicamente si aún no ha sido creada
+    */
     private void inicializarVentanaSiEsNecesario() {
         if (stage == null) {
             try {
@@ -71,10 +78,11 @@ public class VentanaCatalogo {
             }
         }
     }
-
-    /* =========================================================================
-     * MÉTODOS DEL DIAGRAMA DE CLASES (VistaCatalogo)
-     * ========================================================================= */
+    /**
+    * Muestra el catálogo con la lista de materiales proporcionada.
+    *
+    * @param todoMaterial lista de materiales que se mostrarán en el catálogo.
+    */
 
     public void muestraCatalogo(List<Material> todoMaterial) {
         ejecutarEnHiloJavaFX(() -> {
@@ -86,17 +94,23 @@ public class VentanaCatalogo {
             }
         });
     }
-
+    /**
+    * Actualiza la lista de materiales seleccionados para la cotización.
+    *          
+    * @param listaMaterialSeleccionado lista de materiales agregados a la cotización.
+    */
     public void muestraMaterialLista(List<DetalleCotizacion> listaMaterialSeleccionado) {
         muestraListaMaterial(listaMaterialSeleccionado);
-    }
-
+    } 
+    /**
+    * Muestra en la interfaz la lista de materiales seleccionados.
+    * @param listaMaterialSeleccionado lista de detalles de la cotización.
+    */
 
     public void muestraListaMaterial(List<DetalleCotizacion> listaMaterialSeleccionado) {
-
+        // Es una forma abreviada de crear un objeto que implementa una interfaz funcional
     ejecutarEnHiloJavaFX(() -> {
 
-        validaListaVacia(listaMaterialSeleccionado);
 
         if (flowListaMaterial == null) {
             return;
@@ -131,10 +145,12 @@ public class VentanaCatalogo {
         }
 
     });
-     actualizarBotonContinuar();
+    actualizarBotonContinuar();
 
 }
-
+/**
+ * Actualiza el estado del botón para continuar con la cotización.
+ */
 private void actualizarBotonContinuar() {
 
     if (btnContinuarCotizacion == null || flowListaMaterial == null) {
@@ -145,7 +161,10 @@ private void actualizarBotonContinuar() {
 
 }
 
-
+/**
+ * Muestra un mensaje de advertencia cuando se intenta agregar un
+ * mobiliario con daño total a la cotización.
+ */
     public void muestraMensajeNoAgregarMobiliarioDanoTotal() {
         ejecutarEnHiloJavaFX(() -> {
             Alert alert = new Alert(AlertType.WARNING);
@@ -155,23 +174,41 @@ private void actualizarBotonContinuar() {
             alert.showAndWait();
         });
     }
-
+/**
+ * Muestra únicamente los globos disponibles en el catálogo.
+ *
+ * @param todoGlobo lista de globos.
+ */
     public void muestraCatalogoGlobos(List<Globo> todoGlobo) {
         ejecutarEnHiloJavaFX(() -> cargarTarjetas(todoGlobo));
     }
-
+/**
+ * Muestra únicamente los materiales decorativos disponibles.
+ *
+ * @param todoDecoracion lista de materiales decorativos.
+ */
     public void muestraCatalogoDecoraciones(List<MaterialDecorativo> todoDecoracion) {
         ejecutarEnHiloJavaFX(() -> cargarTarjetas(todoDecoracion));
     }
-
+/**
+ * Muestra únicamente los materiales comestibles disponibles.
+ *
+ * @param todoComestible lista de materiales comestibles.
+ */
     public void muestraCatalogoComestible(List<Comestible> todoComestible) {
         ejecutarEnHiloJavaFX(() -> cargarTarjetas(todoComestible));
     }
-
+/**
+ * Muestra únicamente el mobiliario disponible.
+ *
+ * @param todoMobiliario lista de mobiliario.
+ */
     public void muestraCatalogoMobiliario(List<Mobiliario> todoMobiliario) {
         ejecutarEnHiloJavaFX(() -> cargarTarjetas(todoMobiliario));
     }
-    
+    /**
+    * Cierra la ventana del catálogo si ésta se encuentra abierta.
+    */
     public void cierra() {
         ejecutarEnHiloJavaFX(() -> {
             if (stage != null) {
@@ -179,25 +216,18 @@ private void actualizarBotonContinuar() {
             }
         });
     }
-
-    /* =========================================================================
-     * MÉTODOS PRIVADOS DE VALIDACIÓN Y CARGA
-     * ========================================================================= */
-
-    private void validaListaVacia(List<DetalleCotizacion> listaSeleccionada) {
-        if (listaSeleccionada == null || listaSeleccionada.isEmpty()) {
-            deshabiliataContinuarACotizacion();
-        } else if (btnContinuarCotizacion != null) {
-            btnContinuarCotizacion.setDisable(false);
-        }
-    }
-
+    /**
+    * Deshabilita el botón que permite continuar hacia la cotización.
+    */
     private void deshabiliataContinuarACotizacion() {
         if (btnContinuarCotizacion != null) {
             btnContinuarCotizacion.setDisable(true);
         }
     }
-
+/**
+ * Carga las tarjetas gráficas correspondientes a los materiales recibidos.
+ * @param materiales lista de materiales que serán mostrados.
+ */
     private void cargarTarjetas(List<? extends Material> materiales) {
         if (flowMateriales == null || materiales == null) return;
 
@@ -233,7 +263,10 @@ private void actualizarBotonContinuar() {
             }
         }
     }
-
+/**
+ * Carga las tarjetas gráficas correspondientes a los materiales recibidos.
+ * @param materiales lista de materiales que serán mostrados.
+ */
     private void ejecutarEnHiloJavaFX(Runnable accion) {
         if (Platform.isFxApplicationThread()) {
             accion.run();
@@ -241,12 +274,17 @@ private void actualizarBotonContinuar() {
             Platform.runLater(accion);
         }
     }
-
+/**
+ * Inicializa los componentes de la ventana después de cargar el archivo FXML.
+ */
     @FXML
     public void initialize() {
 
         btnContinuarCotizacion.setDisable(true);
     }   
+    /**
+    * Atiende el evento del botón "Continuar Cotización".
+    */
     @FXML 
     public void continuarCotizacion() { 
         System.out.println("Se presionó Continuar Cotización");
@@ -254,14 +292,12 @@ private void actualizarBotonContinuar() {
             System.out.println("controlCatalogo NO es null");
             controlCatalogo.iniciarCotizacion(); 
         }else{
-             System.out.println("controlCatalogo ES null");
+            System.out.println("controlCatalogo ES null");
         }
     }
-
-    /* =========================================================================
-     * MANEJO DE EVENTOS FXML (Botones OnAction)
-     * ========================================================================= */
-
+    /**
+    * Muetran el material correspondiente
+    */
     @FXML private void muestraCatalogo() { controlCatalogo.recuperarTodoMaterial(); }
     @FXML private void muestraCatalogoGlobos() { controlCatalogo.recuperarTodoGlobos(); }
     @FXML private void muestraCatalogoDecoraciones() { controlCatalogo.recuperarTodoMaterialDecorativo(); }

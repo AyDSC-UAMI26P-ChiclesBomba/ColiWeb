@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,6 +29,7 @@ class ServicioMobiliarioTest {
 
     // recuperaTodoMobiliario
     @Test
+    @DisplayName("Deberia verificar que se recupera el mobiliario corectamente")
     void recuperaTodoMobiliarioConListaNoVacia(){
         // Given
         Mobiliario mobiliario1 = new Mobiliario();
@@ -44,6 +46,7 @@ class ServicioMobiliarioTest {
         assertEquals(2, mobiliarios.size());
     }
     @Test
+    @DisplayName("Deberia regresar una lista vacia")
     void recuperaTodoMobiliarioConListaVacia() {
         // Given
         List<Mobiliario> lista = new ArrayList<>();
@@ -61,6 +64,7 @@ class ServicioMobiliarioTest {
     // tieneDanoTotal
     // Debido a que tieneDanoTotal es un método privado, entonces se hace la prueba dentro del mismo verificarNoDanoTotal
     @Test
+    @DisplayName("Deberia detectar cuando un mobiliario tiene dano total")
     void verificarNoDanoTotalConDanoTotal() {
         // Given
         Mobiliario mobiliario = new Mobiliario();
@@ -73,6 +77,7 @@ class ServicioMobiliarioTest {
         assertTrue(verificar);
     }
     @Test
+    @DisplayName("Deberia comprobar que dano pacial o sin dano se cuenten como dano total")
     void verificarNoDanoTotalSinDanoTotal() {
         // Given
         Mobiliario mobiliario1 = new Mobiliario();
