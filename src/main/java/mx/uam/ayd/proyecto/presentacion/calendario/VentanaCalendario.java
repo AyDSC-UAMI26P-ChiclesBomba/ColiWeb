@@ -302,6 +302,7 @@ public class VentanaCalendario {
 			diaCalendario.setDisable(false);
 			diaCalendario.setSelected(false);
 			diaCalendario.setUserData(null);
+			diaCalendario.setStyle(null);
 			diaCalendario.getStyleClass().removeAll("dia-base", "dia-calendario-confirmado", "dia-calendario-finalizado", "dia-calendario-borrador");
 			diaCalendario.getStyleClass().addAll("toggle-button", "dia-base");
 		}
@@ -323,6 +324,10 @@ public class VentanaCalendario {
 		int i = 0; // Es una variable que se asegurará de inhabilitar los días justos para que el mes inicie en el día correcto
 		Evento eventoEncontradoFecha = null; // Es el espacio que guardará al evento que se encuentre en la fecha que se asigna al toggle
 		for(ToggleButton diaCalendario : diasCalendario){
+
+			if(dia.equals(diaLimite.minusDays(16))){
+				diaCalendario.setStyle("-fx-border-width: 2px; -fx-border-color:  #d81b60; -fx-border-radius: 50%");
+			}
 			
 			// Evalúa que i no sea menor al día que debe iniciar y que el mes no haya cambiado por aumentar demasiados días
 			if(i<inicioPrimerDiaMes || dia.getMonthValue()!=diaActual.getMonthValue()){

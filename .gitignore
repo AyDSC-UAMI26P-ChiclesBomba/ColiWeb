@@ -43,4 +43,4 @@ doc/
 *.trace.db
 
 #Archivos de imagenes de eventos
-imagenes_eventos
+#imagenes_eventos

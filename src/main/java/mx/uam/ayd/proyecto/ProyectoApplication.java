@@ -132,6 +132,8 @@ public class ProyectoApplication {
 		repositorioCotizacion.save(cotizacion4);
 		Cotizacion cotizacion5 = new Cotizacion();
 		repositorioCotizacion.save(cotizacion5);
+		Cotizacion cotizacion6 = new Cotizacion();
+		repositorioCotizacion.save(cotizacion6);
 		Cliente cliente1 = new Cliente("Juan", "5546803266");
 		repositorioCliente.save(cliente1);
 		Cliente cliente2 = new Cliente("María Rodríguez", "5512345678");
@@ -142,6 +144,8 @@ public class ProyectoApplication {
 		repositorioCliente.save(cliente4);
 		Cliente cliente5 = new Cliente("Luis Hernández", "5599887766");
 		repositorioCliente.save(cliente5);
+		Cliente cliente6 = new Cliente("Dulce Gomez", "552893491828");
+		repositorioCliente.save(cliente6);
 
 		// --- EVENTO 1 ---
 		Evento evento1 = new Evento();
@@ -152,9 +156,9 @@ public class ProyectoApplication {
 		evento1.setReferencias("A dos cuadras del parque central, portón de madera alto");
 		evento1.setDireccion("Av. Principal #123, Col. Centro");
 		evento1.setTotalPagado(15000.00f);
-		evento1.setEstadoEvento(EstadoEvento.CONFIRMADO);
+		evento1.setEstadoEvento(EstadoEvento.FINALIZADO);
 		evento1.setDetalles("Música en vivo, montaje de mesa de postres");
-		evento1.setVisualRecinto("https://storage.miservicio.com/recintos/hacienda_morales.jpg");
+		evento1.setVisualRecinto("imagenes_eventos/evento1.jpeg");
 		evento1.setEstadoPago(EstadoPago.LIQUIDADO);
 		evento1.setClausulasExtras("Se requiere acceso al recinto 3 horas antes para montaje");
 		evento1.setContratoFirmado(true);
@@ -208,7 +212,7 @@ public class ProyectoApplication {
 		evento4.setTotalPagado(1500.00f);
 		evento4.setEstadoEvento(EstadoEvento.BORRADOR);
 		evento4.setDetalles("Temática de superhéroes");
-		evento4.setVisualRecinto(null); // Opcional nulo
+		evento4.setVisualRecinto("imagenes_eventos/evento4.jpeg"); // Opcional nulo
 		evento4.setEstadoPago(EstadoPago.PENDIENTE);
 		evento4.setClausulasExtras("No se permite pirotecnia dentro del salón");
 		evento4.setContratoFirmado(false);
@@ -225,12 +229,30 @@ public class ProyectoApplication {
 		evento5.setTotalPagado(22000.00f);
 		evento5.setEstadoEvento(EstadoEvento.FINALIZADO);
 		evento5.setDetalles("Boda civil y recepción al aire libre");
-		evento5.setVisualRecinto("https://storage.miservicio.com/recintos/jardin_botanico.jpg");
+		evento5.setVisualRecinto(null);
 		evento5.setEstadoPago(EstadoPago.LIQUIDADO);
 		evento5.setClausulasExtras(null); // Opcional nulo
 		evento5.setContratoFirmado(true);
 		try { evento5.setCotizacion(cotizacion5); } catch (Exception e) {}
 		try { evento5.setCliente(cliente5); } catch (Exception e) {}
+
+		// --- EVENTO 6 ---
+        Evento evento6 = new Evento();
+        evento6.setTipoEvento(TipoEvento.CUMPLEANOS);
+        evento6.setFecha(LocalDate.of(2026, 8, 16));
+        evento6.setHora(LocalTime.of(16, 30));
+        evento6.setLugar("Jardín de Eventos Las Palmas");
+        evento6.setReferencias("Junto al centro comercial, frente al portón blanco");
+        evento6.setDireccion("Calzada del Valle #456, Col. San José");
+        evento6.setTotalPagado(8500.00f);
+        evento6.setEstadoEvento(EstadoEvento.CONFIRMADO);
+        evento6.setDetalles("Fiesta temática retro 80s, show de animación y arco de globos");
+        evento6.setVisualRecinto("imagenes_eventos/evento6.jpeg");
+        evento6.setEstadoPago(EstadoPago.PENDIENTE);
+        evento6.setClausulasExtras("Prohibido el uso de pirotecnia y confeti metálico");
+        evento6.setContratoFirmado(true);
+        try { evento6.setCotizacion(cotizacion6); } catch (Exception e) {}
+        try { evento6.setCliente(cliente6); } catch (Exception e) {}
 		
 
 		repositorioEvento.save(evento1);
@@ -238,6 +260,7 @@ public class ProyectoApplication {
 		repositorioEvento.save(evento3);
 		repositorioEvento.save(evento4);
 		repositorioEvento.save(evento5);
+		repositorioEvento.save(evento6);
 		System.out.println(repositorioEvento.findByOrderByFechaAsc());
 
 
