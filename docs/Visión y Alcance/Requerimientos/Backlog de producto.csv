@@ -1,0 +1,11 @@
+ ID,Responsable,"Prioridad (Alta, Media, Baja)",Proceso de negocio que soporta,Texto de la historia de usuario (como .... quiero .... para ....),Liga al documento con detalle de la historia de usuario,Sprint en el cual se planea
+HU-1,Juan,Alta,Contratación de Servicio (3),Cómo empleado quiero visualizar un calendario con todos los eventos y días disponibles para llevar un mejor manejo de los espacios,Documentación HU-1,
+HU-2,Vania,Alta,Cotización de Decoración (6),Cómo empleado quiero generar una cotización total de una decoración para enviarla al cliente,Documentación HU-2,
+HU-3,Vania,Alta,"Cotización de Decoración (3, 4), Consulta de Precios con Proveedor (2, 3), Contratación de Servicio (12)","Como empleado quiero visualizar un catálogo de materiales disponibles, faltantes y con precio pendiente para gestionar correctamente los recursos de cada decoración.",Documentación HU-3,
+HU-4,Mauricio,Alta,Consulta de Precios con Proveedor (2),Como empleado quiero generar una lista de materiales con precio desconocido para enviarla al proveedor y obtener la información necesaria para completar la cotización de un evento.,Documentación HU-4,
+HU-5,Juan,Alta,"Contratación de Servicio (5, 11)",Como empleado quiero agregar y modificar eventos en una agenda para llevar mejor control de las fechas,Documentación HU-5,
+HU-6,Edri,Media,Contratación de Servicio (8),Como empleado quiero crear un contrato personalizado para proteger legalmente al material prestado,Documentación HU-6,
+HU-7,Frida,Media,"Contratación de Servicio (10, 13) Recolección de Mobiliario (4)",Como empleado quiero registrar adelantos del pago de una decoración para llevar el control de cuánto falta para liquidar,Documentación HU-7,
+HU-8,Mauricio,Alta,"Consulta de Precios con Proveedor (1, 5), Contratación de Servicio (12)",Como empleado quiero modificar y crear materiales para tener actualizados los precios y necesidades,Documentación HU-8,
+HU-9,Frida,Media,Recolección de Mobiliario (2),Como empleado quiero registrar el daño de un mobiliario rentado y su gravedad para conocer la indemnización correspondiente.,Documentación HU-9,
+HU-10,Edri,Baja,----------------------------,Como empleado quiero agregar fotos de eventos para automáticamente subir los eventos terminados a redes sociales,Documentación HU-10,

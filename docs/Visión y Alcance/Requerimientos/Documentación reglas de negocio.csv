@@ -1,0 +1,15 @@
+ID,Descripción de la regla de negocio,Proceso de negocio asociado
+RN-01,No podrá contratarse un servicio en fechas reservadas.,Contratación de Servicio
+RN-02,Todo servicio contratado deberá contar con una cotización aceptada por el cliente.,Contratación de Servicio
+RN-03,El servicio se debe liquidar a más tardar tres días antes del evento.,Contratación de Servicio
+RN-04,"Toda cotización debe considerar costos de materiales, transporte y servicios extras requeridos en el evento.",Cotización de Decoración
+RN-05,Los materiales sin precio registrado deben consultarse con el proveedor para finalizar una cotización.,Consulta de Precios con Proveedor
+RN-06,La cotización se finaliza cuando todos los materiales requeridos tengan precio.,Cotización de Decoración
+RN-07,Todo el mobiliario asignado a un evento debe ser registrado.,Recolección de Mobiliario
+RN-08,El mobiliario dañado no puede utilizarse en futuros eventos hasta su reparación.,Recolección de Mobiliario
+RN-09,La pérdida o daño del mobiliario debe generar un registro asociado al evento correspondiente.,Recolección de Mobiliario
+RN-10,El sistema debe calcular el monto de indemnización respecto al daño o pérdida del mobiliario.,Recolección de Mobiliario
+RN-11,Para confirmar un evento se debe abonar mínimo el 25% del costo total de la decoración.,Contratación de Servicio
+RN-12,No podrán registrarse eventos con menos de 15 días de anticipación respecto a la fecha del evento.,Contratación de Servicio
+RN-13,Los pagos parciales y liquidaciones deben quedar asociados a un único evento.,Contratación de Servicio
+RN-14,A cada decoración se le añade el precio de los materiales consumibles.,Cotización de Decoración
